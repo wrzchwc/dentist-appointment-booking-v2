@@ -1,0 +1,34 @@
+{
+  "name": "dentist-appointment-booking-v2-server",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/dentist-appointment-booking-v2-server/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "dentist-appointment-booking-v2-server:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dentist-appointment-booking-v2-server:build:development"
+        },
+        "production": {
+          "buildTarget": "dentist-appointment-booking-v2-server:build:production"
+        }
+      }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build"
+      ],
+      "command": "docker build -f apps/dentist-appointment-booking-v2-server/Dockerfile . -t dentist-appointment-booking-v2-server"
+    }
+  }
+}
