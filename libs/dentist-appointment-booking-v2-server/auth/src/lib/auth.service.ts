@@ -2,15 +2,23 @@ import { Injectable } from '@nestjs/common';
 import {
   CognitoIdentityProviderClient,
   ConfirmSignUpCommand,
-  ConfirmSignUpCommandOutput, GlobalSignOutCommand,
+  GlobalSignOutCommand,
   GlobalSignOutCommandOutput,
   InitiateAuthCommand,
   InitiateAuthCommandOutput,
-  SignUpCommand,
-  SignUpCommandOutput
+  SignUpCommand
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
-import { ConfirmSignUpRequest, SignInRequest, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
+import {
+  ConfirmSignUpRequest,
+  SignInRequest, SignInResponse,
+  SignUpRequest,
+  SignUpResponse
+} from '@dentist-appointment-booking-v2/shared/auth';
+import { Repository } from 'typeorm';
+import { User } from './user.model';
+import { UserEntity } from './user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
@@ -18,10 +26,16 @@ export class AuthService {
     region: this.configService.get('REGION')
   });
 
-  constructor(private readonly configService: ConfigService) {}
 
-  async signUp(request: SignUpRequest): Promise<SignUpCommandOutput> {
-    return await this.cognitoClient.send(new SignUpCommand({
+  constructor(
+    private readonly configService: ConfigService,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<User>
+  ) {
+  }
+
+  async signUp(request: SignUpRequest): Promise<SignUpResponse> {
+    const { UserSub } = await this.cognitoClient.send(new SignUpCommand({
       ClientId: this.configService.get('CLIENT_ID'),
       Username: request.email,
       Password: request.password,
@@ -32,32 +46,58 @@ export class AuthService {
         }
       ]
     }));
+    return { userId: UserSub };
   }
 
-  async confirmSignUp(request: ConfirmSignUpRequest): Promise<ConfirmSignUpCommandOutput> {
-    return await this.cognitoClient.send(new ConfirmSignUpCommand({
+  async confirmSignUp(request: ConfirmSignUpRequest): Promise<string> {
+    await this.cognitoClient.send(new ConfirmSignUpCommand({
       ClientId: this.configService.get('CLIENT_ID'),
       Username: request.email,
       ConfirmationCode: request.confirmationCode
     }));
+    await this.userRepository.save({
+      id: request.userId,
+      email: request.email,
+      firstName: request.firstName,
+      lastName: request.lastName,
+      photoUrl: request.photoUrl
+    });
+    return 'Success'
   }
 
-  async signIn(request: SignInRequest): Promise<InitiateAuthCommandOutput> {
-    return await this.cognitoClient.send(
-      new InitiateAuthCommand({ ...({
-          AuthFlow: this.configService.get('AUTH_FLOW'),
-          ClientId: this.configService.get('CLIENT_ID'),
-          AuthParameters: {
-            USERNAME: request.email,
-            PASSWORD: request.password,
-          },
-        }) }),
+  async signIn(request: SignInRequest): Promise<SignInResponse> {
+    const {AuthenticationResult} = await this.cognitoClient.send(
+      new InitiateAuthCommand({
+        AuthFlow: 'USER_PASSWORD_AUTH',
+        ClientId: this.configService.get('CLIENT_ID'),
+        AuthParameters: {
+          USERNAME: request.email,
+          PASSWORD: request.password
+        }
+      })
     );
+    return {
+      token: AuthenticationResult.IdToken,
+      refreshToken: AuthenticationResult.RefreshToken,
+      accessToken: AuthenticationResult.AccessToken
+    }
   }
 
   async signOut(accessToken: string): Promise<GlobalSignOutCommandOutput> {
     return await this.cognitoClient.send(new GlobalSignOutCommand({
       AccessToken: accessToken
-    }))
+    }));
+  }
+
+  async refreshTokens(refreshToken: string): Promise<InitiateAuthCommandOutput> {
+    return await this.cognitoClient.send(
+      new InitiateAuthCommand({
+        AuthFlow: 'REFRESH_TOKEN_AUTH',
+        ClientId: this.configService.get('CLIENT_ID'),
+        AuthParameters: {
+          'REFRESH_TOKEN': refreshToken
+        }
+      })
+    );
   }
 }
