@@ -1,5 +1,5 @@
 import { EntitySchema } from "typeorm"
-import { User } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
+import { User } from './user.model';
 
 export const UserEntity = new EntitySchema<User>({
   name: "users",

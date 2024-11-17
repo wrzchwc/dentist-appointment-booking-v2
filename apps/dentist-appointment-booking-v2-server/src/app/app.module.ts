@@ -3,10 +3,14 @@ import { AppController } from './app.controller';
 import { AuthModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  AppointmentBookingModule
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking';
 
 @Module({
   imports: [
     AuthModule,
+    AppointmentBookingModule,
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

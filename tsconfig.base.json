@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking": [
+        "libs/dentist-appointment-booking-v2-server/appointment-booking/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth": [
         "libs/dentist-appointment-booking-v2-client/auth/src/index.ts"
       ],

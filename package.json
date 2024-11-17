@@ -28,7 +28,7 @@
     "ngrx-store-localstorage": "^18.0.0",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~7.5.0",
+    "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
     "typeorm": "^0.3.20",
     "zone.js": "~0.14.10"
