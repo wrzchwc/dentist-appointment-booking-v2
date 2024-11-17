@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthenticationGuard } from './shared/guards/authentication.guard';
 import { AppointmentPreviewClientService } from './appointment-preview/services/appointment-preview-client.service';
-import { Route } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
+import { Route} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { authGuard } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 
 export const APP_ROUTES: Routes = [
@@ -32,6 +32,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: Route.HOME,
+    title: 'Dentist Appointment Booking',
     loadComponent: async () => (await import('./shared/components/page/home/home.component')).HomeComponent
   }
 ];
