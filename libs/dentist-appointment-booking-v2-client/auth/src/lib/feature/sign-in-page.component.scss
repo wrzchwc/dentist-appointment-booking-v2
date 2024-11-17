@@ -1,0 +1,34 @@
+.sign-in-page__main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+
+    .header .header-content {
+      margin: auto;
+      font-size: 1.75rem;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .form-field {
+        width: 100%;
+      }
+    }
+
+    .footer {
+      padding: 0 1rem 1rem;
+    }
+  }
+}

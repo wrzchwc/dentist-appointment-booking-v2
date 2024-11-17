@@ -1,0 +1,28 @@
+<section class="sign-in-page__main-container">
+  <mat-card class="content">
+    <mat-card-header class="header">
+      <h1 class="header-content">Logowanie</h1>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <form class="form" [formGroup]="signInForm">
+        <mat-form-field class="form-field">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Hasło</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="button" (click)="signIn()">
+          Zaloguj się
+        </button>
+      </form>
+    </mat-card-content>
+    <mat-card-footer class="footer">
+      <span>Nie masz jeszcze konta?</span>
+      <button routerLink="/auth/sign-up" mat-button color="accent">
+        Zarejestruj się
+      </button>
+    </mat-card-footer>
+  </mat-card>
+</section>

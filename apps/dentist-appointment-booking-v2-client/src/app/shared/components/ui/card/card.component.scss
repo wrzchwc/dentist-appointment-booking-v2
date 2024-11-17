@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@use '../../../../../theme/dimensions' as dimensions;
+
+.title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 0;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: dimensions.$card-padding * 1.5;
+    background-color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 50);
+}

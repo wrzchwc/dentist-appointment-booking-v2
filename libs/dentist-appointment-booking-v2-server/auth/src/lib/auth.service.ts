@@ -3,7 +3,6 @@ import {
   CognitoIdentityProviderClient,
   ConfirmSignUpCommand,
   GlobalSignOutCommand,
-  GlobalSignOutCommandOutput,
   InitiateAuthCommand,
   InitiateAuthCommandOutput,
   SignUpCommand
@@ -46,7 +45,7 @@ export class AuthService {
         }
       ]
     }));
-    return { userId: UserSub };
+    return { userId: UserSub || '' };
   }
 
   async confirmSignUp(request: ConfirmSignUpRequest): Promise<string> {
@@ -77,16 +76,17 @@ export class AuthService {
       })
     );
     return {
-      token: AuthenticationResult.IdToken,
-      refreshToken: AuthenticationResult.RefreshToken,
-      accessToken: AuthenticationResult.AccessToken
+      token: AuthenticationResult?.IdToken || '',
+      refreshToken: AuthenticationResult?.RefreshToken || '',
+      accessToken: AuthenticationResult?.AccessToken || ''
     }
   }
 
-  async signOut(accessToken: string): Promise<GlobalSignOutCommandOutput> {
-    return await this.cognitoClient.send(new GlobalSignOutCommand({
+  async signOut(accessToken: string): Promise<string> {
+    await this.cognitoClient.send(new GlobalSignOutCommand({
       AccessToken: accessToken
     }));
+    return 'SUCCESS';
   }
 
   async refreshTokens(refreshToken: string): Promise<InitiateAuthCommandOutput> {

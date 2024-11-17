@@ -1,0 +1,4 @@
+<ng-container *ngIf="appointments.length; else noUpcomingAppointments">
+    <app-appointments-list title=""></app-appointments-list>
+</ng-container>
+<ng-template #noUpcomingAppointments></ng-template>

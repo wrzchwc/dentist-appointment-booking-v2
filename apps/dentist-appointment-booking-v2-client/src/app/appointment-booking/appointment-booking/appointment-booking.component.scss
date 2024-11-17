@@ -1,0 +1,17 @@
+.stepper {
+    background: transparent;
+}
+
+.step-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.step-button {
+    font-weight: 700;
+    font-size: 20px;
+}

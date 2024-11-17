@@ -1,0 +1,55 @@
+<nav
+  class="main-container"
+  [ngClass]="{
+        'styles-background-accent': isAuthenticated(),
+        shadow: isAuthenticated(),
+        authenticated: isAuthenticated()
+    }"
+>
+  <div class="logo-container">
+    <img
+      ngSrc="favicon.svg"
+      alt="logo"
+      class="logo-item"
+      [routerLink]="isAuthenticated() | logoUrl"
+      height="48"
+      width="48"
+    />
+    <h1 class="logo-item app-name styles-color-primary" [routerLink]="isAuthenticated() | logoUrl">
+      Dentist Appointment Booking
+    </h1>
+  </div>
+  @if (isAuthenticated()) {
+    <div class="user-container">
+      @if (false) {
+        <div class="nav-container">
+          <button mat-button color="primary" class="nav-button" routerLink="/admin/appointments">
+            WIZYTY
+          </button>
+          <button mat-button color="primary" class="nav-button" routerLink="/admin/price-list">CENNIK</button>
+        </div>
+      } @else {
+        <div class="nav-container">
+          <button
+            mat-raised-button
+            color="primary"
+            class="nav-button"
+            routerLink="/appointment-booking"
+          >
+            UMÓW WIZYTYĘ
+          </button>
+          <button mat-button color="primary" class="nav-button" routerLink="/client/appointments">
+            MOJE WIZYTY
+          </button>
+        </div>
+      }
+      <div class="profile-container">
+        <span class="styles-color-primary user-name">{{ '' }}</span>
+        <img [src]="''" [alt]="''" crossorigin="anonymous" class="avatar" />
+        <button mat-icon-button color="primary" (click)="signOut()">
+          <mat-icon id="sign-out-icon" class="button-base sign-out-icon">logout</mat-icon>
+        </button>
+      </div>
+    </div>
+  }
+</nav>

@@ -14,7 +14,8 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "671d5332d4ea3c25c46db143",
+  "neverConnectToCloud": true,
+  "useDaemonProcess": false,
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
@@ -43,6 +44,29 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@angular-devkit/build-angular:browser": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
+  "generators": {
+    "@nx/angular:application": {
+      "e2eTestRunner": "none",
+      "linter": "eslint",
+      "style": "scss",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "directory": "libs"
+    },
+    "@nx/angular:component": {
+      "style": "scss",
+      "changeDetection": "OnPush",
+      "prefix": "dentist-appointment-booking-v2"
     }
   }
 }

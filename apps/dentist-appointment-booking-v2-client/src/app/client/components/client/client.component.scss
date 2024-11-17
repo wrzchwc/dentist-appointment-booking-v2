@@ -1,0 +1,47 @@
+@use '../../../../theme/dimensions' as dimensions;
+
+$dimension: 58px;
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    cursor: default;
+}
+
+.info-container {
+    @extend .container;
+
+    margin-top: 160px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main {
+    @extend .container;
+
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.greeting {
+    font-weight: 700;
+    font-size: $dimension - 10px;
+    line-height: $dimension;
+    margin-bottom: 2 * $dimension;
+}
+
+.action-label {
+    cursor: pointer;
+
+    &:hover {
+        opacity: 75%;
+    }
+}
+
+.info-label {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    margin-bottom: 0;
+}

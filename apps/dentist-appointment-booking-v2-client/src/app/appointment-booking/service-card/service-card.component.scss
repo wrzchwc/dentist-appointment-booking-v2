@@ -1,0 +1,77 @@
+@use '@angular/material' as mat;
+@use '../../../theme/dimensions' as dimensions;
+@use '../../../theme/functions' as functions;
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.font-weight-700 {
+    font-weight: 700;
+}
+
+.main-container {
+    @extend .container;
+
+    padding: 25px;
+    background: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 50);
+    gap: functions.gap(2);
+}
+
+.details-container {
+    @extend .container;
+    @extend .font-weight-700;
+
+    gap: functions.gap(1);
+    color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 900);
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.detail-container {
+    @extend .container;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.price-detail {
+    width: 62px;
+}
+
+.times-detail {
+    width: 106px;
+}
+
+.service-name {
+    @extend .font-weight-700;
+
+    font-size: 32px;
+    line-height: 39px;
+}
+
+.cart-container {
+    @extend .container;
+    @extend .font-weight-700;
+
+    gap: functions.gap(1);
+}
+
+.action-container {
+    @extend .container;
+    gap: functions.gap(2);
+}
+
+.icon {
+    width: dimensions.$icon-size;
+    height: dimensions.$icon-size;
+    font-size: dimensions.$icon-size;
+    line-height: dimensions.$icon-size;
+}
+
+.count {
+    @extend .font-weight-700;
+    font-size: 20px;
+    line-height: 24px;
+}
