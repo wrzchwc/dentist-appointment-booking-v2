@@ -45,7 +45,7 @@
       }
       <div class="profile-container">
         <span class="styles-color-primary user-name">{{ profile()?.firstName }}</span>
-        <img [src]="profile()?.photoUrl" [alt]="profile()?.firstName" crossorigin="anonymous" class="avatar" />
+        <img [src]="profile()?.photoUrl" [alt]="profile()?.firstName" class="avatar" />
         <button mat-icon-button color="primary" (click)="initiateSignOut()">
           <mat-icon id="sign-out-icon" class="button-base sign-out-icon">logout</mat-icon>
         </button>

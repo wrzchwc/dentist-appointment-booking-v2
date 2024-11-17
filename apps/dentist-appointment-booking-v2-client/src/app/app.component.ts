@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { HeaderComponent } from './shared/components/ui/header/header.component';
+import { HeaderComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { RouterOutlet } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { Store } from '@ngrx/store';
 import {
-  isAuthenticated,
-  profile,
-  signOut
+  AuthFacadeService
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 
 @Component({
@@ -19,11 +17,12 @@ import {
 })
 export class AppComponent {
     private readonly store = inject(Store);
+    private readonly authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
-    readonly isAuthenticated = this.store.selectSignal(isAuthenticated);
-    readonly profile = this.store.selectSignal(profile);
+    readonly isAuthenticated = this.authFacadeService.isAuthenticated;
+    readonly profile = this.authFacadeService.profile;
 
     signOut() {
-      this.store.dispatch(signOut());
+      this.authFacadeService.signOut();
     }
 }

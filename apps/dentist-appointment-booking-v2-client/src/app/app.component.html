@@ -1,4 +1,4 @@
-<app-header [isAuthenticated]="isAuthenticated()" [profile]="profile()" (signOut)="signOut()"></app-header>
+<lib-header [profile]="profile()" (signOut)="signOut()" />
 <section class="outlet" [ngClass]="{'blue-background': !isAuthenticated()}">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </section>

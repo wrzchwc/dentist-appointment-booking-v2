@@ -5,13 +5,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { AuthService } from '../data/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { signIn } from '../data/auth.actions';
 
 @Component({
-  selector: 'sign-in-page',
+  selector: 'lib-sign-in-page',
   standalone: true,
   imports: [
     CommonModule,

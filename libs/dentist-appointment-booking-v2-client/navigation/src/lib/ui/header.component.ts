@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FetchUserProfileResponse } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Component({
-  selector: 'app-header',
+  selector: 'lib-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   imports: [NgClass, RouterLink, MatIconModule, MatButtonModule, NgOptimizedImage],
@@ -14,11 +14,11 @@ import { FetchUserProfileResponse } from '@dentist-appointment-booking-v2/shared
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  readonly isAuthenticated = input(false);
   readonly profile = input<FetchUserProfileResponse>();
 
   readonly signOut = output();
 
+  readonly isAuthenticated = computed(() => !!this.profile());
   readonly logoUrl = computed(() =>
     this.isAuthenticated() ? '/' : '/appointment-preview'
   );
