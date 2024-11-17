@@ -24,4 +24,11 @@ export class AuthService {
       null,
       {headers, responseType: 'text' });
   }
+
+  getCurrentUserProfile(accessToken: string): Observable<object> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${accessToken}`
+    });
+    return this.httpClient.get<object>(`${this.baseUrl}/me`, {headers});
+  }
 }

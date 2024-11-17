@@ -15,8 +15,8 @@ import {
   SignUpResponse
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { Repository } from 'typeorm';
-import { User } from './user.model';
-import { UserEntity } from './user.entity';
+import { User } from '../domain/user.model';
+import { UserEntity } from '../domain/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -61,11 +61,11 @@ export class AuthService {
       lastName: request.lastName,
       photoUrl: request.photoUrl
     });
-    return 'Success'
+    return 'Success';
   }
 
   async signIn(request: SignInRequest): Promise<SignInResponse> {
-    const {AuthenticationResult} = await this.cognitoClient.send(
+    const { AuthenticationResult } = await this.cognitoClient.send(
       new InitiateAuthCommand({
         AuthFlow: 'USER_PASSWORD_AUTH',
         ClientId: this.configService.get('CLIENT_ID'),
@@ -79,7 +79,7 @@ export class AuthService {
       token: AuthenticationResult?.IdToken || '',
       refreshToken: AuthenticationResult?.RefreshToken || '',
       accessToken: AuthenticationResult?.AccessToken || ''
-    }
+    };
   }
 
   async signOut(accessToken: string): Promise<string> {
@@ -99,5 +99,13 @@ export class AuthService {
         }
       })
     );
+  }
+
+  async getUserProfile(userId: string) {
+    return await this.userRepository.findOne({
+      where: {
+        id: userId
+      }
+    });
   }
 }

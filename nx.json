@@ -15,7 +15,7 @@
     "sharedGlobals": []
   },
   "neverConnectToCloud": true,
-  "useDaemonProcess": false,
+  "useDaemonProcess": true,
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",

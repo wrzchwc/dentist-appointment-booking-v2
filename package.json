@@ -22,6 +22,7 @@
     "@nestjs/typeorm": "^10.0.2",
     "@ngrx/effects": "^18.1.1",
     "@ngrx/store": "^18.1.1",
+    "aws-jwt-verify": "^4.0.1",
     "axios": "^1.6.0",
     "luxon": "^3.4.3",
     "ngrx-store-localstorage": "^18.0.0",

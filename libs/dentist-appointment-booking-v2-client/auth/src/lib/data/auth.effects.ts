@@ -27,6 +27,8 @@ export class AuthEffects {
   readonly signInSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signInSuccess),
+      map(({tokens}) => tokens.accessToken),
+      switchMap((accessToken) => this.authService.getCurrentUserProfile(accessToken)),
       map(() => navigateToPage({route: Route.CLIENT}))
     )
   );
