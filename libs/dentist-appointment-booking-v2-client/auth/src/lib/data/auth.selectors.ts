@@ -11,4 +11,9 @@ export const isAuthenticated = createSelector(
 export const accessToken = createSelector(
   selectFeature,
   (state) => state.accessToken
-)
+);
+
+export const profile = createSelector(
+  selectFeature,
+  (state) => state.profile
+);

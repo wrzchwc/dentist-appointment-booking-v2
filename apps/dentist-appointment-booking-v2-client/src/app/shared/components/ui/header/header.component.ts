@@ -1,27 +1,29 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { LogoUrlPipe } from './logo-url.pipe';
-import { Store } from '@ngrx/store';
-import { isAuthenticated, signOut } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
+import { FetchUserProfileResponse } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [NgClass, RouterLink, MatIconModule, MatButtonModule, NgOptimizedImage, LogoUrlPipe],
+  imports: [NgClass, RouterLink, MatIconModule, MatButtonModule, NgOptimizedImage],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  private readonly store = inject(Store);
+  readonly isAuthenticated = input(false);
+  readonly profile = input<FetchUserProfileResponse>();
 
+  readonly signOut = output();
 
-  readonly isAuthenticated = this.store.selectSignal(isAuthenticated);
+  readonly logoUrl = computed(() =>
+    this.isAuthenticated() ? '/' : '/appointment-preview'
+  );
 
-  signOut(): void {
-    this.store.dispatch(signOut());
+  initiateSignOut(): void {
+    this.signOut.emit()
   }
 }

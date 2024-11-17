@@ -14,6 +14,6 @@ export class JwtVerifierService {
   });
 
   verify(jwt: string): Promise<CognitoAccessTokenPayload> {
-    return this.verifier.verify(jwt)
+    return this.verifier.verify(jwt);
   }
 }

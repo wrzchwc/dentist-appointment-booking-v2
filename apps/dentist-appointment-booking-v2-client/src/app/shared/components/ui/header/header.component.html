@@ -11,11 +11,11 @@
       ngSrc="favicon.svg"
       alt="logo"
       class="logo-item"
-      [routerLink]="isAuthenticated() | logoUrl"
+      [routerLink]="logoUrl()"
       height="48"
       width="48"
     />
-    <h1 class="logo-item app-name styles-color-primary" [routerLink]="isAuthenticated() | logoUrl">
+    <h1 class="logo-item app-name styles-color-primary" [routerLink]="logoUrl()">
       Dentist Appointment Booking
     </h1>
   </div>
@@ -44,9 +44,9 @@
         </div>
       }
       <div class="profile-container">
-        <span class="styles-color-primary user-name">{{ '' }}</span>
-        <img [src]="''" [alt]="''" crossorigin="anonymous" class="avatar" />
-        <button mat-icon-button color="primary" (click)="signOut()">
+        <span class="styles-color-primary user-name">{{ profile()?.firstName }}</span>
+        <img [src]="profile()?.photoUrl" [alt]="profile()?.firstName" crossorigin="anonymous" class="avatar" />
+        <button mat-icon-button color="primary" (click)="initiateSignOut()">
           <mat-icon id="sign-out-icon" class="button-base sign-out-icon">logout</mat-icon>
         </button>
       </div>

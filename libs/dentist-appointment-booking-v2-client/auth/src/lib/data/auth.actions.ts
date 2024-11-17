@@ -1,32 +1,20 @@
 import { createAction, props } from '@ngrx/store';
 import { FetchUserProfileResponse, SignInRequest, SignInResponse } from '@dentist-appointment-booking-v2/shared/auth';
 
-interface SignIn {
-  readonly request: SignInRequest;
-}
-
 export const signIn = createAction(
-  '[Auth] Sign In]', props<SignIn>()
+  '[Auth] Sign In]', props<{ readonly request: SignInRequest }>()
 );
-
-interface SignInSuccess {
-  readonly tokens: SignInResponse;
-}
 
 export const signInSuccess = createAction(
   '[Auth] Sign In Success',
-  props<SignInSuccess>()
+  props<{ readonly tokens: SignInResponse; }>()
 );
 
 export const signOut = createAction('[Auth] Sign Out]');
 
 export const signOutSuccess = createAction('[Auth] Sign Out Success]');
 
-interface FetchUserProfileSuccess {
-  readonly profile: FetchUserProfileResponse
-}
-
 export const fetchUserProfileSuccess = createAction(
   '[Auth] Fetch User Profile Success',
-  props<FetchUserProfileSuccess>()
+  props<{ readonly profile: FetchUserProfileResponse }>()
 );
