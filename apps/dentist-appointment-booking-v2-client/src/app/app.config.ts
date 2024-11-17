@@ -1,6 +1,5 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
-import { CredentialsInterceptor } from './shared/interceptors/credentials.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { APP_ROUTES } from './routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -10,7 +9,8 @@ import { provideEffects } from '@ngrx/effects';
 import {
   AUTH_FEATURE_KEY,
   AuthEffects,
-  authReducer
+  authReducer,
+  jwtInterceptor
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { NavigationEffects } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { localStorageSync } from 'ngrx-store-localstorage';
@@ -21,13 +21,8 @@ function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CredentialsInterceptor,
-      multi: true
-    },
     provideRouter(APP_ROUTES),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([jwtInterceptor])),
     provideAnimations(),
     provideStore(
       { [AUTH_FEATURE_KEY]: authReducer },

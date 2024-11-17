@@ -1,10 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from './auth.service';
-import { signIn, signInSuccess, signOut, signOutSuccess } from './auth.actions';
-import { filter, map, switchMap, withLatestFrom } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { accessToken } from './auth.selectors';
+import { fetchUserProfileSuccess, signIn, signInSuccess, signOut, signOutSuccess } from './auth.actions';
+import { filter, map, switchMap } from 'rxjs';
 import {
   navigateToPage,
   Route
@@ -14,7 +12,6 @@ import {
 export class AuthEffects {
   private readonly actions$ = inject(Actions);
   private readonly authService = inject(AuthService);
-  private readonly store = inject(Store);
 
   readonly signIn$ = createEffect(() =>
     this.actions$.pipe(
@@ -27,19 +24,22 @@ export class AuthEffects {
   readonly signInSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signInSuccess),
-      map(({tokens}) => tokens.accessToken),
-      switchMap((accessToken) => this.authService.getCurrentUserProfile(accessToken)),
-      map(() => navigateToPage({route: Route.CLIENT}))
+      switchMap(() => this.authService.getCurrentUserProfile()),
+      map((profile) => fetchUserProfileSuccess({ profile }))
+    )
+  );
+
+  readonly fetchUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchUserProfileSuccess),
+      map(() => navigateToPage({ route: Route.CLIENT }))
     )
   );
 
   readonly signOut$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signOut),
-      withLatestFrom(this.store.select(accessToken)),
-      map(([, accessToken]) => accessToken),
-      filter(Boolean),
-      switchMap((accessToken) => this.authService.signOut(accessToken)),
+      switchMap(() => this.authService.signOut()),
       filter((response) => response === 'SUCCESS'),
       map(() => signOutSuccess())
     )

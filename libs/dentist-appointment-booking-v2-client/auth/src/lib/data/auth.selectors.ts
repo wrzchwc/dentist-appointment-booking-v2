@@ -5,7 +5,7 @@ const selectFeature = createFeatureSelector<AuthState>(AUTH_FEATURE_KEY);
 
 export const isAuthenticated = createSelector(
   selectFeature,
-  (state) => state.isAuthenticated
+  (state) => !!state.accessToken && !!state.profile
 );
 
 export const accessToken = createSelector(

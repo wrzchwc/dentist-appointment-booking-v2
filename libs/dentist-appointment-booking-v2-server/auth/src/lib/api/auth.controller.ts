@@ -1,14 +1,15 @@
 import { Body, Controller, Get, Headers, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from '../data/auth.service';
 import {
-  ConfirmSignUpRequest,
+  ConfirmSignUpRequest, FetchUserProfileResponse,
   RefreshTokenRequest,
-  SignInRequest, SignInResponse,
-  SignUpRequest, SignUpResponse
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticatedRequest } from '../domain/authenticated-request';
-import { User } from '../domain/user.model';
 
 @Controller('auth')
 export class AuthController {
@@ -42,7 +43,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  getCurrentUserProfile(@Request() request: AuthenticatedRequest): Promise<User | null> {
+  getCurrentUserProfile(@Request() request: AuthenticatedRequest): Promise<FetchUserProfileResponse | null> {
     return this.authService.getUserProfile(request.userId);
   }
 }

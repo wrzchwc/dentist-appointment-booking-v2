@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { SignInRequest, SignInResponse } from '@dentist-appointment-booking-v2/shared/auth';
+import { FetchUserProfileResponse, SignInRequest, SignInResponse } from '@dentist-appointment-booking-v2/shared/auth';
 
 interface SignIn {
   readonly request: SignInRequest;
@@ -21,3 +21,12 @@ export const signInSuccess = createAction(
 export const signOut = createAction('[Auth] Sign Out]');
 
 export const signOutSuccess = createAction('[Auth] Sign Out Success]');
+
+interface FetchUserProfileSuccess {
+  readonly profile: FetchUserProfileResponse
+}
+
+export const fetchUserProfileSuccess = createAction(
+  '[Auth] Fetch User Profile Success',
+  props<FetchUserProfileSuccess>()
+);

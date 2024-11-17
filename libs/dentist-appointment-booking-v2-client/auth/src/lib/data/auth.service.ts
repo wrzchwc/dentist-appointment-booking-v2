@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignInResponse, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FetchUserProfileResponse, SignInResponse, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +9,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AuthService {
   private readonly httpClient = inject(HttpClient);
 
-  private readonly baseUrl = '/api/auth'
+  private readonly baseUrl = '/api/auth';
 
   signIn(request: SignUpRequest): Observable<SignInResponse> {
     return this.httpClient.post<SignInResponse>(`${this.baseUrl}/sign-in`, request);
   }
 
-  signOut(accessToken: string): Observable<string> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${accessToken}`
-    });
+  signOut(): Observable<string> {
     return this.httpClient.post(
       `${this.baseUrl}/sign-out`,
       null,
-      {headers, responseType: 'text' });
+      { responseType: 'text' });
   }
 
-  getCurrentUserProfile(accessToken: string): Observable<object> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${accessToken}`
-    });
-    return this.httpClient.get<object>(`${this.baseUrl}/me`, {headers});
+  getCurrentUserProfile(): Observable<FetchUserProfileResponse> {
+    return this.httpClient.get<FetchUserProfileResponse>(`${this.baseUrl}/me`);
   }
 }

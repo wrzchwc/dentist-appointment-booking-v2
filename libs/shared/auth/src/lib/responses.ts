@@ -7,3 +7,11 @@ export interface SignInResponse {
   readonly accessToken: string;
   readonly refreshToken: string;
 }
+
+export interface FetchUserProfileResponse {
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+  readonly photoUrl?: string;
+}
