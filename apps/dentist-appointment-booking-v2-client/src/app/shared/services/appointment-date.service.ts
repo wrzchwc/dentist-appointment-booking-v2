@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
 export class AppointmentDateService {
-    readonly selectedDate$: BehaviorSubject<Date | null> = new BehaviorSubject<Date | null>(null);
+  readonly selectedDate$: BehaviorSubject<Date | null> = new BehaviorSubject<Date | null>(null);
 
-    private readonly baseUrl = `${environment.apiUrl}/api/appointments/available-dates`;
+  private readonly baseUrl = '/api/appointment-booking/available-dates';
 
-    constructor(private readonly httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {
+  }
 
-    getAvailableDates(date: Date, length: number): Observable<Date[]> {
-        return this.httpClient.get<Date[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
-    }
+  getAvailableDates(date: Date, length: number): Observable<Date[]> {
+    return of([new Date(Date.UTC(2024, 10, 22, 9, 15))]);
+    // return this.httpClient.get<Date[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
+  }
 }

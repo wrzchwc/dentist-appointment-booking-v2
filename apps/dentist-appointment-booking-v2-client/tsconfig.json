@@ -7,10 +7,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "lib": ["es2022", "dom"]
   },
-  "files": [],
-  "include": [],
   "references": [
     {
       "path": "./tsconfig.editor.json"

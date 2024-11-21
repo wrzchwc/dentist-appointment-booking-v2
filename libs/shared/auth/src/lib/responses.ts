@@ -13,5 +13,5 @@ export interface FetchUserProfileResponse {
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;
-  readonly photoUrl?: string;
+  readonly photoUrl: string | null;
 }

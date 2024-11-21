@@ -11,7 +11,8 @@ export const ServiceEntity = new EntitySchema<Service>({
     },
     name: {
       type: String,
-      nullable: false
+      nullable: false,
+      unique: true
     },
     length: {
       type: Number,
@@ -22,9 +23,9 @@ export const ServiceEntity = new EntitySchema<Service>({
       nullable: true
     },
     detail: {
-      type: Number,
+      type: String,
       unique: true,
-      nullable: false
+      nullable: true
     },
     count: {
       type: Number,

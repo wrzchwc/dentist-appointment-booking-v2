@@ -1,6 +1,6 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { APP_ROUTES } from './routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ActionReducer, provideStore } from '@ngrx/store';
@@ -21,7 +21,7 @@ function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(APP_ROUTES),
+    provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([jwtInterceptor])),
     provideAnimations(),
     provideStore(

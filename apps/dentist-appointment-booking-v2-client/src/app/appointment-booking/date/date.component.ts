@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Inp
 import { AppointmentDateService } from '../../shared';
 import { LengthService } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
-import { DatePipe, NgForOf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TimeCardComponent } from '../time-card/time-card.component';
 import { DateService } from '../../shared/services/date.service';
@@ -12,7 +12,7 @@ import { DateService } from '../../shared/services/date.service';
     templateUrl: './date.component.html',
     styleUrls: ['./date.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgForOf, DatePipe, MatButtonModule, TimeCardComponent],
+    imports: [DatePipe, MatButtonModule, TimeCardComponent],
     standalone: true,
 })
 export class DateComponent implements AfterViewChecked {

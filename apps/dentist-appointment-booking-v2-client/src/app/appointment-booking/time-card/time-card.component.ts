@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AppointmentDateService } from '../../shared/services/appointment-date.service';
+import { AppointmentDateService } from '../../shared';
 import { filter, map, Subject, takeUntil } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe, NgClass, NgIf } from '@angular/common';
@@ -17,7 +17,7 @@ export class TimeCardComponent implements OnInit, OnDestroy {
 
     private readonly destroy$: Subject<void> = new Subject();
 
-    private _notSelected: boolean = false;
+    private _notSelected = false;
 
     constructor(private readonly appointmentDateService: AppointmentDateService) {}
 

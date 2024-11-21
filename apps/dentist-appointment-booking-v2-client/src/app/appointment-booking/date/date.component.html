@@ -7,9 +7,9 @@
         Dostępne terminy w dniu {{ currentWorkday | date: 'dd.MM.yyyy' }}
     </h2>
     <div class="time-cards-container">
-        <ng-container *ngFor="let date of availableTimes">
-            <app-time-card [date]="date"></app-time-card>
-        </ng-container>
+      @for (availableTime of availableTimes; track availableTime.getTime()) {
+        <app-time-card [date]="availableTime"></app-time-card>
+      }
     </div>
     <div class="buttons-container" (click)="ignoreClick($event)">
         <button

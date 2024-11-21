@@ -11,7 +11,7 @@ export class AppointmentManagementClientService {
     ) {}
 
     cancelAppointment(appointmentId: string): Observable<string> {
-        const url: string = `${this.appointmentUrlService.getBaseUrl(false)}/${appointmentId}`;
+        const url = `${this.appointmentUrlService.getBaseUrl(false)}/${appointmentId}`;
         return this.httpClient.delete(url, { responseType: 'text' });
     }
 }
