@@ -20,7 +20,7 @@ export class AppComponent {
     private readonly authFacadeService: AuthFacadeService = inject(AuthFacadeService);
 
     readonly isAuthenticated = this.authFacadeService.isAuthenticated;
-    readonly profile = this.authFacadeService.profile;
+    readonly profile = this.authFacadeService.userProfile;
 
     signOut() {
       this.authFacadeService.signOut();

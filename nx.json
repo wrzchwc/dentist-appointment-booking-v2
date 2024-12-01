@@ -37,6 +37,18 @@
         "targetName": "test"
       },
       "exclude": ["apps/dentist-appointment-booking-v2-server-e2e/**/*"]
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "tsc:build",
+          "configName": "tsconfig.lib.json"
+        }
+      }
     }
   ],
   "targetDefaults": {
@@ -46,6 +58,11 @@
       "inputs": ["production", "^production"]
     },
     "@angular-devkit/build-angular:browser": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/js:tsc": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]

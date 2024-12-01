@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@a
 import { AppointmentDateService } from '../../shared';
 import { filter, map, Subject, takeUntil } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { DatePipe, NgClass, NgIf } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-time-card',
     templateUrl: './time-card.component.html',
     styleUrls: ['./time-card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatCardModule, NgIf, NgClass, DatePipe],
+    imports: [MatCardModule, NgClass, DatePipe],
     standalone: true,
 })
 export class TimeCardComponent implements OnInit, OnDestroy {

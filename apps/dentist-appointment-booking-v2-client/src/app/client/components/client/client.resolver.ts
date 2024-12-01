@@ -13,7 +13,6 @@ export class ClientResolver {
   }
 
   resolve(): Observable<Appointment[]> {
-    console.log('client resolver!');
     return of([]);
     // return this.clientService.getAppointments(this.dateService.currentDay);
   }

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FetchUserProfileResponse, SignInResponse, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
+import { UserProfile, SignInResponse, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class AuthService {
       { responseType: 'text' });
   }
 
-  getCurrentUserProfile(): Observable<FetchUserProfileResponse> {
-    return this.httpClient.get<FetchUserProfileResponse>(`${this.baseUrl}/me`);
+  getCurrentUserProfile(): Observable<UserProfile> {
+    return this.httpClient.get<UserProfile>(`${this.baseUrl}/me`);
   }
 }

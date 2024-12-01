@@ -1,7 +1,7 @@
 <mat-stepper linear labelPosition="bottom" class="stepper">
     <mat-step label="Zakres leczenia" [completed]="isCartValid">
         <ng-template matStepContent>
-            <app-appointment-services [services]="services"></app-appointment-services>
+            <app-appointment-services [services]="services()"></app-appointment-services>
             <section class="step-buttons-container">
                 <button mat-raised-button color="primary" matStepperNext class="step-button" [disabled]="!isCartValid">
                     DALEJ
@@ -29,7 +29,13 @@
     </mat-step>
     <mat-step label="Stan zdrowia">
         <ng-template matStepContent>
-            <app-health-state [questions]="questions"></app-health-state>
+            <app-health-state
+              [questions]="appointmentQuestions()"
+              (positive)="storeHealthDescriptor($event)"
+              (additionalInfo)="storeAdditionalInfo($event)"
+              (negative)="removeHealthDescriptor($event)"
+              (clearWomenOnly)="clearWomenOnly()"
+            />
             <section class="step-buttons-container">
                 <button mat-raised-button color="primary" matStepperNext class="step-button">DALEJ</button>
                 <button mat-raised-button color="accent" matStepperPrevious class="step-button">POWRÓT</button>
@@ -38,7 +44,7 @@
     </mat-step>
     <mat-step label="Podsumowanie">
         <ng-template matStepContent>
-            <app-summary></app-summary>
+            <app-summary [userProfile]="userProfile()" [facts]="facts()"/>
             <section class="step-buttons-container">
                 <button
                     mat-raised-button

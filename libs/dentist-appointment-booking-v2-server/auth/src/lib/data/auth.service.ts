@@ -9,7 +9,7 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfirmSignUpRequest, FetchUserProfileResponse,
+  ConfirmSignUpRequest, UserProfile,
   SignInRequest, SignInResponse,
   SignUpRequest,
   SignUpResponse
@@ -101,7 +101,7 @@ export class AuthService {
     );
   }
 
-  async getUserProfile(userId: string): Promise<FetchUserProfileResponse | null> {
+  async getUserProfile(userId: string): Promise<UserProfile | null> {
     return await this.userRepository.findOne({
       where: {
         id: userId

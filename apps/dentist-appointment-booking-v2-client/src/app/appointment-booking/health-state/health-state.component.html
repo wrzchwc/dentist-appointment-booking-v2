@@ -1,6 +1,6 @@
 <section class="main-container">
     <h1 class="styles-color-primary title">Opowiedz o swoim stanie zdrowia</h1>
-    <ng-container *ngFor="let question of questions">
+    <ng-container *ngFor="let question of questions()">
         <ng-container *ngIf="!question.womenOnly">
             <app-health-question
                 [question]="question"
@@ -19,7 +19,7 @@
         Jestem kobietą
     </mat-slide-toggle>
     <ng-container *ngIf="isWomen.value">
-        <ng-container *ngFor="let question of questions">
+        <ng-container *ngFor="let question of questions()">
             <ng-container *ngIf="question.womenOnly">
                 <app-health-question
                     [question]="question"

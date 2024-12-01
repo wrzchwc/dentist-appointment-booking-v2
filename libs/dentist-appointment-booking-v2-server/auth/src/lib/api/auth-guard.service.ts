@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtVerifierService } from './jwt-verifier.service';
 
-@Injectable({})
+@Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private readonly jwtVerifier: JwtVerifierService) {
   }

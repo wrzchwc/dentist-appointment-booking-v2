@@ -1,9 +1,9 @@
-<ng-container *ngIf="date">
-    <mat-card
-        class="styles-color-primary main-container"
-        (click)="handleClick($event)"
-        [ngClass]="{ 'not-selected': notSelected }"
-    >
-        {{ date | date: 'HH:mm' }}
-    </mat-card>
-</ng-container>
+@if(date) {
+  <mat-card
+    class="styles-color-primary main-container"
+    (click)="handleClick($event)"
+    [ngClass]="{ 'not-selected': notSelected }"
+  >
+    {{ date | date: 'HH:mm' }}
+  </mat-card>
+}

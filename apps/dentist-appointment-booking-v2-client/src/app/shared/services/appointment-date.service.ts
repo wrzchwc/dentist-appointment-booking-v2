@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +14,7 @@ export class AppointmentDateService {
   }
 
   getAvailableDates(date: Date, length: number): Observable<Date[]> {
-    return of([new Date(Date.UTC(2024, 10, 22, 9, 15))]);
+    return of([new Date(Date.UTC(2024, 11, 1, 9, 15))]);
     // return this.httpClient.get<Date[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
   }
 }

@@ -1,54 +1,59 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, output } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { HealthStateService } from './health-state.service';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { AppointmentQuestion, HealthStateDescriptor, Info } from '../model';
+import { HealthStateDescriptor, Info } from '../model';
 import { HealthQuestionComponent } from '../health-question/health-question.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { AppointmentQuestion } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 @Component({
-    selector: 'app-health-state',
-    templateUrl: './health-state.component.html',
-    styleUrls: ['./health-state.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [HealthQuestionComponent, MatSlideToggleModule, ReactiveFormsModule, NgClass, NgForOf, NgIf],
-    standalone: true,
+  selector: 'app-health-state',
+  templateUrl: './health-state.component.html',
+  styleUrls: ['./health-state.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [HealthQuestionComponent, MatSlideToggleModule, ReactiveFormsModule, NgClass, NgForOf, NgIf],
+  standalone: true
 })
 export class HealthStateComponent implements OnInit, OnDestroy {
-    @Input() questions: AppointmentQuestion[] = [];
+  readonly questions = input<AppointmentQuestion[]>([]);
 
-    readonly isWomen: FormControl<boolean> = this.builder.control(false, { nonNullable: true });
+  readonly positive = output<HealthStateDescriptor>();
+  readonly additionalInfo = output<Info>();
+  readonly negative = output<string>();
+  readonly clearWomenOnly = output();
 
-    private readonly destroy$: Subject<void> = new Subject();
+  private readonly builder = inject(FormBuilder);
 
-    constructor(private readonly builder: FormBuilder, private readonly state: HealthStateService) {}
+  private readonly destroy$: Subject<void> = new Subject();
 
-    ngOnInit(): void {
-        this.isWomen.valueChanges
-            .pipe(
-                takeUntil(this.destroy$),
-                filter((value) => !value)
-            )
-            .subscribe(() => {
-                this.state.clearWomenOnly();
-            });
-    }
+  readonly isWomen: FormControl<boolean> = this.builder.control(false, { nonNullable: true });
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
+  ngOnInit(): void {
+    this.isWomen.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((value) => !value)
+      )
+      .subscribe(() => {
+        this.clearWomenOnly.emit();
+      });
+  }
 
-    store(descriptor: HealthStateDescriptor): void {
-        this.state.store(descriptor);
-    }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
-    remove(id: string): void {
-        this.state.remove(id);
-    }
+  store(descriptor: HealthStateDescriptor): void {
+    this.positive.emit(descriptor);
+  }
 
-    update(info: Info): void {
-        this.state.update(info);
-    }
+  remove(id: string): void {
+    this.negative.emit(id);
+  }
+
+  update(info: Info): void {
+    this.additionalInfo.emit(info);
+  }
 }

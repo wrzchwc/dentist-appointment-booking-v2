@@ -8,7 +8,7 @@ export interface SignInResponse {
   readonly refreshToken: string;
 }
 
-export interface FetchUserProfileResponse {
+export interface UserProfile {
   readonly id: string;
   readonly firstName: string;
   readonly lastName: string;

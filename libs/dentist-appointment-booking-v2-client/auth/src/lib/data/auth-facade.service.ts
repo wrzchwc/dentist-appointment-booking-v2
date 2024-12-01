@@ -10,7 +10,7 @@ export class AuthFacadeService {
   private readonly store = inject(Store);
 
   readonly isAuthenticated = this.store.selectSignal(isAuthenticated);
-  readonly profile = this.store.selectSignal(profile);
+  readonly userProfile = this.store.selectSignal(profile);
 
   signOut() {
     this.store.dispatch(signOut());

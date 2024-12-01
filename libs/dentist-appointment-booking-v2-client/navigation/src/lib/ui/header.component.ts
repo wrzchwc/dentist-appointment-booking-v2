@@ -3,7 +3,7 @@ import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { FetchUserProfileResponse } from '@dentist-appointment-booking-v2/shared/auth';
+import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Component({
   selector: 'lib-header',
@@ -14,7 +14,7 @@ import { FetchUserProfileResponse } from '@dentist-appointment-booking-v2/shared
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  readonly profile = input<FetchUserProfileResponse>();
+  readonly profile = input<UserProfile>();
 
   readonly signOut = output();
 

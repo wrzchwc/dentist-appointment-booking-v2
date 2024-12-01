@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Headers, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from '../data/auth.service';
 import {
-  ConfirmSignUpRequest, FetchUserProfileResponse,
+  ConfirmSignUpRequest, UserProfile,
   RefreshTokenRequest,
   SignInRequest,
   SignInResponse,
@@ -43,7 +43,7 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(AuthGuard)
-  getCurrentUserProfile(@Request() request: AuthenticatedRequest): Promise<FetchUserProfileResponse | null> {
+  getCurrentUserProfile(@Request() request: AuthenticatedRequest): Promise<UserProfile | null> {
     return this.authService.getUserProfile(request.userId);
   }
 }
