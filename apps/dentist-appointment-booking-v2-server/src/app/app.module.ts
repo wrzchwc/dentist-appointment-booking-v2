@@ -9,12 +9,15 @@ import {
 import { ServicesModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
 import { UsersModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users';
 import { TreatmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
+import { HealthReportsModule } from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
+import { AppointmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 
 @Module({
   imports: [
     AuthModule,
+    AppointmentsModule,
     AppointmentBookingModule,
-    AppointmentBookingModule,
+    HealthReportsModule,
     ServicesModule,
     TreatmentsModule,
     UsersModule,

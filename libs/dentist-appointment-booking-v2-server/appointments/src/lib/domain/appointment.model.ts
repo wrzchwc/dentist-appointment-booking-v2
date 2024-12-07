@@ -3,4 +3,5 @@ export interface Appointment {
   readonly startsAt: string;
   readonly userId: string;
   readonly treatments: object[];
+  readonly healthReports: object[];
 }

@@ -27,6 +27,11 @@ export const AppointmentEntity = new EntitySchema<Appointment>({
       type: 'one-to-many',
       target: 'treatments',
       inverseSide: 'appointmentId'
+    },
+    healthReports: {
+      type: 'one-to-many',
+      target: 'health-reports',
+      inverseSide: 'appointmentId'
     }
   }
 })

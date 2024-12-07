@@ -44,6 +44,9 @@
       ],
       "@dentist-appointment-booking-v2/shared/auth": [
         "libs/shared/auth/src/index.ts"
+      ],
+      "@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports": [
+        "libs/dentist-appointment-booking-v2-server/health-reports/src/index.ts"
       ]
     }
   },

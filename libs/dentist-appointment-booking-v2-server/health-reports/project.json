@@ -1,0 +1,9 @@
+{
+  "name": "dentist-appointment-booking-v2-server/health-reports",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/dentist-appointment-booking-v2-server/health-reports/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project dentist-appointment-booking-v2-server/health-reports --web",
+  "targets": {}
+}
