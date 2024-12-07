@@ -2,8 +2,8 @@ import { Controller, Get } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  @Get()
-  getData(): object {
-    return ({ message: 'Hello API' });
+  @Get('health')
+  checkHealth(): object {
+    return ({ message: 'API is healthy!' });
   }
 }

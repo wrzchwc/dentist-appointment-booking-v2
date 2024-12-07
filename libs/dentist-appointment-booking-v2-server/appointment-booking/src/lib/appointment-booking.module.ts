@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServiceEntity } from './domain/service.entity';
 import { AppointmentQuestionEntity } from './domain/appointment-question.entity';
 import { HealthFactEntity } from './domain/health-fact.entity';
-import { AuthModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
+import { AppointmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 
 @Module({
   controllers: [AppointmentBookingController, ServicesController],
@@ -18,7 +18,7 @@ import { AuthModule } from '@dentist-appointment-booking-v2/dentist-appointment-
       AppointmentQuestionEntity,
       HealthFactEntity
     ]),
-    AuthModule
+    AppointmentsModule
   ]
 })
 export class AppointmentBookingModule {

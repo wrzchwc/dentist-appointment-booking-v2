@@ -11,6 +11,7 @@ import {
   imports: [
     AuthModule,
     AppointmentBookingModule,
+    AppointmentBookingModule,
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

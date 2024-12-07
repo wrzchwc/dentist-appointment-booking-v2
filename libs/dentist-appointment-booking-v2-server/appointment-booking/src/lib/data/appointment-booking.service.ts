@@ -1,17 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AppointmentQuestionEntity } from '../domain/appointment-question.entity';
 import { Repository } from 'typeorm';
 import { AppointmentQuestion } from '../domain/appointment-question.model';
 import {
   AppointmentQuestion as AppointmentQuestionDAO
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import {
+  Appointment,
+  AppointmentsRepository
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AppointmentQuestionEntity } from '../domain/appointment-question.entity';
 
 @Injectable()
 export class AppointmentBookingService {
   constructor(
     @InjectRepository(AppointmentQuestionEntity)
-    private readonly appointmentQuestionRepository: Repository<AppointmentQuestion>
+    private readonly appointmentQuestionRepository: Repository<AppointmentQuestion>,
+    private readonly appointmentsRepository: AppointmentsRepository
   ) {
   }
 
@@ -31,5 +36,9 @@ export class AppointmentBookingService {
         value: appointmentQuestion.healthFact.value
       } : undefined
     }));
+  }
+
+  getAllAppointments(): Promise<Appointment[]> {
+    return this.appointmentsRepository.findAll();
   }
 }

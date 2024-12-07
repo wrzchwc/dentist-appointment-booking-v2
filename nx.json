@@ -48,7 +48,8 @@
           "targetName": "tsc:build",
           "configName": "tsconfig.lib.json"
         }
-      }
+      },
+      "exclude": ["libs/dentist-appointment-booking-v2-server/appointments/*"]
     }
   ],
   "targetDefaults": {
