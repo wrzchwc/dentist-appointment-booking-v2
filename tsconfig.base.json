@@ -21,14 +21,20 @@
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation": [
         "libs/dentist-appointment-booking-v2-client/navigation/src/index.ts"
       ],
-      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments": [
-        "libs/dentist-appointment-booking-v2-server/appointments/src/index.ts"
-      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking": [
         "libs/dentist-appointment-booking-v2-server/appointment-booking/src/index.ts"
       ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments": [
+        "libs/dentist-appointment-booking-v2-server/appointments/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth": [
         "libs/dentist-appointment-booking-v2-server/auth/src/index.ts"
+      ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services": [
+        "libs/dentist-appointment-booking-v2-server/services/src/index.ts"
+      ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users": [
+        "libs/dentist-appointment-booking-v2-server/users/src/index.ts"
       ],
       "@dentist-appointment-booking-v2/shared/appointment-booking": [
         "libs/shared/appointment-booking/src/index.ts"

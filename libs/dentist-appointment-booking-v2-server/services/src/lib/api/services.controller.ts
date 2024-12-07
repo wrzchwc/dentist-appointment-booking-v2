@@ -3,7 +3,7 @@ import { ServicesService } from '../data/services.service';
 import { Service } from '../domain/service.model';
 import { AuthGuard } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
 
-@Controller('appointment-booking/services')
+@Controller('services')
 @UseGuards(AuthGuard)
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}

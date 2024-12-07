@@ -24,13 +24,5 @@ export const UserEntity = new EntitySchema<User>({
       type: String,
       nullable: true
     }
-  },
-  relations: {
-    appointments: {
-      type: 'one-to-many',
-      target: 'appointments',
-      inverseSide: 'userId',
-      cascade: true
-    }
   }
 })

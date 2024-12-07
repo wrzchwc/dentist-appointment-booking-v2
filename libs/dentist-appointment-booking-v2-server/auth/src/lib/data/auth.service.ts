@@ -9,15 +9,13 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfirmSignUpRequest, UserProfile,
-  SignInRequest, SignInResponse,
+  ConfirmSignUpRequest,
+  SignInRequest,
+  SignInResponse,
   SignUpRequest,
   SignUpResponse
 } from '@dentist-appointment-booking-v2/shared/auth';
-import { Repository } from 'typeorm';
-import { User } from '../domain/user.model';
-import { UserEntity } from '../domain/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { User, UsersService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users';
 
 @Injectable()
 export class AuthService {
@@ -25,11 +23,9 @@ export class AuthService {
     region: this.configService.get('REGION')
   });
 
-
   constructor(
     private readonly configService: ConfigService,
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<User>
+    private readonly usersService: UsersService
   ) {
   }
 
@@ -54,7 +50,7 @@ export class AuthService {
       Username: request.email,
       ConfirmationCode: request.confirmationCode
     }));
-    await this.userRepository.save({
+    await this.usersService.createUser({
       id: request.userId,
       email: request.email,
       firstName: request.firstName,
@@ -101,11 +97,7 @@ export class AuthService {
     );
   }
 
-  async getUserProfile(userId: string): Promise<UserProfile | null> {
-    return await this.userRepository.findOne({
-      where: {
-        id: userId
-      }
-    });
+  async getUserProfile(userId: string): Promise<User | null> {
+    return await this.usersService.getUserProfile(userId);
   }
 }

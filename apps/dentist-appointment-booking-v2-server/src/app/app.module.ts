@@ -6,12 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   AppointmentBookingModule
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking';
+import { ServicesModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
+import { UsersModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users';
 
 @Module({
   imports: [
     AuthModule,
     AppointmentBookingModule,
     AppointmentBookingModule,
+    ServicesModule,
+    UsersModule,
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',

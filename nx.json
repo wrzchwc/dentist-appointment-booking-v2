@@ -49,7 +49,10 @@
           "configName": "tsconfig.lib.json"
         }
       },
-      "exclude": ["libs/dentist-appointment-booking-v2-server/appointments/*"]
+      "exclude": [
+        "libs/dentist-appointment-booking-v2-server/appointments/*",
+        "libs/dentist-appointment-booking-v2-server/users/*"
+      ]
     }
   ],
   "targetDefaults": {

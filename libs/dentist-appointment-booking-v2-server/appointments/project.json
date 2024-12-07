@@ -1,5 +1,5 @@
 {
-  "name": "appointments",
+  "name": "dentist-appointment-booking-v2-server/appointments",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/dentist-appointment-booking-v2-server/appointments/src",
   "projectType": "library",
