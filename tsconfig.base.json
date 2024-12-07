@@ -33,6 +33,9 @@
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services": [
         "libs/dentist-appointment-booking-v2-server/services/src/index.ts"
       ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments": [
+        "libs/dentist-appointment-booking-v2-server/treatments/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users": [
         "libs/dentist-appointment-booking-v2-server/users/src/index.ts"
       ],

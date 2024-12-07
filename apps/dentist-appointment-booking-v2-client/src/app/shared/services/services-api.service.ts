@@ -7,7 +7,7 @@ import { Service } from '../model';
     providedIn: 'root',
 })
 export class ServicesApiService {
-    private readonly baseUrl= '/api/appointment-booking/services';
+    private readonly baseUrl= '/api/services';
 
     constructor(private readonly client: HttpClient) {}
 

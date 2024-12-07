@@ -22,6 +22,11 @@ export const AppointmentEntity = new EntitySchema<Appointment>({
         referencedColumnName: 'id'
       },
       onDelete: 'CASCADE'
+    },
+    treatments: {
+      type: 'one-to-many',
+      target: 'treatments',
+      inverseSide: 'appointmentId'
     }
   }
 })

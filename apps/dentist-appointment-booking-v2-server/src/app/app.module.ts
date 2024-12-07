@@ -8,6 +8,7 @@ import {
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking';
 import { ServicesModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
 import { UsersModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users';
+import { TreatmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UsersModule } from '@dentist-appointment-booking-v2/dentist-appointment
     AppointmentBookingModule,
     AppointmentBookingModule,
     ServicesModule,
+    TreatmentsModule,
     UsersModule,
     ConfigModule.forRoot({ isGlobal: true, cache: true }),
     TypeOrmModule.forRoot({
