@@ -1,8 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Quantity, Info } from '../model';
-import { AppointmentQuestion } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import {
+  AppointmentQuestion,
+  HealthReportDTO,
+  TreatmentDTO
+} from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +15,8 @@ export class AppointmentBookingService {
 
   private readonly baseUrl = '/api/appointment-booking';
 
-  createAppointment(startsAt: Date, services: Quantity[], facts?: Info[]): Observable<object> {
-    return this.httpClient.post(this.baseUrl, { startsAt, services, facts });
+  createAppointment(startsAt: Date, treatments: TreatmentDTO[], facts: HealthReportDTO[]): Observable<object> {
+    return this.httpClient.post(this.baseUrl, { startsAt, treatments, facts });
   }
 
   getAppointmentQuestions(): Observable<AppointmentQuestion[]> {

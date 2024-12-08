@@ -13,8 +13,3 @@ export interface HealthStatePayload {
   readonly womenOnly: boolean;
   additionalInfo?: string;
 }
-
-export interface Quantity {
-  readonly id: string;
-  readonly quantity: number;
-}

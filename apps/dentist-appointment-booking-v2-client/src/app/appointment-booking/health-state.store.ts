@@ -1,6 +1,7 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { HealthStateDescriptor, HealthStatePayload, Info } from './model';
 import { computed } from '@angular/core';
+import { HealthReportDTO } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 interface State {
   readonly descriptors: Record<string, HealthStatePayload>;
@@ -14,7 +15,7 @@ export const HealthStateStore = signalStore(
   withState(initialState),
   withComputed(({ descriptors }) => ({
     facts: computed<string[]>(() => Object.values(descriptors()).map(({ fact }) => fact)),
-    infos: computed<Info[]>(() => Object.entries(descriptors()).map(([id, { additionalInfo }]) => ({ id, additionalInfo }))),
+    infos: computed<HealthReportDTO[]>(() => Object.entries(descriptors()).map(([id, { additionalInfo }]) => ({ healthFactId: id, additionalInfo }))),
   })),
   withMethods((store) => ({
     storeDescriptor(descriptor: HealthStateDescriptor): void {

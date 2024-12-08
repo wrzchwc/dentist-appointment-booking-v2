@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { AppointmentDateService } from '../../shared';
+import { RouterLink } from '@angular/router';
+import { AppointmentDateService, LengthService, Service } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
-import { debounceTime, map, Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, filter, map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { DateService } from '../../shared/services/date.service';
 import { AppointmentBookingService } from './appointment-booking.service';
-import { LengthService } from '../../shared';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,11 +12,15 @@ import { AppointmentServicesComponent } from '../appointment-services/appointmen
 import { DateComponent } from '../date/date.component';
 import { HealthStateComponent } from '../health-state/health-state.component';
 import { SummaryComponent } from '../summary/summary.component';
-import { Service } from '../../shared';
 import { AppointmentQuestion } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import { AuthFacadeService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { HealthStateStore } from '../health-state.store';
 import { HealthStateDescriptor, Info } from '../model';
+import { Store } from '@ngrx/store';
+import {
+  navigateToPage,
+  Route
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 
 @Component({
   selector: 'app-appointment-booking',
@@ -47,10 +50,10 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   private readonly authFacade = inject(AuthFacadeService);
   private readonly healthStateStore = inject(HealthStateStore);
+  private readonly store = inject(Store);
 
   constructor(
     private readonly time: AppointmentDateService,
-    private readonly router: Router,
     private readonly booking: AppointmentBookingService,
     private readonly cart: AppointmentCartService,
     private readonly date: DateService,
@@ -95,17 +98,15 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
       });
   }
 
-  async handleBookAppointmentClick(event: MouseEvent): Promise<void> {
+  handleBookAppointmentClick(event: MouseEvent): void {
     event.stopPropagation();
-    const startsAt = this.time.selectedDate$.value;
-    if (startsAt !== null) {
-      this.booking
-        .createAppointment(startsAt, this.cart.quantities, this.healthStateStore.infos())
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(async () => {
-          await this.router.navigateByUrl('/client');
-        });
-    }
+    this.time.selectedDate$.pipe(
+      filter(Boolean),
+      takeUntil(this.destroy$),
+      switchMap((startsAt) =>
+        this.booking.createAppointment(startsAt, this.cart.quantities, this.healthStateStore.infos())
+      )
+    ).subscribe(() => this.store.dispatch(navigateToPage({route: Route.CLIENT})))
   }
 
   storeHealthDescriptor(descriptor: HealthStateDescriptor) {
