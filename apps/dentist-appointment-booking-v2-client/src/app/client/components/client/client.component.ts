@@ -1,29 +1,25 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppointmentsListComponent } from '../../../shared/components/page/appointments-list/appointments-list.component';
-import { NgForOf, NgIf } from '@angular/common';
-import { AppointmentsWrapperComponent } from '../../../shared/components/page/appointments-wrapper/appointments-wrapper.component';
-import { Appointment1, AppointmentPreviewComponent, AuthenticationService } from '../../../shared';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { AppointmentsListComponent } from '../../../shared';
+import {
+  AppointmentsWrapperComponent
+} from '../../../shared/components/page/appointments-wrapper/appointments-wrapper.component';
+import { AppointmentPreviewComponent } from '../../../shared';
+import { AuthFacade } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
+import { RouterLink } from '@angular/router';
+import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
-    selector: 'app-client',
-    templateUrl: './client.component.html',
-    styleUrls: ['./client.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [AppointmentsListComponent, NgIf, AppointmentsWrapperComponent, AppointmentPreviewComponent, NgForOf],
-    standalone: true,
+  selector: 'app-client',
+  templateUrl: './client.component.html',
+  styleUrls: ['./client.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AppointmentsListComponent, AppointmentsWrapperComponent, AppointmentPreviewComponent, RouterLink],
+  standalone: true
 })
 export class ClientComponent {
-    constructor(
-        private readonly authenticationService: AuthenticationService,
-        private readonly route: ActivatedRoute
-    ) {}
+  readonly appointments = input<Appointment[]>([]);
 
-    get appointments(): Appointment1[] {
-        return this.route.snapshot.data['appointments'];
-    }
+  private readonly authFacade = inject(AuthFacade);
 
-    get name(): string | undefined {
-        return this.authenticationService.profile?.name;
-    }
+  readonly name = computed(() => this.authFacade.userProfile()?.firstName)
 }

@@ -26,6 +26,7 @@ export const TreatmentEntity = new EntitySchema<Treatment>({
     serviceId: {
       type: 'many-to-one',
       target: 'services',
+      eager: true,
       joinColumn: {
         name: 'serviceId',
         referencedColumnName: 'id'

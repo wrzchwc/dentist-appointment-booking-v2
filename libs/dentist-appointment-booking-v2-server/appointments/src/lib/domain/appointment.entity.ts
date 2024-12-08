@@ -9,6 +9,9 @@ export const AppointmentEntity = new EntitySchema<Appointment>({
       generated: 'uuid',
       primary: true
     },
+    userId: {
+      type: 'uuid'
+    },
     startsAt: {
       type: Date
     }

@@ -1,4 +1,4 @@
-import { AssociatedService } from '../shared/model';
+import { AssociatedService } from '../shared';
 
 export interface Appointment {
     readonly id: string;

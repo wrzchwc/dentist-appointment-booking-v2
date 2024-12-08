@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DateTime } from 'luxon';
-import { AdminAppointmentPreview } from '../../../../shared';
-import { environment } from '../../../../../environments/environment';
+import { Appointment, FetchAppointmentsResponse } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
     providedIn: 'root',
 })
-export class AdminService {
-    private readonly baseUrl: string = `${environment.apiUrl}/api/appointments`;
+export class AdminAppointmentManagementApiService {
+    private readonly baseUrl: string = '/api/appointment-management';
 
     constructor(private readonly httpClient: HttpClient) {}
 
-    getAppointments(after: Date): Observable<AdminAppointmentPreview[]> {
-        return this.httpClient.get<AdminAppointmentPreview[]>(this.baseUrl, {
+    getAppointments(after: Date): Observable<Appointment[]> {
+        return this.httpClient.get<FetchAppointmentsResponse>(this.baseUrl, {
             params: {
                 after: after.toISOString(),
                 before: DateTime.fromJSDate(after)
@@ -22,6 +21,6 @@ export class AdminService {
                     .toJSDate()
                     .toISOString(),
             },
-        });
+        }).pipe(map((response) => response.appointments));
     }
 }

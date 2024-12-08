@@ -53,7 +53,9 @@
         "libs/dentist-appointment-booking-v2-server/appointments/*",
         "libs/dentist-appointment-booking-v2-server/users/*",
         "libs/dentist-appointment-booking-v2-server/treatments/*",
-        "libs/dentist-appointment-booking-v2-server/health-reports/*"
+        "libs/dentist-appointment-booking-v2-server/health-reports/*",
+        "libs/dentist-appointment-booking-v2-server/appointment-management/*",
+        "libs/shared/appointment-management/*"
       ]
     }
   ],

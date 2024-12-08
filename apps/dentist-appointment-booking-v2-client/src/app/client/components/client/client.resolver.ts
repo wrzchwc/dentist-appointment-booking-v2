@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { DateService } from '../../../shared/services/date.service';
-import { ClientService } from './client.service';
-import { Appointment } from '../../model';
+import { ClientAppointmentManagementApiService } from './client-appointment-management-api.service';
+import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientResolver {
-  constructor(private readonly clientService: ClientService, private readonly dateService: DateService) {
-  }
+  private readonly clientService = inject(ClientAppointmentManagementApiService);
+  private readonly dateService = inject(DateService);
 
   resolve(): Observable<Appointment[]> {
-    return of([]);
-    // return this.clientService.getAppointments(this.dateService.currentDay);
+    return this.clientService.getAppointments(this.dateService.currentDay).pipe(
+      map(response => response.appointments)
+    );
   }
 }

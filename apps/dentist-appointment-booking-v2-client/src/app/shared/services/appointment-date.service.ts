@@ -14,7 +14,7 @@ export class AppointmentDateService {
   }
 
   getAvailableDates(date: Date, length: number): Observable<Date[]> {
-    return of([new Date(Date.UTC(2024, 11, 8, 9, 15))]);
+    return of([new Date(Date.UTC(2024, 11, 13, 9, 15))]);
     // return this.httpClient.get<Date[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
   }
 }

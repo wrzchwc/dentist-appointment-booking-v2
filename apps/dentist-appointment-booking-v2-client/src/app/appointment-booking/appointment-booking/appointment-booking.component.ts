@@ -13,7 +13,7 @@ import { DateComponent } from '../date/date.component';
 import { HealthStateComponent } from '../health-state/health-state.component';
 import { SummaryComponent } from '../summary/summary.component';
 import { AppointmentQuestion } from '@dentist-appointment-booking-v2/shared/appointment-booking';
-import { AuthFacadeService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
+import { AuthFacade } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { HealthStateStore } from '../health-state.store';
 import { HealthStateDescriptor, Info } from '../model';
 import { Store } from '@ngrx/store';
@@ -48,7 +48,7 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   private readonly destroy$: Subject<void> = new Subject();
 
-  private readonly authFacade = inject(AuthFacadeService);
+  private readonly authFacade = inject(AuthFacade);
   private readonly healthStateStore = inject(HealthStateStore);
   private readonly store = inject(Store);
 

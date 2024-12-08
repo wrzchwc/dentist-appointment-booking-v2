@@ -1,20 +1,19 @@
-<ng-container *ngIf="appointments.length > 0; else noUpcomingAppointments">
-    <app-appointments-list title="Nadchodzące wizyty">
-        <app-appointments-wrapper>
-            <ng-container *ngFor="let appointment of appointments">
-                <app-appointment-preview [appointment]="appointment"></app-appointment-preview>
-            </ng-container>
-        </app-appointments-wrapper>
-    </app-appointments-list>
-</ng-container>
-<ng-template #noUpcomingAppointments>
-    <div class="info-container">
-        <h1 class="styles-color-primary greeting">Witaj {{ name }}!</h1>
-        <h2 class="info-label">Nie masz żadnych nadchodzących wizyt.</h2>
-        <h2 class="info-label">
-            Kliknij
-            <span class="styles-color-accent action-label" routerLink="/client/appointment-booking">UMÓW WIZYTĘ</span>,
-            aby zarezerwować wizytę.
-        </h2>
-    </div>
-</ng-template>
+@if(appointments().length > 0) {
+  <app-appointments-list title="Nadchodzące wizyty">
+    <app-appointments-wrapper>
+      @for (appointment of appointments(); track appointment.id) {
+        <app-appointment-preview [appointment]="appointment"/>
+      }
+    </app-appointments-wrapper>
+  </app-appointments-list>
+} @else {
+  <div class="info-container">
+    <h1 class="styles-color-primary greeting">Witaj {{ name() }}!</h1>
+    <h2 class="info-label">Nie masz żadnych nadchodzących wizyt.</h2>
+    <h2 class="info-label">
+      Kliknij
+      <span class="styles-color-accent action-label" routerLink="/appointment-booking">UMÓW WIZYTĘ</span>,
+      aby zarezerwować wizytę.
+    </h2>
+  </div>
+}

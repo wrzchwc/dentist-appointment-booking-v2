@@ -9,7 +9,7 @@ import { AppointmentPreviewComponent } from '../../ui/appointment-preview/appoin
 import { MatInputModule } from '@angular/material/input';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
 import { AppointmentsWrapperComponent } from '../appointments-wrapper/appointments-wrapper.component';
-import { AppointmentPreview } from '../../../model';
+import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
     selector: 'app-appointments',
@@ -32,7 +32,7 @@ import { AppointmentPreview } from '../../../model';
 })
 export class AppointmentsComponent implements OnChanges, OnDestroy {
     @Input() listTitle = '';
-    @Input() appointments: AppointmentPreview[] = [];
+    @Input() appointments: Appointment[] = [];
 
     @Output() readonly dateChange: EventEmitter<Date> = new EventEmitter();
 

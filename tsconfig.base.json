@@ -24,6 +24,9 @@
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-booking": [
         "libs/dentist-appointment-booking-v2-server/appointment-booking/src/index.ts"
       ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointment-management": [
+        "libs/dentist-appointment-booking-v2-server/appointment-management/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments": [
         "libs/dentist-appointment-booking-v2-server/appointments/src/index.ts"
       ],
@@ -41,6 +44,9 @@
       ],
       "@dentist-appointment-booking-v2/shared/appointment-booking": [
         "libs/shared/appointment-booking/src/index.ts"
+      ],
+      "@dentist-appointment-booking-v2/shared/appointment-management": [
+        "libs/shared/appointment-management/src/index.ts"
       ],
       "@dentist-appointment-booking-v2/shared/auth": [
         "libs/shared/auth/src/index.ts"

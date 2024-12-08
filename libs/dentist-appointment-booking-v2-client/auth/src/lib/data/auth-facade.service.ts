@@ -6,7 +6,7 @@ import {isAuthenticated, profile} from './auth.selectors';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthFacadeService {
+export class AuthFacade {
   private readonly store = inject(Store);
 
   readonly isAuthenticated = this.store.selectSignal(isAuthenticated);
