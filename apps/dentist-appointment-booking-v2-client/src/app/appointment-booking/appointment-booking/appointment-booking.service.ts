@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
   AppointmentQuestion,
+  BookAppointmentRequest,
   HealthReportDTO,
   TreatmentDTO
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
@@ -15,8 +16,13 @@ export class AppointmentBookingService {
 
   private readonly baseUrl = '/api/appointment-booking';
 
-  createAppointment(startsAt: Date, treatments: TreatmentDTO[], facts: HealthReportDTO[]): Observable<object> {
-    return this.httpClient.post(this.baseUrl, { startsAt, treatments, facts });
+  createAppointment(startsAt: Date, treatments: TreatmentDTO[], healthReports: HealthReportDTO[]): Observable<string> {
+    const body: BookAppointmentRequest = {
+      startsAt: startsAt.toISOString(),
+      treatments,
+      healthReports
+    };
+    return this.httpClient.post(this.baseUrl, body, {responseType: 'text'});
   }
 
   getAppointmentQuestions(): Observable<AppointmentQuestion[]> {
