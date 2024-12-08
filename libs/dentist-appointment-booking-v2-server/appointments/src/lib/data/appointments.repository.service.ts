@@ -15,4 +15,8 @@ export class AppointmentsRepository {
   findAll(): Promise<Appointment[]> {
     return this.appointmentRepository.find();
   }
+
+  create(userId: string, startsAt: string): Promise<Appointment> {
+    return this.appointmentRepository.save({userId, startsAt});
+  }
 }

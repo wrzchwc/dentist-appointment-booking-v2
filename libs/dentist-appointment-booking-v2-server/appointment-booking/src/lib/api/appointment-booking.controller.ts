@@ -1,9 +1,13 @@
-import { Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request, Body } from '@nestjs/common';
 import { AppointmentBookingService } from '../data/appointment-booking.service';
 import {
-  AppointmentQuestion
+  AppointmentQuestion,
+  BookAppointmentRequest
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
-import { AuthGuard } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
+import {
+  AuthenticatedRequest,
+  AuthGuard
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
 
 @Controller('appointment-booking')
 @UseGuards(AuthGuard)
@@ -13,8 +17,12 @@ export class AppointmentBookingController {
   ) {}
 
   @Post()
-  bookAppointment() {
-    return this.appointmentBookingService.bookAppointment();
+  // todo: only for clients
+  bookAppointment(
+    @Request() request: AuthenticatedRequest,
+    @Body() body: BookAppointmentRequest
+  ): Promise<string> {
+    return this.appointmentBookingService.bookAppointment(request.userId, body);
   }
 
   @Get('questions')

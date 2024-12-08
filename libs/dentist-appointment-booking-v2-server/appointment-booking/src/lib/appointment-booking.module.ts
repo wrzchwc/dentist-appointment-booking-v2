@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppointmentQuestionEntity } from './domain/appointment-question.entity';
 import { HealthFactEntity } from './domain/health-fact.entity';
 import { AppointmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
+import { TreatmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
+import { HealthReportsModule } from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
 
 @Module({
   controllers: [AppointmentBookingController],
@@ -14,7 +16,9 @@ import { AppointmentsModule } from '@dentist-appointment-booking-v2/dentist-appo
       AppointmentQuestionEntity,
       HealthFactEntity
     ]),
-    AppointmentsModule
+    AppointmentsModule,
+    HealthReportsModule,
+    TreatmentsModule
   ]
 })
 export class AppointmentBookingModule {
