@@ -14,8 +14,20 @@ export class AppointmentManagementService {
   ) {
   }
 
-  async getAppointmentsByUserId(userId: string, after: string): Promise<FetchAppointmentsResponse> {
+  async getUpcomingAppointmentsByUserId(userId: string, after: string): Promise<FetchAppointmentsResponse> {
     const foundAppointments: Appointment[] = await this.appointmentsRepository.findAllByUserId(userId, after);
+    const appointments = foundAppointments
+      .map((appointment) => ({
+        id: appointment.id,
+        startsAt: appointment.startsAt,
+        treatments: this.transformTreatments(appointment.treatments)
+      })).filter((appointment) => appointment.treatments.length > 0);
+
+    return { appointments };
+  }
+
+  async getAppointmentsByUserIdInRange(userId: string, after: string, before: string): Promise<FetchAppointmentsResponse> {
+    const foundAppointments: Appointment[] = await this.appointmentsRepository.findAllByUserIdInRange(userId, after, before);
     const appointments = foundAppointments
       .map((appointment) => ({
         id: appointment.id,

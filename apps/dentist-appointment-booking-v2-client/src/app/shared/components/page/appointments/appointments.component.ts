@@ -1,6 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+  output
+} from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
 import { DateService } from '../../../services/date.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -10,47 +17,44 @@ import { MatInputModule } from '@angular/material/input';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
 import { AppointmentsWrapperComponent } from '../appointments-wrapper/appointments-wrapper.component';
 import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'app-appointments',
-    templateUrl: './appointments.component.html',
-    styleUrls: ['./appointments.component.scss'],
-    imports: [
-        MatFormFieldModule,
-        MatDatepickerModule,
-        ReactiveFormsModule,
-        NgIf,
-        AppointmentPreviewComponent,
-        NgForOf,
-        DatePipe,
-        MatInputModule,
-        AppointmentsListComponent,
-        AppointmentsWrapperComponent,
-    ],
-    standalone: true,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-appointments',
+  templateUrl: './appointments.component.html',
+  styleUrls: ['./appointments.component.scss'],
+  imports: [
+    MatFormFieldModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    NgIf,
+    AppointmentPreviewComponent,
+    NgForOf,
+    DatePipe,
+    MatInputModule,
+    AppointmentsListComponent,
+    AppointmentsWrapperComponent
+  ],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppointmentsComponent implements OnChanges, OnDestroy {
-    @Input() listTitle = '';
-    @Input() appointments: Appointment[] = [];
+export class AppointmentsComponent implements OnInit {
+  readonly listTitle = input('');
+  readonly appointments = input<Appointment[]>([]);
 
-    @Output() readonly dateChange: EventEmitter<Date> = new EventEmitter();
+  readonly dateChange = output<Date>({});
 
-    readonly pickerControl: FormControl<Date> = this.formBuilder.control(this.dateService.currentWorkday, {
-        nonNullable: true,
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly dateService = inject(DateService);
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly pickerControl: FormControl<Date> = this.formBuilder.control(this.dateService.currentWorkday, {
+    nonNullable: true
+  });
+
+  ngOnInit(): void {
+    this.pickerControl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((date) => {
+      this.dateChange.emit(date);
     });
-
-    private readonly destroy$: Subject<void> = new Subject();
-
-    constructor(private readonly formBuilder: FormBuilder, private readonly dateService: DateService) {}
-
-    ngOnChanges(): void {
-        this.pickerControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((date) => {
-            this.dateChange.emit(date);
-        });
-    }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-    }
+  }
 }

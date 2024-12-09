@@ -7,7 +7,7 @@ import { FetchAppointmentsResponse } from '@dentist-appointment-booking-v2/share
     providedIn: 'root',
 })
 export class ClientAppointmentManagementApiService {
-    private readonly baseUrl: string = '/api/appointment-management';
+    private readonly baseUrl: string = '/api/appointment-management/upcoming';
 
     constructor(private readonly httpClient: HttpClient) {}
 

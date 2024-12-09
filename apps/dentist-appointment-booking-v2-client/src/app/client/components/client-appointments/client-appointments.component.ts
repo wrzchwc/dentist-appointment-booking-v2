@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
-import { ClientAppointmentsService } from './client-appointments.service';
-import { Subject, takeUntil } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { AppointmentsComponent } from '../../../shared';
+import { AppointmentsStore } from './appointments.store';
 import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
@@ -9,30 +8,15 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
   templateUrl: './client-appointments.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AppointmentsComponent],
-  standalone: true
+  standalone: true,
+  providers: [AppointmentsStore]
 })
-export class ClientAppointmentsComponent implements OnDestroy {
-  @Input() appointments: Appointment[] = [];
+export class ClientAppointmentsComponent {
+  private readonly appointmentsStore = inject(AppointmentsStore);
 
-  private readonly destroy$: Subject<void> = new Subject();
-
-  constructor(
-    private readonly clientAppointmentsService: ClientAppointmentsService
-  ) {
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  readonly appointments: Signal<Appointment[]> = this.appointmentsStore.appointments;
 
   handleDateChange(date: Date): void {
-    this.clientAppointmentsService
-      .getAppointments(date)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        // todo: fix this
-        this.appointments = [];
-      });
+    this.appointmentsStore.fetchAppointments(date);
   }
 }

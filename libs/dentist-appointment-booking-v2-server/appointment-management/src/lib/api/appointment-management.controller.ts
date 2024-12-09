@@ -13,14 +13,27 @@ export class AppointmentManagementController {
     private appointmentManagementService: AppointmentManagementService
   ) {}
 
-  @Get()
-  getClientAppointments(
+  @Get('upcoming')
+  getUpcomingClientAppointments(
     @Request() request: AuthenticatedRequest,
     @Query('after') after: string
   ): Promise<FetchAppointmentsResponse> {
-    return this.appointmentManagementService.getAppointmentsByUserId(
+    return this.appointmentManagementService.getUpcomingAppointmentsByUserId(
       request.userId,
       after
+    );
+  }
+
+  @Get()
+  getClientAppointments(
+    @Request() request: AuthenticatedRequest,
+    @Query('after') after: string,
+    @Query('before') before: string
+  ): Promise<FetchAppointmentsResponse> {
+    return this.appointmentManagementService.getAppointmentsByUserIdInRange(
+      request.userId,
+      after,
+      before
     );
   }
 }

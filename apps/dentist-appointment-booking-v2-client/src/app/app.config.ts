@@ -14,6 +14,7 @@ import {
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { NavigationEffects } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ keys: [AUTH_FEATURE_KEY], rehydrate: true, removeOnUndefined: true })(reducer);
@@ -29,6 +30,7 @@ export const appConfig: ApplicationConfig = {
       { metaReducers: [localStorageSyncReducer] }
     ),
     provideStoreDevtools({ logOnly: !isDevMode(), maxAge: 25 }),
-    provideEffects(AuthEffects, NavigationEffects)
+    provideEffects(AuthEffects, NavigationEffects),
+    provideNativeDateAdapter()
   ]
 };
