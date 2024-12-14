@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AppointmentPreviewClientService } from './appointment-preview/services/appointment-preview-client.service';
 import { Route} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { AUTH_ROUTES, authGuard } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 
@@ -18,12 +17,6 @@ export const APP_ROUTES: Routes = [
     path: Route.ADMIN,
     canMatch: [authGuard],
     loadChildren: async () => (await import('./admin/routes')).ADMIN_ROUTES
-  },
-  {
-    path: Route.APPOINTMENT_BOOKING,
-    canMatch: [authGuard],
-    providers: [AppointmentPreviewClientService],
-    loadChildren: async () => (await import('./appointment-preview/routes')).APPOINTMENT_PREVIEW_ROUTES
   },
   {
     path: Route.AUTH,

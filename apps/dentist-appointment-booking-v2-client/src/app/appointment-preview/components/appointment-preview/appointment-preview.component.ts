@@ -9,7 +9,7 @@ import {
 } from '../../../shared';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe, Location, NgForOf, NgIf } from '@angular/common';
-import { AppointmentManagementClientService } from '../../../appointment-managment';
+import { AppointmentManagementClientService } from '../../services/appointment-management-client.service';
 import { EmailPipe } from './email.pipe';
 import { DataService } from './data.service';
 import { EndDatePipe } from './end-date.pipe';
