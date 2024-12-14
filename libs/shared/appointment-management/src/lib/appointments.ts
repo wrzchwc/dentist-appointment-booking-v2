@@ -12,4 +12,8 @@ interface UserDAO {
 
 export interface TreatmentDAO {
   readonly name: string;
+  readonly price?: number | null;
+  readonly detail?: string | null;
+  readonly quantity?: number;
+  readonly lengthEach?: number;
 }

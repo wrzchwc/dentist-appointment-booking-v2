@@ -1,52 +1,46 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { ClientAppointmentService } from './client-appointment.service';
-import { Subject, takeUntil } from 'rxjs';
-import { DatePipe, Location, NgIf } from '@angular/common';
-import { DataService } from '../../../appointment-preview/components/appointment-preview/data.service';
-import { Appointment } from '../../model';
+import { DatePipe, Location } from '@angular/common';
 import {
-    AppointmentComponent,
-    CardComponent,
-    ServicesTableComponent,
-    PricePipe,
-    NamedPriceItem,
+  AppointmentComponent,
+  CardComponent,
+  ServicesTableComponent,
+  PricePipe,
+  NamedPriceItem
 } from '../../../shared';
 import { EndDatePipe } from '../../../appointment-preview/components/appointment-preview/end-date.pipe';
+import { AppointmentStore } from './appointment.store';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
-    selector: 'app-client-appointment',
-    templateUrl: './client-appointment.component.html',
-    styleUrls: ['../../../shared/components/page/appointment/appointment.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [NgIf, AppointmentComponent, CardComponent, ServicesTableComponent, DatePipe, PricePipe, EndDatePipe],
-    standalone: true,
+  selector: 'app-client-appointment',
+  templateUrl: './client-appointment.component.html',
+  styleUrls: ['../../../shared/components/page/appointment/appointment.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AppointmentComponent, CardComponent, ServicesTableComponent, DatePipe, PricePipe, EndDatePipe],
+  standalone: true,
+  providers: [AppointmentStore]
 })
-export class ClientAppointmentComponent implements OnDestroy {
-    readonly appointment: Appointment = this.activatedRoute.snapshot.data['appointment'];
-    readonly dataSource: NamedPriceItem[] = this.appointmentService.createDateSource(this.appointment.services);
-    readonly length: number = this.appointmentService.calculateLength(this.appointment.services);
+export class ClientAppointmentComponent {
+  private readonly appointmentStore = inject(AppointmentStore);
 
-    private readonly destroy$: Subject<void> = new Subject();
+  readonly appointment: Signal<AppointmentDAO | undefined> = this.appointmentStore.appointment;
+  readonly dataSource: Signal<NamedPriceItem[]> = this.appointmentStore.dataSource;
+  readonly length: Signal<number> = this.appointmentStore.length;
 
-    constructor(
-        private readonly activatedRoute: ActivatedRoute,
-        private readonly clientAppointmentService: ClientAppointmentService,
-        private readonly location: Location,
-        private readonly appointmentService: DataService
-    ) {}
+  constructor(
+    private readonly clientAppointmentService: ClientAppointmentService,
+    private readonly location: Location
+  ) {
+  }
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    handleCancel() {
-        this.clientAppointmentService
-            .cancelAppointment(this.appointment.id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-                this.location.back();
-            });
-    }
+  handleCancel() {
+    const appointment = this.appointmentStore.appointment();
+    if (!appointment) return;
+    this.clientAppointmentService
+      .cancelAppointment(appointment.id)
+      .subscribe(() => {
+        this.location.back();
+      });
+  }
 }

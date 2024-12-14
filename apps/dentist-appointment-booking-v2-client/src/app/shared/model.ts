@@ -19,7 +19,7 @@ interface AppointmentServices {
 
 export interface PriceItem {
     readonly price: number | null;
-    readonly detail: 'A' | 'B' | 'C' | null;
+    readonly detail: string | null;
     readonly quantity: number;
 }
 

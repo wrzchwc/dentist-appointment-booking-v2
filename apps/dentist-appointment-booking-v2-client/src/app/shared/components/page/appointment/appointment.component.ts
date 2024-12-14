@@ -16,9 +16,9 @@ import { CancelablePipe } from './cancelable.pipe';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppointmentComponent {
-    @Input() appointmentId: string = '';
+    @Input() appointmentId = '';
     @Input() startsAt: Date = new Date();
-    @Input() length: number = 0;
+    @Input() length = 0;
 
     @Output() readonly cancelAppointment: EventEmitter<void> = new EventEmitter();
 

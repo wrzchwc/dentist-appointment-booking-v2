@@ -8,10 +8,10 @@
         <div class="content">
             <app-card title="Data wizyty" icon="calendar_month" class="card">
                 <h1 class="date">{{ appointment.startsAt | date: 'dd.MM.yyyy' }}</h1>
-                <h2 class="time">
-                    {{ appointment.startsAt | date: 'HH:mm' }}
-                    - {{ appointment.startsAt | endDate: length | date: 'HH:mm' }}
-                </h2>
+<!--                <h2 class="time">-->
+<!--                    {{ appointment.startsAt | date: 'HH:mm' }}-->
+<!--                    - {{ appointment.startsAt | endDate: length | date: 'HH:mm' }}-->
+<!--                </h2>-->
                 <h3 class="time">{{ length }} minut</h3>
             </app-card>
             <app-card title="Usługi" icon="medical_services" class="card">

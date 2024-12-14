@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Appointment } from '../../model';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
 export class ClientAppointmentService {
-    private readonly baseUrl: string = `${environment.apiUrl}/api/appointments/me`;
+  private readonly baseUrl: string = '/api/appointment-management';
 
-    constructor(private readonly httpClient: HttpClient) {}
+  private readonly httpClient = inject(HttpClient);
 
-    getAppointment(appointmentId: string): Observable<Appointment> {
-        return this.httpClient.get<Appointment>(`${this.baseUrl}/${appointmentId}`);
-    }
+  getAppointment(appointmentId: string): Observable<AppointmentDAO> {
+    return this.httpClient.get<AppointmentDAO>(`${this.baseUrl}/${appointmentId}`);
+  }
 
-    cancelAppointment(appointmentId: string) {
-        return this.httpClient.delete(`${this.baseUrl}/${appointmentId}`, { responseType: 'text' });
-    }
+  cancelAppointment(appointmentId: string) {
+    return this.httpClient.delete(`${this.baseUrl}/${appointmentId}`, { responseType: 'text' });
+  }
 }

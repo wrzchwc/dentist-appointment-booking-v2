@@ -12,17 +12,22 @@ export class AppointmentsRepository {
   ) {
   }
 
+  findOneById(appointmentId: string): Promise<Appointment | null> {
+    return this.appointmentRepository.findOne({
+      where: { id: appointmentId },
+      relations: ['treatments']
+    });
+  }
+
   findAllByUserIdInRange(userId: string, after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
-      where: {userId, startsAt: Between(after, before)},
+      where: { userId, startsAt: Between(after, before) },
       select: ['id', 'startsAt'],
       relations: ['treatments']
     });
   }
 
-
-
   create(userId: string, startsAt: string): Promise<Appointment> {
-    return this.appointmentRepository.save({userId, startsAt});
+    return this.appointmentRepository.save({ userId, startsAt });
   }
 }

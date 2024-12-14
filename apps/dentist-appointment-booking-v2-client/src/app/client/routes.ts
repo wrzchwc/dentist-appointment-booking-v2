@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ClientAppointmentResolver } from './components/client-appointment/client-appointment.resolver';
 import { ClientAppointmentComponent } from './components/client-appointment/client-appointment.component';
 import { ClientAppointmentsComponent } from './components/client-appointments/client-appointments.component';
 import { ClientComponent } from './components/client/client.component';
@@ -12,7 +11,6 @@ export const CLIENT_ROUTES: Routes = [
             {
                 path: ':appointmentId',
                 title: 'Podgląd wizyty',
-                resolve: { appointment: ClientAppointmentResolver },
                 component: ClientAppointmentComponent,
             },
             {

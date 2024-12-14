@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Query, Param } from '@nestjs/common';
 import { AppointmentManagementService } from '../data/appointment-management.service';
 import {
   AuthenticatedRequest,
@@ -15,7 +15,6 @@ export class AppointmentManagementController {
   ) {
   }
 
-
   @Get()
   getClientAppointments(
     @Request() request: AuthenticatedRequest,
@@ -27,5 +26,10 @@ export class AppointmentManagementController {
       after,
       before
     );
+  }
+
+  @Get(':id')
+  getClientAppointment(@Param('id') appointmentId: string): Promise<AppointmentDAO> {
+    return this.appointmentManagementService.getAppointmentById(appointmentId);
   }
 }

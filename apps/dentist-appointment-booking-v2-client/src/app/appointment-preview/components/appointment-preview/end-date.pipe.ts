@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
     standalone: true,
 })
 export class EndDatePipe implements PipeTransform {
-    transform(value: Date, length: number): Date {
-        return DateTime.fromJSDate(value).plus({ minute: length }).toJSDate();
+    transform(value: string, length: number): Date {
+        return DateTime.fromISO(value).plus({ minute: length }).toJSDate();
     }
 }
