@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FetchAppointmentsResponse } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
 export class ClientAppointmentManagementApiService {
-    private readonly baseUrl: string = '/api/appointment-management/upcoming';
+  private readonly baseUrl: string = '/api/appointment-management';
 
-    constructor(private readonly httpClient: HttpClient) {}
+  private readonly httpClient = inject(HttpClient);
 
-    getAppointments(after: Date): Observable<FetchAppointmentsResponse> {
-        return this.httpClient.get<FetchAppointmentsResponse>(this.baseUrl, { params: { after: after.toISOString() } });
-    }
+  getAppointments(after: Date): Observable<FetchAppointmentsResponse> {
+    return this.httpClient.get<FetchAppointmentsResponse>(
+      this.baseUrl,
+      { params: { after: after.toISOString() } }
+    );
+  }
 }

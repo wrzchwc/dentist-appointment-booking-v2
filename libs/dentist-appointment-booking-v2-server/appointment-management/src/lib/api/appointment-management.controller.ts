@@ -14,16 +14,6 @@ export class AppointmentManagementController {
     private appointmentManagementService: AppointmentManagementService
   ) {}
 
-  @Get('upcoming')
-  getUpcomingClientAppointments(
-    @Request() request: AuthenticatedRequest,
-    @Query('after') after: string
-  ): Promise<FetchAppointmentsResponse> {
-    return this.appointmentManagementService.getUpcomingAppointmentsByUserId(
-      request.userId,
-      after
-    );
-  }
 
   @Get()
   getClientAppointments(
