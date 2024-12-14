@@ -11,13 +11,13 @@ import {
 
 @Controller('appointment-booking')
 @UseGuards(AuthGuard)
+// todo: only for clients
 export class AppointmentBookingController {
   constructor(
     private readonly appointmentBookingService: AppointmentBookingService
   ) {}
 
   @Post()
-  // todo: only for clients
   bookAppointment(
     @Request() request: AuthenticatedRequest,
     @Body() body: BookAppointmentRequest
@@ -26,7 +26,6 @@ export class AppointmentBookingController {
   }
 
   @Get('questions')
-  // todo: only for clients
   getAppointmentQuestions(): Promise<AppointmentQuestion[]> {
     return this.appointmentBookingService.getAppointmentQuestions();
   }
