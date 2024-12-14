@@ -5,7 +5,7 @@ import { DatePipe} from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
     selector: 'app-appointment-preview',
@@ -16,7 +16,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppointmentPreviewComponent implements OnChanges {
-    readonly appointment = input<Appointment>();
+    readonly appointment = input<AppointmentDAO>();
 
     readonly serviceNames = computed(() =>
       this.appointment()?.treatments?.map((treatment) => treatment.name) || []

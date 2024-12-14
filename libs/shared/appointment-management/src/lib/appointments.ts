@@ -1,8 +1,4 @@
-export interface FetchAppointmentsResponse {
-  readonly appointments: Appointment[]
-}
-
-export interface Appointment {
+export interface AppointmentDAO {
   readonly id: string;
   readonly startsAt: string;
   readonly treatments: TreatmentDAO[];

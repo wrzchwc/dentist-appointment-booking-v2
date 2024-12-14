@@ -7,7 +7,7 @@ import {
 } from '../../../../shared/components/page/appointments-wrapper/appointments-wrapper.component';
 import { DatePipe } from '@angular/common';
 import { AppointmentPreviewComponent } from '../../../../shared';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
   selector: 'app-admin',
@@ -24,7 +24,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminComponent {
-  readonly appointments = input<Appointment[]>();
+  readonly appointments = input<AppointmentDAO[]>();
 
   private readonly dateService = inject(DateService);
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { AppointmentsComponent } from '../../../shared';
 import { AppointmentsStore } from './appointments.store';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
   selector: 'app-client-appointments',
@@ -14,7 +14,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
 export class ClientAppointmentsComponent {
   private readonly appointmentsStore = inject(AppointmentsStore);
 
-  readonly appointments: Signal<Appointment[]> = this.appointmentsStore.appointments;
+  readonly appointments: Signal<AppointmentDAO[]> = this.appointmentsStore.appointments;
 
   handleDateChange(date: Date): void {
     this.appointmentsStore.fetchAppointments(date);

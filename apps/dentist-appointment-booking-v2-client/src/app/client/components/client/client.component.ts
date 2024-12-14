@@ -6,7 +6,7 @@ import {
 import { AppointmentPreviewComponent } from '../../../shared';
 import { AuthFacade } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { RouterLink } from '@angular/router';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
   selector: 'app-client',
@@ -17,7 +17,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
   standalone: true
 })
 export class ClientComponent {
-  readonly appointments = input<Appointment[]>([]);
+  readonly appointments = input<AppointmentDAO[]>([]);
 
   private readonly authFacade = inject(AuthFacade);
 

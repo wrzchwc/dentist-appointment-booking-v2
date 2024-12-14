@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdminAppointmentManagementApiService } from './admin-appointment-management-api.service';
 import { DateService } from '../../../../shared/services/date.service';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
     providedIn: 'root',
@@ -11,7 +11,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
 export class AdminResolver  {
     constructor(private readonly admin: AdminAppointmentManagementApiService, private readonly date: DateService) {}
 
-    resolve(): Observable<Appointment[]> {
+    resolve(): Observable<AppointmentDAO[]> {
         return this.admin.getAppointments(this.date.currentDay);
     }
 }

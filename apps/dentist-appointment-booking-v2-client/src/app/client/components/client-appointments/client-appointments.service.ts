@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DateTime } from 'luxon';
 import { Observable } from 'rxjs';
-import { FetchAppointmentsResponse } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Injectable({
     providedIn: 'root',
@@ -12,10 +12,10 @@ export class ClientAppointmentsService {
 
     constructor(private readonly httpClient: HttpClient) {}
 
-    getAppointments(date: Date): Observable<FetchAppointmentsResponse> {
+    getAppointments(date: Date): Observable<AppointmentDAO[]> {
         const dateTime: DateTime = DateTime.fromJSDate(date);
 
-        return this.httpClient.get<FetchAppointmentsResponse>(this.baseUrl, {
+        return this.httpClient.get<AppointmentDAO[]>(this.baseUrl, {
             params: {
                 after: dateTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toJSDate().toISOString(),
                 before: dateTime.set({ hour: 23, minute: 59, second: 59, millisecond: 999 }).toJSDate().toISOString(),

@@ -4,7 +4,7 @@ import {
   AuthenticatedRequest,
   AuthGuard
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
-import { FetchAppointmentsResponse } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 import { MAX_DATE } from '../domain/date';
 
 @Controller('appointment-management')
@@ -12,7 +12,8 @@ import { MAX_DATE } from '../domain/date';
 export class AppointmentManagementController {
   constructor(
     private appointmentManagementService: AppointmentManagementService
-  ) {}
+  ) {
+  }
 
 
   @Get()
@@ -20,7 +21,7 @@ export class AppointmentManagementController {
     @Request() request: AuthenticatedRequest,
     @Query('after') after: string,
     @Query('before') before = MAX_DATE
-  ): Promise<FetchAppointmentsResponse> {
+  ): Promise<AppointmentDAO[]> {
     return this.appointmentManagementService.getAppointmentsByUserIdInRange(
       request.userId,
       after,

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppointmentPreviewClientService } from '../../services/appointment-preview-client.service';
 import { AppointmentsComponent } from '../../../shared';
 import { Title } from '@angular/platform-browser';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
   selector: 'app-appointment-list',
@@ -13,7 +13,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
   imports: [AppointmentsComponent]
 })
 export class AppointmentListComponent {
-  appointments: Appointment[] = this.activatedRoute.snapshot.data['appointments'];
+  appointments: AppointmentDAO[] = this.activatedRoute.snapshot.data['appointments'];
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,

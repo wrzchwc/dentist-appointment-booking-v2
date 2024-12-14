@@ -3,7 +3,7 @@ import { AdminAppointmentsService } from './admin-appointments.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AppointmentsComponent } from '../../../../shared';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 
 @Component({
   selector: 'app-admin-appointments',
@@ -13,7 +13,7 @@ import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-
   standalone: true
 })
 export class AdminAppointmentsComponent implements OnDestroy {
-  appointments: Appointment[] = this.route.snapshot.data['appointments'];
+  appointments: AppointmentDAO[] = this.route.snapshot.data['appointments'];
 
   private readonly destroy$: Subject<void> = new Subject();
 

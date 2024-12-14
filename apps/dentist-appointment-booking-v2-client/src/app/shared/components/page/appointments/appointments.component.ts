@@ -16,7 +16,7 @@ import { AppointmentPreviewComponent } from '../../ui/appointment-preview/appoin
 import { MatInputModule } from '@angular/material/input';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
 import { AppointmentsWrapperComponent } from '../appointments-wrapper/appointments-wrapper.component';
-import { Appointment } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -40,7 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AppointmentsComponent implements OnInit {
   readonly listTitle = input('');
-  readonly appointments = input<Appointment[]>([]);
+  readonly appointments = input<AppointmentDAO[]>([]);
 
   readonly dateChange = output<Date>({});
 
