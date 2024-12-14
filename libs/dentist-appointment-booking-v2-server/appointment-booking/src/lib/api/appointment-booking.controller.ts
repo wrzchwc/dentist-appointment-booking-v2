@@ -30,10 +30,4 @@ export class AppointmentBookingController {
   getAppointmentQuestions(): Promise<AppointmentQuestion[]> {
     return this.appointmentBookingService.getAppointmentQuestions();
   }
-
-  @Get('appointments')
-  // todo: only for admins
-  getAllAppointments() {
-    return this.appointmentBookingService.getAllAppointments();
-  }
 }

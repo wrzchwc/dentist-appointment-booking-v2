@@ -6,7 +6,6 @@ import {
   BookAppointmentRequest
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import {
-  Appointment,
   AppointmentsRepository
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -48,9 +47,5 @@ export class AppointmentBookingService {
         value: appointmentQuestion.healthFact.value
       } : undefined
     }));
-  }
-
-  getAllAppointments(): Promise<Appointment[]> {
-    return this.appointmentsRepository.findAll();
   }
 }

@@ -12,10 +12,6 @@ export class AppointmentsRepository {
   ) {
   }
 
-  findAll(): Promise<Appointment[]> {
-    return this.appointmentRepository.find();
-  }
-
   findAllByUserIdInRange(userId: string, after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
       where: {userId, startsAt: Between(after, before)},
@@ -23,6 +19,8 @@ export class AppointmentsRepository {
       relations: ['treatments']
     });
   }
+
+
 
   create(userId: string, startsAt: string): Promise<Appointment> {
     return this.appointmentRepository.save({userId, startsAt});
