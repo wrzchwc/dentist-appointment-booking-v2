@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { fetchUserProfileSuccess, signInSuccess, signOutSuccess } from './auth.actions';
+import { fetchUserProfileSuccess, refreshTokens, signInSuccess, signOutSuccess } from './auth.actions';
 import { AuthState } from '../domain/state';
 
 const initialState: AuthState = {};
@@ -22,5 +22,10 @@ export const authReducer = createReducer(
   on(fetchUserProfileSuccess, (state, { profile }) => ({
     ...state,
     profile
+  })),
+  on(refreshTokens, (state, {token, accessToken}) => ({
+    ...state,
+    token,
+    accessToken
   }))
 );

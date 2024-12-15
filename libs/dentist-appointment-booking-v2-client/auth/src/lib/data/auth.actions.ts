@@ -18,3 +18,8 @@ export const fetchUserProfileSuccess = createAction(
   '[Auth] Fetch User Profile Success',
   props<{ readonly profile: UserProfile }>()
 );
+
+export const refreshTokens = createAction(
+  '[Auth] Refresh Tokens',
+  props<{ readonly token: string, accessToken: string }>()
+)

@@ -36,7 +36,7 @@ export class AuthController {
     return this.authService.signOut(accessToken.split(' ').at(1) || '');
   }
 
-  @Post('refresh-token')
+  @Post('refresh-tokens')
   refreshToken(@Body() request: RefreshTokenRequest): Promise<RefreshTokenResponse> {
     return this.authService.refreshTokens(request.refreshToken);
   }

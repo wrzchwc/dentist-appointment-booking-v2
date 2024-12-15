@@ -1,6 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserProfile, SignInResponse, SignUpRequest } from '@dentist-appointment-booking-v2/shared/auth';
+import {
+  UserProfile,
+  SignInResponse,
+  SignUpRequest,
+  RefreshTokenResponse
+} from '@dentist-appointment-booking-v2/shared/auth';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -24,5 +29,9 @@ export class AuthService {
 
   getCurrentUserProfile(): Observable<UserProfile> {
     return this.httpClient.get<UserProfile>(`${this.baseUrl}/me`);
+  }
+
+  refreshTokens(refreshToken: string): Observable<RefreshTokenResponse> {
+    return this.httpClient.post<RefreshTokenResponse>(`${this.baseUrl}/refresh-tokens`, {refreshToken});
   }
 }
