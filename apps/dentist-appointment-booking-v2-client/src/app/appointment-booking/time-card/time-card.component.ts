@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AppointmentDateService } from '../../shared';
 import { filter, map, Subject, takeUntil } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe, NgClass } from '@angular/common';
+import {
+  AppointmentDateService
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
     selector: 'app-time-card',

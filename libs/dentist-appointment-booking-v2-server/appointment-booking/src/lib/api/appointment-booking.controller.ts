@@ -1,8 +1,8 @@
-import { Controller, Get, Post, UseGuards, Request, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request, Body, Query, Patch, Param } from '@nestjs/common';
 import { AppointmentBookingService } from '../data/appointment-booking.service';
 import {
   AppointmentQuestion,
-  BookAppointmentRequest
+  BookAppointmentRequest, RescheduleAppointmentRequest
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import {
   AuthenticatedRequest,
@@ -36,5 +36,13 @@ export class AppointmentBookingController {
     @Query('length') length = Number.MAX_SAFE_INTEGER
   ): Promise<string[]> {
     return this.appointmentBookingService.getAvailableDates(date, length);
+  }
+
+  @Patch(':appointmentId')
+  rescheduleAppointment(
+    @Param('appointmentId') appointmentId: string,
+    @Body() request: RescheduleAppointmentRequest
+    ): Promise<string> {
+    return this.appointmentBookingService.rescheduleAppointment(appointmentId, request.startsAt)
   }
 }

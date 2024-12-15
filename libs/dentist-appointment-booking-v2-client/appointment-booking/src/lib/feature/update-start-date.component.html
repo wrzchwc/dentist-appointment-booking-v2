@@ -10,11 +10,11 @@
     <mat-form-field appearance="outline" color="primary" class="form-field">
         <mat-label>Dostępne terminy</mat-label>
         <mat-select [formControl]="formGroup.controls['timeControl']">
-            <ng-container *ngFor="let availableDate of availableDates$ | async">
-                <mat-option [value]="availableDate">
-                    {{ availableDate | date: 'HH:mm' }}
-                </mat-option>
-            </ng-container>
+          @for (availableTime of availableTimes(); track availableTime) {
+            <mat-option [value]="availableTime">
+              {{ availableTime | date: 'HH:mm' }}
+            </mat-option>
+          }
         </mat-select>
     </mat-form-field>
 </mat-dialog-content>

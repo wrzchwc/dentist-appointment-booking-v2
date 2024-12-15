@@ -1,7 +1,5 @@
-@use '../../../../../theme/dimensions' as dimensions;
-
 :host {
-    padding: 2 * dimensions.$card-padding;
+    padding: 20px;
 }
 
 .title {

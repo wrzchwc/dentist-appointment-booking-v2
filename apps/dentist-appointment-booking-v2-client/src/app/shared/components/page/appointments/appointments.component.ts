@@ -8,7 +8,7 @@ import {
   output
 } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { DateService } from '../../../services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';

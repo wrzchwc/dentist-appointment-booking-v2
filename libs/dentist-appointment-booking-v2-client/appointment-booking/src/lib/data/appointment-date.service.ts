@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AppointmentDateService {
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getAvailableDates(date: Date, length: number): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
+  getAvailableDates(date: string, length: number): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.baseUrl, { params: { date, length } });
   }
 }

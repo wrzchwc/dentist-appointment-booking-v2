@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { DateService } from '../../../../shared/services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { RouterLink } from '@angular/router';
 import { AppointmentsListComponent } from '../../../../shared';
 import {

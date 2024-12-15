@@ -42,6 +42,10 @@ export class AppointmentsRepository {
     return this.appointmentRepository.save({ userId, startsAt });
   }
 
+  updateStartDate(appointmentId: string, startsAt: string) {
+    return this.appointmentRepository.update({id: appointmentId}, { startsAt });
+  }
+
   private getStartsAtRangeOperator(after: string, before: string): FindOperator<Date> {
     return Between(DateTime.fromISO(after).toJSDate(), DateTime.fromISO(before).toJSDate());
   }

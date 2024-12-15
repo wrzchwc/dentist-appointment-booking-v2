@@ -4,7 +4,7 @@ import { inject } from '@angular/core';
 import { ClientAppointmentsService } from './client-appointments.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
-import { DateService } from '../../../shared/services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 
 interface State {
   readonly appointments: AppointmentDAO[];

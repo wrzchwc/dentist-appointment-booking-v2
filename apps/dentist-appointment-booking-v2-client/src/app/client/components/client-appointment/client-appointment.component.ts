@@ -11,6 +11,10 @@ import {
 import { EndDatePipe } from '../../../appointment-preview/components/appointment-preview/end-date.pipe';
 import { AppointmentStore } from './appointment.store';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { Store } from '@ngrx/store';
+import {
+  rescheduleAppointment
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
   selector: 'app-client-appointment',
@@ -23,6 +27,7 @@ import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointme
 })
 export class ClientAppointmentComponent {
   private readonly appointmentStore = inject(AppointmentStore);
+  private readonly store = inject(Store);
 
   readonly appointment: Signal<AppointmentDAO | undefined> = this.appointmentStore.appointment;
   readonly dataSource: Signal<NamedPriceItem[]> = this.appointmentStore.dataSource;
@@ -44,5 +49,13 @@ export class ClientAppointmentComponent {
       .subscribe(() => {
         this.location.back();
       });
+  }
+
+  handleReschedule() {
+    this.store.dispatch(rescheduleAppointment({
+      id: this.appointmentId(),
+      length: this.length(),
+      startsAt: this.startsAt()
+    }));
   }
 }

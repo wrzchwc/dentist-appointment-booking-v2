@@ -1,11 +1,13 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { AppointmentDateService } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TimeCardComponent } from '../time-card/time-card.component';
-import { DateService } from '../../shared/services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import {
+  AppointmentDateService
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
     selector: 'app-date',

@@ -1,6 +1,5 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, input, OnInit } from '@angular/core';
 import {
-  AppointmentDateService,
   NamedPriceItem,
   CardComponent,
   ServicesTableComponent,
@@ -12,6 +11,9 @@ import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 import { DateTime } from 'luxon';
 import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import {
+  AppointmentDateService
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
   selector: 'app-summary',
@@ -30,13 +32,13 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
   private _endsAt: DateTime = DateTime.now();
 
   constructor(
-    private readonly time: AppointmentDateService,
+    private readonly appointmentDateService: AppointmentDateService,
     private readonly cart: AppointmentCartService
   ) {
   }
 
   ngOnInit(): void {
-    this.time.selectedDate$
+    this.appointmentDateService.selectedDate$
       .pipe(
         filter(Boolean),
         map((date) => DateTime.fromISO(date))
@@ -47,7 +49,7 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    const { value } = this.time.selectedDate$;
+    const { value } = this.appointmentDateService.selectedDate$;
     if (value) {
       this._endsAt = DateTime.fromISO(value).plus({ minute: this.appointmentLength });
     }
@@ -58,7 +60,7 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
   }
 
   get selectedDate$(): Observable<string | null> {
-    return this.time.selectedDate$;
+    return this.appointmentDateService.selectedDate$;
   }
 
   get priceItems(): NamedPriceItem[] {

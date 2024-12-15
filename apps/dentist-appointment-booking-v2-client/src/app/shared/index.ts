@@ -7,4 +7,3 @@ export * from './components/page/appointment/appointment.component';
 export * from './components/page/appointments/appointments.component';
 export * from './components/page/appointments-list/appointments-list.component';
 export * from './services/authentication.service';
-export * from './services/appointment-date.service';

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DateService } from '../../../shared/services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { ClientAppointmentManagementApiService } from './client-appointment-management-api.service';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 

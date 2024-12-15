@@ -13,3 +13,7 @@ export interface HealthReportDTO {
   readonly healthFactId: string;
   readonly additionalInfo?: string;
 }
+
+export interface RescheduleAppointmentRequest {
+  readonly startsAt: string;
+}

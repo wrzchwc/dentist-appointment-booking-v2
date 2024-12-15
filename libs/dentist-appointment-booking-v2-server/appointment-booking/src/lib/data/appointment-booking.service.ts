@@ -65,4 +65,9 @@ export class AppointmentBookingService {
     );
     return this.availableDatesCalculator.calculateAvailableDates(appointmentsAtDate, fromISO, estimatedLength);
   }
+
+  async rescheduleAppointment(appointmentId: string, startsAt: string): Promise<string> {
+    await this.appointmentsRepository.updateStartDate(appointmentId, startsAt);
+    return 'SUCCESS';
+  }
 }

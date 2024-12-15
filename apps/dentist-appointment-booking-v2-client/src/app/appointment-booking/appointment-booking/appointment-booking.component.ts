@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AppointmentDateService, Service } from '../../shared';
+import { Service } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
 import { debounceTime, filter, map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
-import { DateService } from '../../shared/services/date.service';
+import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { AppointmentBookingService } from './appointment-booking.service';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AsyncPipe } from '@angular/common';
@@ -25,6 +25,9 @@ import {
   Route
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
+import {
+  AppointmentDateService
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
   selector: 'app-appointment-booking',
@@ -91,7 +94,7 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   refreshAppointmentsAvailability(): void {
     this.appointmentDateService
-      .getAvailableDates(this.date.currentWorkday, calculateTotalAppointmentLength(this.cart.lengthItems))
+      .getAvailableDates(this.date.currentWorkday.toISOString(), calculateTotalAppointmentLength(this.cart.lengthItems))
       .pipe(
         takeUntil(this.destroy$),
         map((times) => times.filter((time) => new Date(time) >= this.date.currentWorkday))
