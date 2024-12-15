@@ -7,4 +7,9 @@ export const rescheduleAppointment = createAction(
     readonly length: number,
     readonly startsAt: string
   }>()
-)
+);
+
+export const cancelAppointment = createAction(
+  '[Appointment Booking] Cancel Appointment',
+  props<{ readonly appointmentId: string }>()
+);

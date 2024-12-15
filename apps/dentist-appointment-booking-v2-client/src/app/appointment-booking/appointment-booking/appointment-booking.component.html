@@ -12,7 +12,7 @@
     </mat-step>
     <mat-step label="Termin wizyty" [completed]="(selectedDate$ | async) !== null">
         <ng-template matStepContent>
-            <app-date [availableTimes]="availableTimes" (workdayChange)="refreshAppointmentsAvailability()"></app-date>
+            <app-date [availableTimes]="availableTimes()" (workdayChange)="refreshAppointmentsAvailability()"></app-date>
             <section class="step-buttons-container">
                 <button
                     mat-raised-button

@@ -1,8 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  Signal
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Service } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
-import { debounceTime, filter, map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
+import { debounceTime, filter, Observable, switchMap } from 'rxjs';
 import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { AppointmentBookingService } from './appointment-booking.service';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -26,8 +35,9 @@ import {
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 import {
-  AppointmentDateService
+  AppointmentDateService, AvailableTimesStore
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-appointment-booking',
@@ -45,19 +55,17 @@ import {
     SummaryComponent
   ],
   standalone: true,
-  providers: [HealthStateStore]
+  providers: [HealthStateStore, AvailableTimesStore]
 })
 export class AppointmentBookingComponent implements OnInit, OnDestroy {
   readonly services = input<Service[]>([]);
   readonly appointmentQuestions = input<AppointmentQuestion[]>([]);
 
-  availableTimes: string[] = [];
-
-  private readonly destroy$: Subject<void> = new Subject();
-
   private readonly authFacade = inject(AuthFacade);
   private readonly healthStateStore = inject(HealthStateStore);
   private readonly store = inject(Store);
+  private readonly availableTimesStore = inject(AvailableTimesStore);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly appointmentDateService: AppointmentDateService,
@@ -69,6 +77,7 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   readonly userProfile: Signal<UserProfile | undefined> = this.authFacade.userProfile;
   readonly facts: Signal<string[]> = this.healthStateStore.facts;
+  readonly availableTimes: Signal<string[]> = this.availableTimesStore.availableTimes;
 
   get isCartValid(): boolean {
     return this.cart.valid;
@@ -80,28 +89,24 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cart.initialize(this.services() || []);
-    this.cart.change$.pipe(takeUntil(this.destroy$), debounceTime(281.25)).subscribe(() => {
+    this.cart.change$.pipe(
+      takeUntilDestroyed(this.destroyRef),
+      debounceTime(281.25)
+    ).subscribe(() => {
       this.refreshAppointmentsAvailability();
     });
   }
 
   ngOnDestroy(): void {
     this.appointmentDateService.selectedDate$.next(null);
-    this.destroy$.next();
-    this.destroy$.complete();
     this.date.reset();
   }
 
   refreshAppointmentsAvailability(): void {
-    this.appointmentDateService
-      .getAvailableDates(this.date.currentWorkday.toISOString(), calculateTotalAppointmentLength(this.cart.lengthItems))
-      .pipe(
-        takeUntil(this.destroy$),
-        map((times) => times.filter((time) => new Date(time) >= this.date.currentWorkday))
-      )
-      .subscribe((availableTimes) => {
-        this.availableTimes = availableTimes;
-      });
+    this.availableTimesStore.fetchTimes({
+      date: this.date.currentWorkday.toISOString(),
+      length: calculateTotalAppointmentLength(this.cart.lengthItems)
+    });
   }
 
   handleBookAppointmentClick(event: MouseEvent): void {

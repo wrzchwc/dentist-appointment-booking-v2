@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { rescheduleAppointment } from './appointment-booking.actions';
+import { cancelAppointment, rescheduleAppointment } from './appointment-booking.actions';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, switchMap, tap } from 'rxjs';
 import { UpdateStartDateComponent } from '../feature/update-start-date.component';
-import { UpdateStartDateService } from './update-start-date.service';
 import { UpdateStartDateData, UpdateStartDateDialogData } from '../domain/update-start-date';
+import { AppointmentBookingApiService } from './appointment-booking-api.service';
 
 @Injectable()
 export class AppointmentBookingEffects {
   private readonly actions$ = inject(Actions);
   private readonly matDialog = inject(MatDialog);
   private readonly location = inject(Location);
-  private readonly updateStartDateService = inject(UpdateStartDateService);
+  private readonly appointmentBookingApiService = inject(AppointmentBookingApiService);
 
   readonly rescheduleAppointment$ = createEffect(() =>
     this.actions$.pipe(
@@ -27,9 +27,16 @@ export class AppointmentBookingEffects {
       ),
       filter(Boolean),
       switchMap((data) =>
-        this.updateStartDateService.rescheduleAppointment(data.id, data.startsAt)
+        this.appointmentBookingApiService.rescheduleAppointment(data.id, data.startsAt)
       ),
       tap(() => this.location.back())
     ), { dispatch: false }
   );
+
+  // readonly cancelAppointment$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(cancelAppointment),
+  //     switchMap()
+  //   )
+  // );
 }

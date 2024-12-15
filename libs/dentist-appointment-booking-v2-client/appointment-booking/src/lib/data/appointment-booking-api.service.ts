@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UpdateStartDateService {
+export class AppointmentBookingApiService {
   private readonly baseUrl: string = '/api/appointment-booking';
 
   private readonly httpClient = inject(HttpClient);
@@ -15,6 +15,13 @@ export class UpdateStartDateService {
       `${this.baseUrl}/${appointmentId}`,
       { startsAt },
       {responseType: 'text'}
+    );
+  }
+
+  getAvailableTimes(date: string, length: number): Observable<string[]> {
+    return this.httpClient.get<string[]>(
+      `${this.baseUrl}/available-dates`,
+      { params: { date, length } }
     );
   }
 }
