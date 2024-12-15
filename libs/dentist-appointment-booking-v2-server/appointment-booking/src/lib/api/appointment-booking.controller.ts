@@ -43,7 +43,11 @@ export class AppointmentBookingController {
     @Body() body: RescheduleAppointmentRequest,
     @Request() request: AuthenticatedRequest
     ): Promise<string> {
-    return this.appointmentBookingService.rescheduleAppointment(appointmentId, body.startsAt, request.userId);
+    return this.appointmentBookingService.rescheduleAppointment(
+      appointmentId,
+      body.startsAt,
+      request.userId
+    );
   }
 
   @Delete(':appointmentId')

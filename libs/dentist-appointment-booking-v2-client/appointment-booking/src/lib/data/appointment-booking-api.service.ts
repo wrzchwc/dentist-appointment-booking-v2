@@ -24,4 +24,11 @@ export class AppointmentBookingApiService {
       { params: { date, length } }
     );
   }
+
+  cancelAppointment(appointmentId: string) {
+    return this.httpClient.delete(
+      `${this.baseUrl}/${appointmentId}`,
+      { responseType: 'text' }
+    );
+  }
 }

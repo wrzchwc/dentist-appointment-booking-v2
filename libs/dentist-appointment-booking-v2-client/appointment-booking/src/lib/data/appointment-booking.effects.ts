@@ -33,10 +33,11 @@ export class AppointmentBookingEffects {
     ), { dispatch: false }
   );
 
-  // readonly cancelAppointment$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(cancelAppointment),
-  //     switchMap()
-  //   )
-  // );
+  readonly cancelAppointment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(cancelAppointment),
+      switchMap(({ appointmentId }) => this.appointmentBookingApiService.cancelAppointment(appointmentId)),
+      tap(() => this.location.back())
+    ), { dispatch: false }
+  );
 }

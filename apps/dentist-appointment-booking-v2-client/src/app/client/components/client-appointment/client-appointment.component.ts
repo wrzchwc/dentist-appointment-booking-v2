@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
-import { ClientAppointmentService } from './client-appointment.service';
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   AppointmentComponent,
   CardComponent,
@@ -13,6 +12,7 @@ import { AppointmentStore } from './appointment.store';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 import { Store } from '@ngrx/store';
 import {
+  cancelAppointment,
   rescheduleAppointment
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
@@ -35,20 +35,8 @@ export class ClientAppointmentComponent {
   readonly appointmentId = computed(() => this.appointment()?.id || '');
   readonly startsAt = computed(() => this.appointment()?.startsAt || '');
 
-  constructor(
-    private readonly clientAppointmentService: ClientAppointmentService,
-    private readonly location: Location
-  ) {
-  }
-
   handleCancel() {
-    const appointment = this.appointmentStore.appointment();
-    if (!appointment) return;
-    this.clientAppointmentService
-      .cancelAppointment(appointment.id)
-      .subscribe(() => {
-        this.location.back();
-      });
+    this.store.dispatch(cancelAppointment({ appointmentId: this.appointmentId() }));
   }
 
   handleReschedule() {

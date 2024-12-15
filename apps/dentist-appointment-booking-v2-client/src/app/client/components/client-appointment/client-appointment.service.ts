@@ -14,8 +14,4 @@ export class ClientAppointmentService {
   getAppointment(appointmentId: string): Observable<AppointmentDAO> {
     return this.httpClient.get<AppointmentDAO>(`${this.baseUrl}/${appointmentId}`);
   }
-
-  cancelAppointment(appointmentId: string) {
-    return this.httpClient.delete(`${this.baseUrl}/${appointmentId}`, { responseType: 'text' });
-  }
 }
