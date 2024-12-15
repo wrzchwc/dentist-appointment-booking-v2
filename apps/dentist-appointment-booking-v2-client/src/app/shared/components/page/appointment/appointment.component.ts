@@ -1,41 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Location, NgIf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CancelablePipe } from './cancelable.pipe';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
   styleUrls: ['./appointment.component.scss'],
-  imports: [MatIconModule, NgIf, MatButtonModule, CancelablePipe],
+  imports: [MatIconModule, MatButtonModule],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppointmentComponent {
-  @Input() appointmentId = '';
-  @Input() startsAt: string = new Date().toISOString().slice(0, 10);
-  @Input() length = 0;
+  readonly appointmentId = input('');
+  readonly startsAt = input(new Date().toISOString());
 
   readonly cancelAppointment = output();
   readonly rescheduleAppointment = output();
 
-  private readonly dialogConfig: MatDialogConfig = { autoFocus: true };
-
-  constructor(private readonly matDialog: MatDialog, private readonly location: Location) {
-  }
-
-  // reschedule(): void {
-  //     this.dialogConfig.data = { id: this.appointmentId, startsAt: this.startsAt, length: this.length };
-  //     this.matDialog
-  //         .open(UpdateStartDateComponent, this.dialogConfig)
-  //         .afterClosed()
-  //         .pipe(filter(Boolean))
-  //         .subscribe(() => {
-  //             this.location.back();
-  //         });
-  // }
+  readonly cancelable = computed(() =>
+    DateTime.fromISO(this.startsAt()).diffNow().get('millisecond') >= 0
+  )
 
   reschedule(): void {
     this.rescheduleAppointment.emit();
