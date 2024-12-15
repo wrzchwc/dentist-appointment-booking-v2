@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { ClientAppointmentService } from './client-appointment.service';
 import { DatePipe, Location } from '@angular/common';
 import {
@@ -27,6 +27,8 @@ export class ClientAppointmentComponent {
   readonly appointment: Signal<AppointmentDAO | undefined> = this.appointmentStore.appointment;
   readonly dataSource: Signal<NamedPriceItem[]> = this.appointmentStore.dataSource;
   readonly length: Signal<number> = this.appointmentStore.length;
+  readonly appointmentId = computed(() => this.appointment()?.id || '');
+  readonly startsAt = computed(() => this.appointment()?.startsAt || '');
 
   constructor(
     private readonly clientAppointmentService: ClientAppointmentService,

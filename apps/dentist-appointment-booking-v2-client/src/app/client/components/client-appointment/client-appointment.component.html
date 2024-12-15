@@ -1,8 +1,9 @@
 @if (appointment()) {
   <app-appointment
-    [appointmentId]="appointment()?.id || ''"
-    (cancelAppointment)="handleCancel()"
+    [appointmentId]="appointmentId()"
+    [startsAt]="startsAt()"
     [length]="length()"
+    (cancelAppointment)="handleCancel()"
   >
     <div class="content">
       <app-card title="Data wizyty" icon="calendar_month" class="card">

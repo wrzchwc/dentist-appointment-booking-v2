@@ -5,7 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
     standalone: true,
 })
 export class CancelablePipe implements PipeTransform {
-    transform(value: Date): boolean {
-        return new Date() < new Date(value);
+    transform(value: string): boolean {
+      //todo: should return if current date appt start date
+        return true;
     }
 }

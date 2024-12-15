@@ -17,7 +17,7 @@ import { CancelablePipe } from './cancelable.pipe';
 })
 export class AppointmentComponent {
     @Input() appointmentId = '';
-    @Input() startsAt: Date = new Date();
+    @Input() startsAt: string = new Date().toISOString().slice(0, 10);
     @Input() length = 0;
 
     @Output() readonly cancelAppointment: EventEmitter<void> = new EventEmitter();

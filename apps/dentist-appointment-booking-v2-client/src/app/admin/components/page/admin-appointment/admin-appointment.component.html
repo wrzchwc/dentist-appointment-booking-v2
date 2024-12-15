@@ -1,7 +1,6 @@
 <ng-container *ngIf="appointment">
     <app-appointment
         [appointmentId]="appointment.id"
-        [startsAt]="appointment.startsAt"
         (cancelAppointment)="handleCancel()"
         [length]="length"
     >
