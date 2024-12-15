@@ -83,9 +83,6 @@ export class AppointmentBookingService {
         for (let minute = 0; minute < length; minute += 15) {
           coveredTimes.push(next.plus({minute: minute}).toISO())
         }
-        console.log('covered times: ' + coveredTimes);
-        console.log('none of covered in unavailable times: ', coveredTimes.every((time) => !unavailableTimes.includes(time)));
-        console.log(next, unavailableTimes.includes(next.toISO()), unavailableTimes);
         if (coveredTimes.every((time) => !unavailableTimes.includes(time))) {
           availableTimes.push(next.toISO());
         }
@@ -96,8 +93,6 @@ export class AppointmentBookingService {
 
   private transformPeriodsToUnavailableTimes(periods: Period[]): string[] {
     return periods.flatMap((period) => {
-      console.log(period);
-      console.log(period.startsAt);
       const dt = DateTime.fromISO(period.startsAt);
       const unavailableTimes = [];
       if (!dt.isValid) {
