@@ -4,8 +4,7 @@ import { AppointmentQuestion } from '../domain/appointment-question.model';
 import {
   AppointmentQuestion as AppointmentQuestionDAO,
   BookAppointmentRequest,
-  calculateTotalAppointmentLength,
-  LengthItem
+  calculateTotalAppointmentLength
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import {
   Appointment,
@@ -16,11 +15,8 @@ import { AppointmentQuestionEntity } from '../domain/appointment-question.entity
 import {
   HealthReportsRepository
 } from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
-import {
-  Treatment,
-  TreatmentsRepository
-} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
-import { DateTime, Zone } from 'luxon';
+import { TreatmentsRepository } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
+import { DateTime } from 'luxon';
 import { Service } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
 import { END_HOUR, END_MINUTE, INTERVAL_MINUTE, START_HOUR, START_MINUTE } from '../domain/time-units';
 
@@ -63,7 +59,7 @@ export class AppointmentBookingService {
     }));
   }
 
-  async getAvailableDates(date: string, length: number): Promise<string[]> {
+  async getAvailableDates(date: string, estimatedLength: number): Promise<string[]> {
     const fromISO = DateTime.fromISO(date);
     if (!fromISO.isValid) {
       return Array.of<string>();
@@ -73,22 +69,36 @@ export class AppointmentBookingService {
       fromISO.set({ hour: START_HOUR, minute: START_MINUTE }).toISO(),
       fromISO.set({ hour: END_HOUR, minute: END_MINUTE }).toISO()
     );
-    const periods = this.transformAppointmentsToPeriods(appointmentsAtDate);
-    const unavailableTimes = this.transformPeriodsToUnavailableTimes(periods);
+    const unavailableTimes = this.transformPeriodsToUnavailableTimes(
+      this.transformAppointmentsToPeriods(appointmentsAtDate)
+    );
+    return this.getAvailableTimes(fromISO, unavailableTimes, estimatedLength);
+  }
+
+  private getAvailableTimes(fromISO: DateTime<true>, unavailableTimes: string[], length: number) {
     const availableTimes: string[] = [];
     for (let hour = START_HOUR; hour < END_HOUR; hour++) {
       for (let minute = 0; minute < 60; minute += INTERVAL_MINUTE) {
         const next = fromISO.set({ hour, minute }).toUTC();
-        const coveredTimes = [];
-        for (let minute = START_MINUTE; minute < length; minute += INTERVAL_MINUTE) {
-          coveredTimes.push(next.plus({minute: minute}).toISO())
-        }
-        if (coveredTimes.every((time) => !unavailableTimes.includes(time))) {
+        const coveredTimes = this.generateCoveredTimes(next, length)
+        if (this.areTimesNotOverlapping(coveredTimes, unavailableTimes)) {
           availableTimes.push(next.toISO());
         }
       }
     }
     return availableTimes;
+  }
+
+  private areTimesNotOverlapping(coveredTimes: string[], unavailableTimes: string[]): boolean {
+    return coveredTimes.every((time) => !unavailableTimes.includes(time));
+  }
+
+  private generateCoveredTimes(next: DateTime<true>, length: number): string[] {
+    const coveredTimes: string[] = [];
+    for (let minute = START_MINUTE; minute < length; minute += INTERVAL_MINUTE) {
+      coveredTimes.push(next.plus({minute: minute}).toISO())
+    }
+    return coveredTimes;
   }
 
   private transformPeriodsToUnavailableTimes(periods: Period[]): string[] {
