@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from '../domain/appointment.model';
 import { AppointmentEntity } from '../domain/appointment.entity';
-import { Between, Repository } from 'typeorm';
+import { Between, FindOperator, Repository } from 'typeorm';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class AppointmentsRepository {
@@ -21,13 +22,27 @@ export class AppointmentsRepository {
 
   findAllByUserIdInRange(userId: string, after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
-      where: { userId, startsAt: Between(after, before) },
+      where: { userId, startsAt: this.getStartsAtRangeOperator(after, before) },
       select: ['id', 'startsAt'],
-      relations: ['treatments']
+      relations: ['treatments'],
+      order: { startsAt: 'ASC' }
+    });
+  }
+
+  findAllInRange(after: string, before: string): Promise<Appointment[]> {
+    return this.appointmentRepository.find({
+      where: { startsAt: this.getStartsAtRangeOperator(after, before) },
+      select: ['startsAt'],
+      relations: ['treatments'],
+      order: { startsAt: 'ASC' }
     });
   }
 
   create(userId: string, startsAt: string): Promise<Appointment> {
     return this.appointmentRepository.save({ userId, startsAt });
+  }
+
+  private getStartsAtRangeOperator(after: string, before: string): FindOperator<Date> {
+    return Between(DateTime.fromISO(after).toJSDate(), DateTime.fromISO(before).toJSDate());
   }
 }

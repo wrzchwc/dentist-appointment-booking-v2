@@ -9,7 +9,7 @@ export class AppointmentTransformer {
   transformAppointments(appointments: Appointment[]): AppointmentDAO[] {
     return appointments.map((appointment) => ({
       id: appointment.id,
-      startsAt: appointment.startsAt,
+      startsAt: appointment.startsAt.toISOString(),
       treatments: this.transformTreatments(appointment.treatments)
     }));
   }
@@ -17,7 +17,7 @@ export class AppointmentTransformer {
   transformAppointment(appointment: Appointment): AppointmentDAO {
     return {
       id: appointment.id,
-      startsAt: appointment.startsAt,
+      startsAt: appointment.startsAt.toISOString(),
       treatments: this.transformTreatments2(appointment.treatments)
     };
   }

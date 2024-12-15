@@ -1,7 +1,6 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, input, OnInit } from '@angular/core';
 import {
   AppointmentDateService,
-  LengthService,
   NamedPriceItem,
   CardComponent,
   ServicesTableComponent,
@@ -12,6 +11,7 @@ import { filter, map, Observable } from 'rxjs';
 import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 import { DateTime } from 'luxon';
 import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
+import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 @Component({
   selector: 'app-summary',
@@ -25,14 +25,13 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
   readonly userProfile = input<UserProfile>();
   readonly facts = input<string[]>([]);
 
-  private readonly appointmentLength: number = this.length.calculateTotalLength(this.cart.lengthItems);
+  private readonly appointmentLength: number = calculateTotalAppointmentLength(this.cart.lengthItems);
 
   private _endsAt: DateTime = DateTime.now();
 
   constructor(
     private readonly time: AppointmentDateService,
-    private readonly cart: AppointmentCartService,
-    private readonly length: LengthService
+    private readonly cart: AppointmentCartService
   ) {
   }
 
@@ -40,7 +39,7 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
     this.time.selectedDate$
       .pipe(
         filter(Boolean),
-        map((date) => DateTime.fromJSDate(date))
+        map((date) => DateTime.fromISO(date))
       )
       .subscribe((dateTime) => {
         this._endsAt = dateTime.plus({ minute: this.appointmentLength });
@@ -50,7 +49,7 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     const { value } = this.time.selectedDate$;
     if (value) {
-      this._endsAt = DateTime.fromJSDate(value).plus({ minute: this.appointmentLength });
+      this._endsAt = DateTime.fromISO(value).plus({ minute: this.appointmentLength });
     }
   }
 
@@ -58,7 +57,7 @@ export class SummaryComponent implements OnInit, AfterViewChecked {
     return this._endsAt.toJSDate();
   }
 
-  get selectedDate$(): Observable<Date | null> {
+  get selectedDate$(): Observable<string | null> {
     return this.time.selectedDate$;
   }
 

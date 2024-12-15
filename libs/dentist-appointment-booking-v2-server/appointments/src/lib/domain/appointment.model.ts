@@ -2,7 +2,7 @@ import { Treatment } from '@dentist-appointment-booking-v2/dentist-appointment-b
 
 export interface Appointment {
   readonly id: string;
-  readonly startsAt: string;
+  readonly startsAt: Date;
   readonly userId: string;
   readonly treatments?: Treatment[];
   readonly healthReports: object[];

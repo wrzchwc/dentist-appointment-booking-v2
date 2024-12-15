@@ -7,7 +7,7 @@
         Dostępne terminy w dniu {{ currentWorkday | date: 'dd.MM.yyyy' }}
     </h2>
     <div class="time-cards-container">
-      @for (availableTime of availableTimes; track availableTime.getTime()) {
+      @for (availableTime of availableTimes; track availableTime) {
         <app-time-card [date]="availableTime"></app-time-card>
       }
     </div>

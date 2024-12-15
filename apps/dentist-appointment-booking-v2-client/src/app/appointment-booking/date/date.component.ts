@@ -1,11 +1,11 @@
 import { AfterViewChecked, ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AppointmentDateService } from '../../shared';
-import { LengthService } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
 import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { TimeCardComponent } from '../time-card/time-card.component';
 import { DateService } from '../../shared/services/date.service';
+import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 @Component({
     selector: 'app-date',
@@ -16,16 +16,15 @@ import { DateService } from '../../shared/services/date.service';
     standalone: true,
 })
 export class DateComponent implements AfterViewChecked {
-    @Input() availableTimes: Date[] = [];
+    @Input() availableTimes: string[] = [];
 
     @Output() workdayChange: EventEmitter<void> = new EventEmitter();
 
-    appointmentLength: number = this.length.calculateTotalLength(this.cart.lengthItems);
+    appointmentLength: number = calculateTotalAppointmentLength(this.cart.lengthItems);
 
     constructor(
         private readonly time: AppointmentDateService,
         private readonly date: DateService,
-        private readonly length: LengthService,
         private readonly cart: AppointmentCartService
     ) {}
 
@@ -51,7 +50,7 @@ export class DateComponent implements AfterViewChecked {
     }
 
     ngAfterViewChecked(): void {
-        this.appointmentLength = this.length.calculateTotalLength(this.cart.lengthItems);
+        this.appointmentLength = calculateTotalAppointmentLength(this.cart.lengthItems);
     }
 
     handleClick(): void {

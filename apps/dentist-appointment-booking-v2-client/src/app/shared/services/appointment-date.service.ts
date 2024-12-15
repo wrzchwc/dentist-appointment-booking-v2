@@ -6,15 +6,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AppointmentDateService {
-  readonly selectedDate$: BehaviorSubject<Date | null> = new BehaviorSubject<Date | null>(null);
+  readonly selectedDate$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   private readonly baseUrl = '/api/appointment-booking/available-dates';
 
   constructor(private readonly httpClient: HttpClient) {
   }
 
-  getAvailableDates(date: Date, length: number): Observable<Date[]> {
-    return of([new Date(Date.UTC(2024, 11, 13, 9, 15))]);
-    // return this.httpClient.get<Date[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
+  getAvailableDates(date: Date, length: number): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.baseUrl, { params: { date: date.toISOString(), length } });
   }
 }

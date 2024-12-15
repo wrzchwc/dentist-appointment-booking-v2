@@ -36,11 +36,6 @@ export interface Profile {
     readonly photoUrl: string;
 }
 
-export interface LengthItem {
-    readonly quantity: number;
-    readonly length: number;
-}
-
 export interface Appointment1 {
     readonly id: string;
     readonly startsAt: Date;

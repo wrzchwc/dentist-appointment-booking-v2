@@ -3,9 +3,12 @@ import { Repository } from 'typeorm';
 import { AppointmentQuestion } from '../domain/appointment-question.model';
 import {
   AppointmentQuestion as AppointmentQuestionDAO,
-  BookAppointmentRequest
+  BookAppointmentRequest,
+  calculateTotalAppointmentLength,
+  LengthItem
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import {
+  Appointment,
   AppointmentsRepository
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +16,17 @@ import { AppointmentQuestionEntity } from '../domain/appointment-question.entity
 import {
   HealthReportsRepository
 } from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
-import { TreatmentsRepository } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
+import {
+  Treatment,
+  TreatmentsRepository
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
+import { DateTime, Zone } from 'luxon';
+import { Service } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
+
+interface Period {
+  readonly startsAt: string;
+  readonly length: number;
+}
 
 @Injectable()
 export class AppointmentBookingService {
@@ -46,6 +59,66 @@ export class AppointmentBookingService {
         id: appointmentQuestion.healthFact.id,
         value: appointmentQuestion.healthFact.value
       } : undefined
+    }));
+  }
+
+  async getAvailableDates(date: string, length: number): Promise<string[]> {
+    const fromISO = DateTime.fromISO(date);
+    if (!fromISO.isValid) {
+      return Array.of<string>();
+    }
+    fromISO.set({ second: 0, millisecond: 0 });
+    const appointmentsAtDate = await this.appointmentsRepository.findAllInRange(
+      fromISO.set({ hour: 9, minute: 0 }).toISO(),
+      fromISO.set({ hour: 17, minute: 0 }).toISO()
+    );
+    const periods = this.transformAppointmentsToPeriods(appointmentsAtDate);
+    const unavailableTimes = this.transformPeriodsToUnavailableTimes(periods);
+    const availableTimes: string[] = [];
+    fromISO.set({ second: 0, millisecond: 0 });
+    for (let hour = 9; hour < 17; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const next = fromISO.set({ hour, minute }).toUTC();
+        const coveredTimes = [];
+        for (let minute = 0; minute < length; minute += 15) {
+          coveredTimes.push(next.plus({minute: minute}).toISO())
+        }
+        console.log('covered times: ' + coveredTimes);
+        console.log('none of covered in unavailable times: ', coveredTimes.every((time) => !unavailableTimes.includes(time)));
+        console.log(next, unavailableTimes.includes(next.toISO()), unavailableTimes);
+        if (coveredTimes.every((time) => !unavailableTimes.includes(time))) {
+          availableTimes.push(next.toISO());
+        }
+      }
+    }
+    return availableTimes;
+  }
+
+  private transformPeriodsToUnavailableTimes(periods: Period[]): string[] {
+    return periods.flatMap((period) => {
+      console.log(period);
+      console.log(period.startsAt);
+      const dt = DateTime.fromISO(period.startsAt);
+      const unavailableTimes = [];
+      if (!dt.isValid) {
+        return [];
+      }
+      const minutesAtStart = dt.minute;
+      for (let offset = 0; offset < period.length; offset += 15) {
+        unavailableTimes.push(dt.set({ minute: minutesAtStart + offset }).toUTC().toISO());
+      }
+      return unavailableTimes;
+    });
+
+  }
+
+  private transformAppointmentsToPeriods(appointments: Appointment[]): Period[] {
+    return appointments.map((appointment) => ({
+      startsAt: appointment.startsAt.toISOString(),
+      length: calculateTotalAppointmentLength((appointment.treatments || []).map((treatment) => ({
+        quantity: treatment.quantity,
+        length: (treatment.serviceId as Service).length || 0
+      })))
     }));
   }
 }

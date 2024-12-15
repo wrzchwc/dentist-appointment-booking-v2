@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards, Request, Body } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request, Body, Query } from '@nestjs/common';
 import { AppointmentBookingService } from '../data/appointment-booking.service';
 import {
   AppointmentQuestion,
@@ -28,5 +28,13 @@ export class AppointmentBookingController {
   @Get('questions')
   getAppointmentQuestions(): Promise<AppointmentQuestion[]> {
     return this.appointmentBookingService.getAppointmentQuestions();
+  }
+
+  @Get('available-dates')
+  getAvailableAppointmentDates(
+    @Query('date') date: string,
+    @Query('length') length = Number.MAX_SAFE_INTEGER
+  ): Promise<string[]> {
+    return this.appointmentBookingService.getAvailableDates(date, length);
   }
 }

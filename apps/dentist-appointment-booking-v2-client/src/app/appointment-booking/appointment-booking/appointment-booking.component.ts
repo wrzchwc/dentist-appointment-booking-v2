@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, OnInit, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AppointmentDateService, LengthService, Service } from '../../shared';
+import { AppointmentDateService, Service } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
 import { debounceTime, filter, map, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { DateService } from '../../shared/services/date.service';
@@ -12,7 +12,10 @@ import { AppointmentServicesComponent } from '../appointment-services/appointmen
 import { DateComponent } from '../date/date.component';
 import { HealthStateComponent } from '../health-state/health-state.component';
 import { SummaryComponent } from '../summary/summary.component';
-import { AppointmentQuestion } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import {
+  AppointmentQuestion,
+  calculateTotalAppointmentLength
+} from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import { AuthFacade } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { HealthStateStore } from '../health-state.store';
 import { HealthStateDescriptor, Info } from '../model';
@@ -21,6 +24,7 @@ import {
   navigateToPage,
   Route
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
+import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Component({
   selector: 'app-appointment-booking',
@@ -44,7 +48,7 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
   readonly services = input<Service[]>([]);
   readonly appointmentQuestions = input<AppointmentQuestion[]>([]);
 
-  availableTimes: Date[] = [];
+  availableTimes: string[] = [];
 
   private readonly destroy$: Subject<void> = new Subject();
 
@@ -53,23 +57,22 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store);
 
   constructor(
-    private readonly time: AppointmentDateService,
+    private readonly appointmentDateService: AppointmentDateService,
     private readonly booking: AppointmentBookingService,
     private readonly cart: AppointmentCartService,
-    private readonly date: DateService,
-    private readonly length: LengthService
+    private readonly date: DateService
   ) {
   }
 
-  readonly userProfile = this.authFacade.userProfile;
+  readonly userProfile: Signal<UserProfile | undefined> = this.authFacade.userProfile;
   readonly facts: Signal<string[]> = this.healthStateStore.facts;
 
   get isCartValid(): boolean {
     return this.cart.valid;
   }
 
-  get selectedDate$(): Observable<Date | null> {
-    return this.time.selectedDate$;
+  get selectedDate$(): Observable<string | null> {
+    return this.appointmentDateService.selectedDate$;
   }
 
   ngOnInit(): void {
@@ -80,15 +83,15 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.time.selectedDate$.next(null);
+    this.appointmentDateService.selectedDate$.next(null);
     this.destroy$.next();
     this.destroy$.complete();
     this.date.reset();
   }
 
   refreshAppointmentsAvailability(): void {
-    this.time
-      .getAvailableDates(this.date.currentWorkday, this.length.calculateTotalLength(this.cart.lengthItems))
+    this.appointmentDateService
+      .getAvailableDates(this.date.currentWorkday, calculateTotalAppointmentLength(this.cart.lengthItems))
       .pipe(
         takeUntil(this.destroy$),
         map((times) => times.filter((time) => new Date(time) >= this.date.currentWorkday))
@@ -100,9 +103,8 @@ export class AppointmentBookingComponent implements OnInit, OnDestroy {
 
   handleBookAppointmentClick(event: MouseEvent): void {
     event.stopPropagation();
-    this.time.selectedDate$.pipe(
+    this.appointmentDateService.selectedDate$.pipe(
       filter(Boolean),
-      takeUntil(this.destroy$),
       switchMap((startsAt) =>
         this.booking.createAppointment(startsAt, this.cart.quantities, this.healthStateStore.infos())
       )

@@ -13,7 +13,7 @@ import { DatePipe, NgClass } from '@angular/common';
     standalone: true,
 })
 export class TimeCardComponent implements OnInit, OnDestroy {
-    @Input() date: Date = new Date();
+    @Input() date: string = new Date().toISOString();
 
     private readonly destroy$: Subject<void> = new Subject();
 
@@ -23,9 +23,13 @@ export class TimeCardComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.appointmentDateService.selectedDate$
-            .pipe(takeUntil(this.destroy$), filter(Boolean), map(Date.prototype.getTime))
-            .subscribe((time) => {
-                this._notSelected = time !== this.date.getTime();
+            .pipe(
+              takeUntil(this.destroy$),
+              filter(Boolean),
+              map((time) => time !== this.date)
+            )
+            .subscribe((notSelected) => {
+                this._notSelected = notSelected;
             });
     }
 
@@ -40,8 +44,8 @@ export class TimeCardComponent implements OnInit, OnDestroy {
 
     handleClick($event: Event) {
         $event.stopPropagation();
-        const selection: Date | null =
-            this.appointmentDateService.selectedDate$.value === this.date ? null : new Date(this.date);
+        const selection: string | null =
+            this.appointmentDateService.selectedDate$.value === this.date ? null : this.date;
         this.appointmentDateService.selectedDate$.next(selection);
     }
 }

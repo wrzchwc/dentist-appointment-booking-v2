@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { LengthItem, NamedPriceItem, Service } from '../shared';
-import { TreatmentDTO } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import { NamedPriceItem, Service } from '../shared';
+import { LengthItem, TreatmentDTO } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 
 @Injectable({
   providedIn: 'root'

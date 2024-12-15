@@ -16,9 +16,9 @@ export class AppointmentBookingService {
 
   private readonly baseUrl = '/api/appointment-booking';
 
-  createAppointment(startsAt: Date, treatments: TreatmentDTO[], healthReports: HealthReportDTO[]): Observable<string> {
+  createAppointment(startsAt: string, treatments: TreatmentDTO[], healthReports: HealthReportDTO[]): Observable<string> {
     const body: BookAppointmentRequest = {
-      startsAt: startsAt.toISOString(),
+      startsAt,
       treatments,
       healthReports
     };
