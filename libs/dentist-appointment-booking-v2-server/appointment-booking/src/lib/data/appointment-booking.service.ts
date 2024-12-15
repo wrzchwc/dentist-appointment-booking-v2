@@ -22,6 +22,7 @@ import {
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
 import { DateTime, Zone } from 'luxon';
 import { Service } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
+import { END_HOUR, END_MINUTE, INTERVAL_MINUTE, START_HOUR, START_MINUTE } from '../domain/time-units';
 
 interface Period {
   readonly startsAt: string;
@@ -69,18 +70,17 @@ export class AppointmentBookingService {
     }
     fromISO.set({ second: 0, millisecond: 0 });
     const appointmentsAtDate = await this.appointmentsRepository.findAllInRange(
-      fromISO.set({ hour: 9, minute: 0 }).toISO(),
-      fromISO.set({ hour: 17, minute: 0 }).toISO()
+      fromISO.set({ hour: START_HOUR, minute: START_MINUTE }).toISO(),
+      fromISO.set({ hour: END_HOUR, minute: END_MINUTE }).toISO()
     );
     const periods = this.transformAppointmentsToPeriods(appointmentsAtDate);
     const unavailableTimes = this.transformPeriodsToUnavailableTimes(periods);
     const availableTimes: string[] = [];
-    fromISO.set({ second: 0, millisecond: 0 });
-    for (let hour = 9; hour < 17; hour++) {
-      for (let minute = 0; minute < 60; minute += 15) {
+    for (let hour = START_HOUR; hour < END_HOUR; hour++) {
+      for (let minute = 0; minute < 60; minute += INTERVAL_MINUTE) {
         const next = fromISO.set({ hour, minute }).toUTC();
         const coveredTimes = [];
-        for (let minute = 0; minute < length; minute += 15) {
+        for (let minute = START_MINUTE; minute < length; minute += INTERVAL_MINUTE) {
           coveredTimes.push(next.plus({minute: minute}).toISO())
         }
         if (coveredTimes.every((time) => !unavailableTimes.includes(time))) {
@@ -99,7 +99,7 @@ export class AppointmentBookingService {
         return [];
       }
       const minutesAtStart = dt.minute;
-      for (let offset = 0; offset < period.length; offset += 15) {
+      for (let offset = START_MINUTE; offset < period.length; offset += INTERVAL_MINUTE) {
         unavailableTimes.push(dt.set({ minute: minutesAtStart + offset }).toUTC().toISO());
       }
       return unavailableTimes;
