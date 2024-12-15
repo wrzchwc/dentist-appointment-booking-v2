@@ -15,3 +15,8 @@ export interface UserProfile {
   readonly email: string;
   readonly photoUrl: string | null;
 }
+
+export interface RefreshTokenResponse {
+  readonly token: string;
+  readonly accessToken: string;
+}

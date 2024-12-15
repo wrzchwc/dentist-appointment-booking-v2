@@ -6,7 +6,7 @@ import {
   SignInRequest,
   SignInResponse,
   SignUpRequest,
-  SignUpResponse
+  SignUpResponse, RefreshTokenResponse
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { AuthGuard } from './auth-guard.service';
 import { AuthenticatedRequest } from '../domain/authenticated-request';
@@ -37,7 +37,7 @@ export class AuthController {
   }
 
   @Post('refresh-token')
-  refreshToken(@Body() request: RefreshTokenRequest) {
+  refreshToken(@Body() request: RefreshTokenRequest): Promise<RefreshTokenResponse> {
     return this.authService.refreshTokens(request.refreshToken);
   }
 

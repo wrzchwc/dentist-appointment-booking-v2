@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import {
   CognitoIdentityProviderClient,
   ConfirmSignUpCommand,
@@ -9,7 +9,7 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfirmSignUpRequest,
+  ConfirmSignUpRequest, RefreshTokenResponse,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
@@ -85,8 +85,8 @@ export class AuthService {
     return 'SUCCESS';
   }
 
-  async refreshTokens(refreshToken: string): Promise<InitiateAuthCommandOutput> {
-    return await this.cognitoClient.send(
+  async refreshTokens(refreshToken: string): Promise<RefreshTokenResponse> {
+    const { AuthenticationResult } = await this.cognitoClient.send(
       new InitiateAuthCommand({
         AuthFlow: 'REFRESH_TOKEN_AUTH',
         ClientId: this.configService.get('CLIENT_ID'),
@@ -95,6 +95,13 @@ export class AuthService {
         }
       })
     );
+    if (!AuthenticationResult) {
+      throw new InternalServerErrorException({ message: 'Refresh failed' });
+    }
+    return {
+      token: AuthenticationResult.IdToken || '',
+      accessToken: AuthenticationResult.AccessToken || ''
+    };
   }
 
   async getUserProfile(userId: string): Promise<User | null> {
