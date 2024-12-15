@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseGuards, Request, Body, Query, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request, Body, Query, Patch, Param, Delete } from '@nestjs/common';
 import { AppointmentBookingService } from '../data/appointment-booking.service';
 import {
   AppointmentQuestion,
@@ -11,7 +11,6 @@ import {
 
 @Controller('appointment-booking')
 @UseGuards(AuthGuard)
-// todo: only for clients
 export class AppointmentBookingController {
   constructor(
     private readonly appointmentBookingService: AppointmentBookingService
@@ -44,5 +43,13 @@ export class AppointmentBookingController {
     @Body() request: RescheduleAppointmentRequest
     ): Promise<string> {
     return this.appointmentBookingService.rescheduleAppointment(appointmentId, request.startsAt)
+  }
+
+  @Delete(':appointmentId')
+  cancelAppointment(
+    @Param('appointmentId') appointmentId: string,
+    @Request() request: AuthenticatedRequest
+  ): Promise<string> {
+    return this.appointmentBookingService.cancelAppointment(appointmentId,  request.userId);
   }
 }

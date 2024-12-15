@@ -46,6 +46,10 @@ export class AppointmentsRepository {
     return this.appointmentRepository.update({id: appointmentId}, { startsAt });
   }
 
+  deleteById(appointmentId: string) {
+    return this.appointmentRepository.delete({ id: appointmentId });
+  }
+
   private getStartsAtRangeOperator(after: string, before: string): FindOperator<Date> {
     return Between(DateTime.fromISO(after).toJSDate(), DateTime.fromISO(before).toJSDate());
   }

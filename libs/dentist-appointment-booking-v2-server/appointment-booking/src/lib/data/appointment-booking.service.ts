@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { AppointmentQuestion } from '../domain/appointment-question.model';
 import {
@@ -68,6 +68,17 @@ export class AppointmentBookingService {
 
   async rescheduleAppointment(appointmentId: string, startsAt: string): Promise<string> {
     await this.appointmentsRepository.updateStartDate(appointmentId, startsAt);
+    return 'SUCCESS';
+  }
+
+  async cancelAppointment(appointmentId: string, userId: string): Promise<string> {
+    const appointment = await this.appointmentsRepository.findOneById(appointmentId);
+    if(!appointment) {
+      throw new NotFoundException('Appointment not found');
+    } else if(appointment.userId !== userId) {
+      throw new ForbiddenException('Unauthorised action');
+    }
+    await this.appointmentsRepository.deleteById(appointmentId);
     return 'SUCCESS';
   }
 }
