@@ -66,7 +66,13 @@ export class AppointmentBookingService {
     return this.availableDatesCalculator.calculateAvailableDates(appointmentsAtDate, fromISO, estimatedLength);
   }
 
-  async rescheduleAppointment(appointmentId: string, startsAt: string): Promise<string> {
+  async rescheduleAppointment(appointmentId: string, startsAt: string, userId: string): Promise<string> {
+    const appointment = await this.appointmentsRepository.findOneById(appointmentId);
+    if(!appointment) {
+      throw new NotFoundException('Appointment not found');
+    } else if(appointment.userId !== userId) {
+      throw new ForbiddenException('Unauthorised action');
+    }
     await this.appointmentsRepository.updateStartDate(appointmentId, startsAt);
     return 'SUCCESS';
   }
