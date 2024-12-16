@@ -7,3 +7,4 @@ export * from './lib/data/auth.actions';
 export { authGuard } from './lib/data/auth.guard';
 export { JwtInterceptor } from './lib/data/jwt.interceptor';
 export { AuthFacade } from './lib/data/auth-facade.service';
+export { guestGuard } from './lib/data/guest.guard';

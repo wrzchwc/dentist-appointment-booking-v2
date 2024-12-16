@@ -1,6 +1,10 @@
 import { Routes } from '@angular/router';
 import { Route} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
-import { AUTH_ROUTES, authGuard } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
+import {
+  AUTH_ROUTES,
+  authGuard,
+  guestGuard
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 
 export const APP_ROUTES: Routes = [
   {
@@ -20,10 +24,12 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: Route.AUTH,
+    canMatch: [guestGuard],
     children: AUTH_ROUTES
   },
   {
     path: Route.HOME,
+    canMatch: [guestGuard],
     title: 'Dentist Appointment Booking',
     loadComponent: async () => (await import('./shared/components/page/home/home.component')).HomeComponent
   }
