@@ -3,6 +3,5 @@ export enum Route {
   CLIENT = 'client',
   AUTH = 'auth',
   APPOINTMENT_BOOKING = 'appointment-booking',
-  ADMIN = 'admin',
-  APPOINTMENT_PREVIEW = 'appointment-preview',
+  ADMIN = 'admin'
 }
