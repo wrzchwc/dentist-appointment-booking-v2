@@ -51,7 +51,6 @@ export const HealthStateStore = signalStore(
           Object.entries(descriptors).filter(([, { womenOnly }]) => !womenOnly)
         )
       }));
-      console.log(Object.entries(store.descriptors()));
     }
   }))
 );
