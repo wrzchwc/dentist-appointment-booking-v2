@@ -13,14 +13,13 @@ export class AuthGuard implements CanActivate {
 
     const token = request.headers['authorization'].split(' ')[1];
     try {
-      const { username } = await this.jwtVerifier.verify(token);
-      request.userId = username;
+      const decodedToken = await this.jwtVerifier.verify(token);
+      request.userId = decodedToken.username;
+      request.groups = decodedToken['cognito:groups'];
     } catch (error) {
       console.log(error);
-      console.log('Token invalid!');
       return false;
     }
-
     return true;
   }
 }

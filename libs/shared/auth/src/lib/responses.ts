@@ -14,6 +14,7 @@ export interface UserProfile {
   readonly lastName: string;
   readonly email: string;
   readonly photoUrl: string | null;
+  readonly groups?: string [];
 }
 
 export interface RefreshTokenResponse {

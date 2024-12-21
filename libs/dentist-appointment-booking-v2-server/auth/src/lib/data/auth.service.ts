@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import {
+  AdminListGroupsForUserCommand,
   CognitoIdentityProviderClient,
   ConfirmSignUpCommand,
   GlobalSignOutCommand,
@@ -103,7 +104,9 @@ export class AuthService {
     };
   }
 
-  async getUserProfile(userId: string): Promise<User | null> {
-    return await this.usersService.getUserProfile(userId);
+  async getUserProfile(userId: string, groups: string[]) {
+    const foundUser: User | null =  await this.usersService.getUserProfile(userId);
+    if (!foundUser) throw new InternalServerErrorException();
+    return {...foundUser, groups}
   }
 }
