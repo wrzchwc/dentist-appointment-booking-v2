@@ -7,6 +7,7 @@ import {
   navigateToPage,
   Route
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
+import { Group } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Injectable()
 export class AuthEffects {
@@ -32,7 +33,9 @@ export class AuthEffects {
   readonly fetchUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchUserProfileSuccess),
-      map(() => navigateToPage({ route: Route.CLIENT }))
+      map(({profile}) => profile.groups?.includes(Group.ADMIN)),
+      map((isAdmin) => isAdmin ? Route.ADMIN : Route.CLIENT),
+      map((route) => navigateToPage({ route }))
     )
   );
 

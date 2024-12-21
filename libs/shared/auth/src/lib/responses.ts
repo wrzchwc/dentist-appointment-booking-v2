@@ -13,7 +13,11 @@ export interface UserProfile {
   readonly lastName: string;
   readonly email: string;
   readonly photoUrl: string | null;
-  readonly groups?: string [];
+  readonly groups?: Group [];
+}
+
+export enum Group {
+  ADMIN = 'admin'
 }
 
 export interface RefreshTokenResponse {

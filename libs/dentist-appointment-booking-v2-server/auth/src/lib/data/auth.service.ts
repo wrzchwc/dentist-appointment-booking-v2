@@ -9,7 +9,7 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfirmSignUpRequest, RefreshTokenResponse,
+  ConfirmSignUpRequest, Group, RefreshTokenResponse,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
@@ -102,7 +102,7 @@ export class AuthService {
     };
   }
 
-  async getUserProfile(userId: string, groups: string[]) {
+  async getUserProfile(userId: string, groups: Group[]) {
     const foundUser: User | null =  await this.usersService.getUserProfile(userId);
     if (!foundUser) throw new InternalServerErrorException();
     return {...foundUser, groups}
