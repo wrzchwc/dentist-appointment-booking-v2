@@ -3,7 +3,6 @@ export interface SignUpResponse {
 }
 
 export interface SignInResponse {
-  readonly token: string;
   readonly accessToken: string;
   readonly refreshToken: string;
 }
@@ -18,6 +17,5 @@ export interface UserProfile {
 }
 
 export interface RefreshTokenResponse {
-  readonly token: string;
   readonly accessToken: string;
 }

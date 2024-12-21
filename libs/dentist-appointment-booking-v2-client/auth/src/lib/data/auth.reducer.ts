@@ -8,13 +8,11 @@ export const authReducer = createReducer(
   initialState,
   on(signInSuccess, (state, { tokens }) => ({
     ...state,
-    token: tokens.token,
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken
   })),
   on(signOutSuccess, (state) => ({
     ...state,
-    token: undefined,
     accessToken: undefined,
     refreshToken: undefined,
     profile: undefined
@@ -23,9 +21,8 @@ export const authReducer = createReducer(
     ...state,
     profile
   })),
-  on(refreshTokens, (state, {token, accessToken}) => ({
+  on(refreshTokens, (state, {accessToken}) => ({
     ...state,
-    token,
     accessToken
   }))
 );

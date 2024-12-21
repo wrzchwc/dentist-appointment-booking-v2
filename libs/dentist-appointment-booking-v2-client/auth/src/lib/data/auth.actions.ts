@@ -21,5 +21,5 @@ export const fetchUserProfileSuccess = createAction(
 
 export const refreshTokens = createAction(
   '[Auth] Refresh Tokens',
-  props<{ readonly token: string, accessToken: string }>()
+  props<{ accessToken: string }>()
 )

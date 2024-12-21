@@ -72,7 +72,6 @@ export class AuthService {
       })
     );
     return {
-      token: AuthenticationResult?.IdToken || '',
       refreshToken: AuthenticationResult?.RefreshToken || '',
       accessToken: AuthenticationResult?.AccessToken || ''
     };
@@ -99,7 +98,6 @@ export class AuthService {
       throw new InternalServerErrorException({ message: 'Refresh failed' });
     }
     return {
-      token: AuthenticationResult.IdToken || '',
       accessToken: AuthenticationResult.AccessToken || ''
     };
   }
