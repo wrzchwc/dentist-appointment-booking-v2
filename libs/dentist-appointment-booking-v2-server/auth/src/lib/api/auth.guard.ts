@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     try {
       const decodedToken = await this.jwtVerifier.verify(token);
       request.userId = decodedToken.username;
-      request.groups = decodedToken['cognito:groups'];
+      request.roles = decodedToken['cognito:groups'];
     } catch (error) {
       console.log(error);
       return false;

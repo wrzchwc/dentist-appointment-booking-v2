@@ -8,7 +8,7 @@ import {
   SignUpRequest,
   SignUpResponse, RefreshTokenResponse
 } from '@dentist-appointment-booking-v2/shared/auth';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from './auth.guard';
 import { AuthenticatedRequest } from '../domain/authenticated-request';
 
 @Controller('auth')
@@ -44,6 +44,6 @@ export class AuthController {
   @Get('me')
   @UseGuards(AuthGuard)
   getCurrentUserProfile(@Request() request: AuthenticatedRequest): Promise<UserProfile | null> {
-    return this.authService.getUserProfile(request.userId, request.groups || []);
+    return this.authService.getUserProfile(request.userId, request.roles || []);
   }
 }

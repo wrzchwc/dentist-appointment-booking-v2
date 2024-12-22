@@ -13,10 +13,10 @@ export interface UserProfile {
   readonly lastName: string;
   readonly email: string;
   readonly photoUrl: string | null;
-  readonly groups?: Group [];
+  readonly roles?: Role [];
 }
 
-export enum Group {
+export enum Role {
   ADMIN = 'admin'
 }
 

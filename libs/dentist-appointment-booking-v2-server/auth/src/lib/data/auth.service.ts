@@ -1,6 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import {
-  AdminListGroupsForUserCommand,
   CognitoIdentityProviderClient,
   ConfirmSignUpCommand,
   GlobalSignOutCommand,
@@ -9,11 +8,11 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider';
 import { ConfigService } from '@nestjs/config';
 import {
-  ConfirmSignUpRequest, Group, RefreshTokenResponse,
+  ConfirmSignUpRequest, Role, RefreshTokenResponse,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
-  SignUpResponse
+  SignUpResponse, UserProfile
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { User, UsersService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/users';
 
@@ -102,9 +101,9 @@ export class AuthService {
     };
   }
 
-  async getUserProfile(userId: string, groups: Group[]) {
-    const foundUser: User | null =  await this.usersService.getUserProfile(userId);
+  async getUserProfile(userId: string, roles: Role[]): Promise<UserProfile> {
+    const foundUser: User | null = await this.usersService.getUserProfile(userId);
     if (!foundUser) throw new InternalServerErrorException();
-    return {...foundUser, groups}
+    return { ...foundUser, roles };
   }
 }
