@@ -5,7 +5,7 @@ export interface AppointmentDAO {
   readonly user?: UserDAO;
 }
 
-interface UserDAO {
+export interface UserDAO {
   readonly name: string;
   readonly surname: string;
 }

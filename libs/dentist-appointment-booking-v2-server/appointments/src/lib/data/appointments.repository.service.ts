@@ -29,6 +29,15 @@ export class AppointmentsRepository {
     });
   }
 
+  findAllInRangeIncludeUser(after: string, before: string): Promise<Appointment[]> {
+    return this.appointmentRepository.find({
+      where: { startsAt: this.getStartsAtRangeOperator(after, before) },
+      select: ['startsAt'],
+      relations: ['treatments', 'userId'],
+      order: { startsAt: 'ASC' }
+    });
+  }
+
   findAllInRange(after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
       where: { startsAt: this.getStartsAtRangeOperator(after, before) },

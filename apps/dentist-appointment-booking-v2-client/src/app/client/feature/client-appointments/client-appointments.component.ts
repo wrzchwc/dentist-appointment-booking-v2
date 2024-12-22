@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { AppointmentsComponent } from '../../../shared';
-import { AppointmentsStore } from './appointments.store';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import {
+  AppointmentsStore
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-listing';
 
 @Component({
   selector: 'app-client-appointments',

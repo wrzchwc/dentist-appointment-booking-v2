@@ -20,6 +20,13 @@ export class AppointmentManagementService {
       .filter((appointment) => appointment.treatments.length > 0);
   }
 
+  async getAppointmentsInRange(after: string, before: string) {
+    const foundAppointments: Appointment[] = await this.appointmentsRepository.findAllInRangeIncludeUser(after, before);
+    console.log(foundAppointments);
+    return this.appointmentTransformer.transformAppointments(foundAppointments)
+      .filter((appointment) => appointment.treatments.length > 0);
+  }
+
   async getAppointmentById(appointmentId: string): Promise<AppointmentDAO> {
     const appointment = await this.appointmentsRepository.findOneById(appointmentId);
     if(!appointment) throw new NotFoundException(`Appointment ${appointmentId} not found`);

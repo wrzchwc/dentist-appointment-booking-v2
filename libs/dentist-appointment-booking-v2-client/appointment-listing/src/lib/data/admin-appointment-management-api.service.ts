@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DateTime } from 'luxon';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentManagementApiService } from './appointment-management-api.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class AdminAppointmentManagementApiService {
-    private readonly baseUrl: string = '/api/appointment-management';
+export class AdminAppointmentManagementApiService extends AppointmentManagementApiService{
+    private readonly baseUrl: string = '/api/appointment-management/admin';
 
-    constructor(private readonly httpClient: HttpClient) {}
+    private readonly httpClient = inject(HttpClient);
 
     getAppointments(after: Date): Observable<AppointmentDAO[]> {
         return this.httpClient.get<AppointmentDAO[]>(this.baseUrl, {
