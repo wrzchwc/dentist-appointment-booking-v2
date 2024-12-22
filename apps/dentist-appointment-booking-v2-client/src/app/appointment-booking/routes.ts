@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { ServicesResolver } from '../shared/resolvers/services.resolver';
 import { AppointmentQuestionsResolver } from './appointment-questions.resolver';
+import {
+  ServicesResolver
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 export const APPOINTMENT_BOOKING_ROUTES: Routes = [
     {

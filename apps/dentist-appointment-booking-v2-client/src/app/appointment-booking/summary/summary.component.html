@@ -17,7 +17,7 @@
           <h4 class="card-content">{{ userProfile()?.email }}</h4>
         </app-card>
         <app-card title="Zakres leczenia" icon="medical_services">
-          <app-services-table [dataSource]="priceItems"></app-services-table>
+          <lib-services-table [dataSource]="priceItems"></lib-services-table>
         </app-card>
       </div>
       <div class="content-container">

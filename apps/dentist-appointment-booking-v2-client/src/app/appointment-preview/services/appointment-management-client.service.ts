@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AppointmentUrlService } from '../../shared/services/appointment-url.service';
+import { AppointmentUrlService } from './appointment-url.service';
 
 @Injectable()
 export class AppointmentManagementClientService {

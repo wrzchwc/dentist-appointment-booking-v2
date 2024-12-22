@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Route} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
+import { Route } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
 import {
   AUTH_ROUTES,
   authGuard,
@@ -26,6 +26,11 @@ export const APP_ROUTES: Routes = [
     path: Route.AUTH,
     canMatch: [guestGuard],
     children: AUTH_ROUTES
+  },
+  {
+    path: Route.PRICE_LIST,
+    canMatch: [authGuard],
+    loadChildren: async () => (await import('@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/price-list')).PRICE_LIST_ROUTES
   },
   {
     path: Route.HOME,

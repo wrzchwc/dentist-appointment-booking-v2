@@ -55,8 +55,22 @@
         "libs/dentist-appointment-booking-v2-server/treatments/*",
         "libs/dentist-appointment-booking-v2-server/health-reports/*",
         "libs/dentist-appointment-booking-v2-server/appointment-management/*",
-        "libs/shared/appointment-management/*"
+        "libs/shared/appointment-management/*",
+        "libs/shared/services/*"
       ]
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": ["libs/shared/services/*"],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json"
+        }
+      }
     }
   ],
   "targetDefaults": {

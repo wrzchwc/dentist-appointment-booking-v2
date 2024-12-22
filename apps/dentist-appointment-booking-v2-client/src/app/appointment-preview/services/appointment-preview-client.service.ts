@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { iif, Observable } from 'rxjs';
-import { AppointmentUrlService } from '../../shared/services/appointment-url.service';
+import { AppointmentUrlService } from './appointment-url.service';
 import { HttpClient } from '@angular/common/http';
 import { DateTime } from 'luxon';
 import { Appointment, AppointmentPreview } from '../model';

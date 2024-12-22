@@ -3,8 +3,6 @@ import { AdminAppointmentResolver } from './components/page/admin-appointment/ad
 import { AdminAppointmentComponent } from './components/page/admin-appointment/admin-appointment.component';
 import { AdminAppointmentsResolver } from './components/page/admin-appointments/admin-appointments.resolver';
 import { AdminAppointmentsComponent } from './components/page/admin-appointments/admin-appointments.component';
-import { PriceListComponent } from './components/page/price-list/price-list.component';
-import { ServicesResolver } from '../shared/resolvers/services.resolver';
 import { AdminComponent } from './components/page/admin/admin.component';
 import { AdminResolver } from './components/page/admin/admin.resolver';
 
@@ -26,6 +24,5 @@ export const ADMIN_ROUTES: Routes = [
             },
         ],
     },
-    { path: 'price-list', component: PriceListComponent, title: 'Cennik', resolve: { services: ServicesResolver } },
     { path: '', component: AdminComponent, title: 'Rezerwacje', resolve: { appointments: AdminResolver } },
 ];

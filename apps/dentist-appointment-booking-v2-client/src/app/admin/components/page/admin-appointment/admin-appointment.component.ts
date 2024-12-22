@@ -6,10 +6,10 @@ import { DataService } from '../../../../appointment-preview/components/appointm
 import { DatePipe, Location, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { AppointmentComponent } from '../../../../shared';
 import { CardComponent } from '../../../../shared';
-import { ServicesTableComponent } from '../../../../shared';
 import { Appointment1, NamedPriceItem, PricePipe } from '../../../../shared';
 import { EmailPipe } from './email.pipe';
 import { EndDatePipe } from '../../../../appointment-preview/components/appointment-preview/end-date.pipe';
+import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
 
 @Component({
     selector: 'app-admin-appointment',
@@ -19,18 +19,19 @@ import { EndDatePipe } from '../../../../appointment-preview/components/appointm
         '../../../../shared/components/page/appointment/appointment.scss',
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        AppointmentComponent,
-        NgIf,
-        CardComponent,
-        ServicesTableComponent,
-        DatePipe,
-        NgOptimizedImage,
-        NgForOf,
-        PricePipe,
-        EmailPipe,
-        EndDatePipe,
-    ],
+  imports: [
+    AppointmentComponent,
+    NgIf,
+    CardComponent,
+    ServicesTableComponent,
+    DatePipe,
+    NgOptimizedImage,
+    NgForOf,
+    PricePipe,
+    EmailPipe,
+    EndDatePipe,
+    ServicesTableComponent
+  ],
     standalone: true,
 })
 export class AdminAppointmentComponent implements OnDestroy {

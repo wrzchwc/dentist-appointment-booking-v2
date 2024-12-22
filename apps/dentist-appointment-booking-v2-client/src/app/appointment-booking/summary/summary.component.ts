@@ -2,7 +2,6 @@ import { AfterViewChecked, ChangeDetectionStrategy, Component, input, OnInit } f
 import {
   NamedPriceItem,
   CardComponent,
-  ServicesTableComponent,
   PricePipe
 } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
@@ -14,13 +13,14 @@ import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2
 import {
   AppointmentDateService
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
+import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIf, CardComponent, ServicesTableComponent, DatePipe, AsyncPipe, PricePipe],
+  imports: [NgIf, CardComponent, ServicesTableComponent, DatePipe, AsyncPipe, PricePipe, ServicesTableComponent],
   standalone: true
 })
 export class SummaryComponent implements OnInit, AfterViewChecked {

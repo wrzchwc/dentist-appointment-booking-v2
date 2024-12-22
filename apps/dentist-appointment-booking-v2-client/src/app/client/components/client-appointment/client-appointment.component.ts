@@ -3,7 +3,6 @@ import { DatePipe } from '@angular/common';
 import {
   AppointmentComponent,
   CardComponent,
-  ServicesTableComponent,
   PricePipe,
   NamedPriceItem
 } from '../../../shared';
@@ -15,13 +14,14 @@ import {
   cancelAppointment,
   rescheduleAppointment
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
+import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
 
 @Component({
   selector: 'app-client-appointment',
   templateUrl: './client-appointment.component.html',
   styleUrls: ['../../../shared/components/page/appointment/appointment.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AppointmentComponent, CardComponent, ServicesTableComponent, DatePipe, PricePipe, EndDatePipe],
+  imports: [AppointmentComponent, CardComponent, ServicesTableComponent, DatePipe, PricePipe, EndDatePipe, ServicesTableComponent],
   standalone: true,
   providers: [AppointmentStore]
 })

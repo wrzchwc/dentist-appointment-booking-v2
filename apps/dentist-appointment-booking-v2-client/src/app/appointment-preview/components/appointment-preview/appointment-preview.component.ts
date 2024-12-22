@@ -4,8 +4,6 @@ import {
     PricePipe,
     AppointmentComponent,
     CardComponent,
-    ServicesTableComponent,
-    AuthenticationService,
 } from '../../../shared';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe, Location, NgForOf, NgIf } from '@angular/common';
@@ -14,6 +12,8 @@ import { EmailPipe } from './email.pipe';
 import { DataService } from './data.service';
 import { EndDatePipe } from './end-date.pipe';
 import { AppointmentPreview } from '../../model';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
 
 @Component({
     selector: 'app-appointment-preview',
@@ -24,17 +24,18 @@ import { AppointmentPreview } from '../../model';
         '../../../shared/components/page/appointment/appointment.component.scss',
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        AppointmentComponent,
-        CardComponent,
-        EmailPipe,
-        EndDatePipe,
-        NgForOf,
-        NgIf,
-        PricePipe,
-        ServicesTableComponent,
-        DatePipe,
-    ],
+  imports: [
+    AppointmentComponent,
+    CardComponent,
+    EmailPipe,
+    EndDatePipe,
+    NgForOf,
+    NgIf,
+    PricePipe,
+    ServicesTableComponent,
+    DatePipe,
+    ServicesTableComponent
+  ],
     providers: [AppointmentManagementClientService, DataService],
 })
 export class AppointmentPreviewComponent {

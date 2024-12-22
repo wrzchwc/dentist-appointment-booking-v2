@@ -27,15 +27,6 @@ export interface NamedPriceItem extends PriceItem {
     readonly name: string;
 }
 
-export interface Profile {
-    readonly id: string;
-    readonly isAdmin: boolean;
-    readonly name: string;
-    readonly surname: string;
-    readonly email: string;
-    readonly photoUrl: string;
-}
-
 export interface Appointment1 {
     readonly id: string;
     readonly startsAt: Date;

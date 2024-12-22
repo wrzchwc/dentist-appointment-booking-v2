@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { ServiceCardComponent } from '../service-card/service-card.component';
-import { Service } from '../../shared';
+import { ServiceDAO } from '@dentist-appointment-booking-v2/shared/services';
 
 @Component({
     selector: 'app-appointment-services',
@@ -12,5 +12,5 @@ import { Service } from '../../shared';
     standalone: true,
 })
 export class AppointmentServicesComponent {
-    @Input() services: Service[] = [];
+    @Input() services: ServiceDAO[] = [];
 }

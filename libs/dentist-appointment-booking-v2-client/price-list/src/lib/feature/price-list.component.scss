@@ -1,0 +1,76 @@
+@use '@angular/material' as mat;
+
+.main {
+  display: flex;
+  justify-content: flex-start;
+  cursor: default;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-container {
+  @extend .container;
+  padding: 25px;
+  gap: 40px;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.action-container {
+  @extend .container;
+  gap: 40px;
+}
+
+.details-container {
+  @extend .bold;
+  @extend .container;
+  gap: 20px;
+  color: mat.m2-get-color-from-palette(mat.$m2-gray-palette, 900);
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.detail-container {
+  @extend .container;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.title {
+  $dimension: 58px;
+  @extend .bold;
+  font-size: $dimension - 10px;
+  line-height: $dimension;
+  margin-bottom: 0;
+}
+
+.service-name {
+  @extend .bold;
+  font-size: 31px;
+  line-height: 39px;
+}
+
+.times-detail {
+  width: 106px;
+}
+
+.price-detail {
+  width: 62px;
+}
+
+.menu {
+  @extend .bold;
+  font-size: 14px;
+  line-height: 17px;
+}

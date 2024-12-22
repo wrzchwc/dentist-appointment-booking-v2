@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { NamedPriceItem, Service } from '../shared';
+import { NamedPriceItem } from '../shared';
 import { LengthItem, TreatmentDTO } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import { ServiceDAO } from '@dentist-appointment-booking-v2/shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,9 @@ import { LengthItem, TreatmentDTO } from '@dentist-appointment-booking-v2/shared
 export class AppointmentCartService {
   readonly change$: Subject<void> = new Subject();
 
-  private readonly cart: Map<string, [BehaviorSubject<number>, Service]> = new Map();
+  private readonly cart: Map<string, [BehaviorSubject<number>, ServiceDAO]> = new Map();
 
-  initialize(services: Service[]): void {
+  initialize(services: ServiceDAO[]): void {
     services.forEach((service) => {
       this.cart.set(service.id, [new BehaviorSubject<number>(0), service]);
     });
@@ -32,7 +33,7 @@ export class AppointmentCartService {
 
   get lengthItems(): LengthItem[] {
     return this.cartValuesWithPositiveSubjectValue.map(([{ value }, { length }]) => ({
-      length,
+      length: length || 0,
       quantity: value
     }));
   }
@@ -41,11 +42,11 @@ export class AppointmentCartService {
     return this.cartValuesWithPositiveSubjectValue.map(([{ value }, { id }]) => ({ serviceId: id, quantity: value }));
   }
 
-  quantityOf(service: Service): BehaviorSubject<number> {
+  quantityOf(service: ServiceDAO): BehaviorSubject<number> {
     return this.cart.get(service.id)?.at(0) as BehaviorSubject<number>;
   }
 
-  add(service: Service): void {
+  add(service: ServiceDAO): void {
     const entry = this.cart.get(service.id);
 
     if (entry) {
@@ -57,7 +58,7 @@ export class AppointmentCartService {
     }
   }
 
-  remove(service: Service): void {
+  remove(service: ServiceDAO): void {
     const entry = this.cart.get(service.id);
 
     if (entry) {
@@ -69,7 +70,7 @@ export class AppointmentCartService {
     }
   }
 
-  private get cartValuesWithPositiveSubjectValue(): Array<[BehaviorSubject<number>, Service]> {
+  private get cartValuesWithPositiveSubjectValue(): Array<[BehaviorSubject<number>, ServiceDAO]> {
     return Array.from(this.cart.values()).filter(([{ value }]) => value > 0);
   }
 }

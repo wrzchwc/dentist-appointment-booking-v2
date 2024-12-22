@@ -9,7 +9,6 @@ import {
   Signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Service } from '../../shared';
 import { AppointmentCartService } from '../appointment-cart.service';
 import { debounceTime, filter, Observable, switchMap } from 'rxjs';
 import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
@@ -38,6 +37,7 @@ import {
   AppointmentDateService, AvailableTimesStore
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ServiceDAO } from '@dentist-appointment-booking-v2/shared/services';
 
 @Component({
   selector: 'app-appointment-booking',
@@ -58,7 +58,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providers: [HealthStateStore, AvailableTimesStore]
 })
 export class AppointmentBookingComponent implements OnInit, OnDestroy {
-  readonly services = input<Service[]>([]);
+  readonly services = input<ServiceDAO[]>([]);
   readonly appointmentQuestions = input<AppointmentQuestion[]>([]);
 
   private readonly authFacade = inject(AuthFacade);
