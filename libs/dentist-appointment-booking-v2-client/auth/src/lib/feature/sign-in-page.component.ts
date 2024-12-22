@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { signIn } from '../data/auth.actions';
 
 @Component({
-  selector: 'lib-sign-in-page',
+  selector: 'lib-sign-in-feature',
   standalone: true,
   imports: [
     CommonModule,

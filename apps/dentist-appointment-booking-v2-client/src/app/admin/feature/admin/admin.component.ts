@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { DateService } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date';
 import { RouterLink } from '@angular/router';
-import { AppointmentsListComponent } from '../../../../shared';
+import { DatePipe } from '@angular/common';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentPreviewComponent, AppointmentsListComponent } from '../../../shared';
 import {
   AppointmentsWrapperComponent
-} from '../../../../shared/components/page/appointments-wrapper/appointments-wrapper.component';
-import { DatePipe } from '@angular/common';
-import { AppointmentPreviewComponent } from '../../../../shared';
-import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+} from '../../../shared/components/page/appointments-wrapper/appointments-wrapper.component';
 
 @Component({
   selector: 'app-admin',
@@ -24,7 +23,7 @@ import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointme
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminComponent {
-  readonly appointments = input<AppointmentDAO[]>();
+  readonly appointments = input<AppointmentDAO[]>([]);
 
   private readonly dateService = inject(DateService);
 

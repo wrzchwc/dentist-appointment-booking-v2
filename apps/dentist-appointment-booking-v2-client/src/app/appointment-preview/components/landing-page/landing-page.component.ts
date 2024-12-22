@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { AppointmentsListComponent } from '../../../shared';
 
 @Component({
-    selector: 'app-landing-page',
+    selector: 'app-landing-feature',
     standalone: true,
     templateUrl: './landing-page.component.html',
     styleUrls: ['./landing-page.component.scss'],

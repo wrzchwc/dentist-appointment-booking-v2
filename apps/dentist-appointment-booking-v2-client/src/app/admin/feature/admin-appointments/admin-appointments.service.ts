@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DateTime } from 'luxon';
-import { AdminAppointmentPreview } from '../../../../shared';
-import { environment } from '../../../../../environments/environment';
+import { AdminAppointmentPreview } from '../../../shared';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AdminAppointmentsService {
-    private readonly baseUrl: string = `${environment.apiUrl}/api/appointments`;
+    private readonly baseUrl = '/api/appointment-management';
 
     constructor(private readonly client: HttpClient) {}
 

@@ -9,7 +9,10 @@ import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointme
     providedIn: 'root',
 })
 export class AdminResolver  {
-    constructor(private readonly admin: AdminAppointmentManagementApiService, private readonly date: DateService) {}
+    constructor(
+      private readonly admin: AdminAppointmentManagementApiService,
+      private readonly date: DateService
+    ) {}
 
     resolve(): Observable<AppointmentDAO[]> {
         return this.admin.getAppointments(this.date.currentDay);

@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { ClientAppointmentComponent } from './components/client-appointment/client-appointment.component';
-import { ClientAppointmentsComponent } from './components/client-appointments/client-appointments.component';
-import { ClientComponent } from './components/client/client.component';
-import { ClientResolver } from './components/client/client.resolver';
+import { ClientAppointmentComponent } from './feature/client-appointment/client-appointment.component';
+import { ClientAppointmentsComponent } from './feature/client-appointments/client-appointments.component';
+import { ClientComponent } from './feature/client/client.component';
+import { ClientResolver } from './feature/client/client.resolver';
 
 export const CLIENT_ROUTES: Routes = [
     {

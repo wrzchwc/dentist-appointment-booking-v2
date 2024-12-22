@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdatePriceComponent } from '../ui/update-price.component';
 import { filter, map, switchMap } from 'rxjs';

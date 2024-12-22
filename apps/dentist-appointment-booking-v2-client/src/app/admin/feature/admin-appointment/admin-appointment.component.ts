@@ -2,21 +2,19 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AdminAppointmentService } from './admin-appointment.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { DataService } from '../../../../appointment-preview/components/appointment-preview/data.service';
 import { DatePipe, Location, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
-import { AppointmentComponent } from '../../../../shared';
-import { CardComponent } from '../../../../shared';
-import { Appointment1, NamedPriceItem, PricePipe } from '../../../../shared';
 import { EmailPipe } from './email.pipe';
-import { EndDatePipe } from '../../../../appointment-preview/components/appointment-preview/end-date.pipe';
 import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
+import { Appointment1, AppointmentComponent, CardComponent, NamedPriceItem, PricePipe } from '../../../shared';
+import { EndDatePipe } from '../../../appointment-preview/components/appointment-preview/end-date.pipe';
+import { DataService } from '../../../appointment-preview/components/appointment-preview/data.service';
 
 @Component({
     selector: 'app-admin-appointment',
     templateUrl: './admin-appointment.component.html',
     styleUrls: [
         './admin-appointment.component.scss',
-        '../../../../shared/components/page/appointment/appointment.scss',
+        '../../../shared/components/page/appointment/appointment.scss',
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [

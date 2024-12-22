@@ -1,4 +1,4 @@
-@if ((appointments() || []).length > 0) {
+@if ((appointments()).length > 0) {
   <app-appointments-list title="Rezerwacje">
     <app-appointments-wrapper>
       @for (appointment of appointments(); track appointment.id) {

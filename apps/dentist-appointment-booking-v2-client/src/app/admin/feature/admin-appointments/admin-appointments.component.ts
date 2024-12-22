@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AdminAppointmentsService } from './admin-appointments.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AppointmentsComponent } from '../../../../shared';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import { AppointmentsComponent } from '../../../shared';
 
 @Component({
   selector: 'app-admin-appointments',
