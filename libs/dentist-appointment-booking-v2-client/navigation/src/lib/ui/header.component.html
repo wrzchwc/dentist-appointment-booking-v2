@@ -21,7 +21,7 @@
   </div>
   @if (isAuthenticated()) {
     <div class="user-container">
-      @if (false) {
+      @if (isAdmin()) {
         <div class="nav-container">
           <button mat-button color="primary" class="nav-button" routerLink="/admin/appointments">
             WIZYTY

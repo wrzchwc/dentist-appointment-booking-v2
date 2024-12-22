@@ -3,7 +3,7 @@ import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
+import { Group, UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 import { Route } from '../domain/route';
 
 @Component({
@@ -20,11 +20,15 @@ export class HeaderComponent {
   readonly signOut = output();
 
   readonly isAuthenticated = computed(() => !!this.profile());
+  readonly isAdmin = computed(() => this.profile()?.groups?.includes(Group.ADMIN));
+
   readonly logoUrl = computed(() => {
-      if (!this.isAuthenticated()) {
-        return `/${Route.HOME}`;
+      if (this.isAdmin()) {
+        return Route.ADMIN;
+      } else if (this.isAuthenticated()) {
+        return Route.CLIENT;
       }
-      return Route.CLIENT;
+      return Route.HOME;
     }
   );
 
