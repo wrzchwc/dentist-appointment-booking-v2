@@ -30,6 +30,7 @@ export const HealthReportEntity = new EntitySchema<HealthReport>({
     healthFactId: {
       type: 'many-to-one',
       target: 'health-facts',
+      eager: true,
       joinColumn: {
         name: 'healthFactId',
         referencedColumnName: 'id'

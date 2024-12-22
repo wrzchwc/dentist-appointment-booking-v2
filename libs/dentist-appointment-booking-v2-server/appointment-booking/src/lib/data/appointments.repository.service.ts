@@ -20,6 +20,13 @@ export class AppointmentsRepository {
     });
   }
 
+  findOneByIdAdmin(appointmentId: string): Promise<Appointment | null> {
+    return this.appointmentRepository.findOne({
+      where: { id: appointmentId },
+      relations: ['treatments', 'userId', 'healthReports']
+    });
+  }
+
   findAllByUserIdInRange(userId: string, after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
       where: { userId, startsAt: this.getStartsAtRangeOperator(after, before) },
@@ -32,7 +39,7 @@ export class AppointmentsRepository {
   findAllInRangeIncludeUser(after: string, before: string): Promise<Appointment[]> {
     return this.appointmentRepository.find({
       where: { startsAt: this.getStartsAtRangeOperator(after, before) },
-      select: ['startsAt'],
+      select: ['id', 'startsAt'],
       relations: ['treatments', 'userId'],
       order: { startsAt: 'ASC' }
     });

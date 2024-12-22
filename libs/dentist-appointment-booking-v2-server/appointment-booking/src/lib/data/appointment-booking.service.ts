@@ -5,18 +5,14 @@ import {
   AppointmentQuestion as AppointmentQuestionDAO,
   BookAppointmentRequest
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
-import {
-  AppointmentsRepository
-} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AppointmentQuestionEntity } from '../domain/appointment-question.entity';
-import {
-  HealthReportsRepository
-} from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
 import { TreatmentsRepository } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
 import { DateTime } from 'luxon';
 import { END_HOUR, END_MINUTE, START_HOUR, START_MINUTE } from '../domain/time-units';
 import { AvailableDatesCalculator } from './available-dates-calculator.service';
+import { HealthReportsRepository } from './health-reports.repository.service';
+import { AppointmentsRepository } from './appointments.repository.service';
 
 @Injectable()
 export class AppointmentBookingService {

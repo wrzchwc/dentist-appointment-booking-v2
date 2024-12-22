@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Appointment } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { Period } from '../domain/period';
 import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import { Service } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/services';
+import { Appointment } from '../domain/appointment.model';
 
 @Injectable()
 export class PeriodFactory {

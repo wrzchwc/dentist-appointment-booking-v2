@@ -45,4 +45,9 @@ export class AppointmentManagementController {
   getClientAppointment(@Param('id') appointmentId: string): Promise<AppointmentDAO> {
     return this.appointmentManagementService.getAppointmentById(appointmentId);
   }
+
+  @Get('admin/:id')
+  getAppointment(@Param('id') appointmentId: string): Promise<AppointmentDAO> {
+    return this.appointmentManagementService.getAppointmentByIdAdmin(appointmentId);
+  }
 }

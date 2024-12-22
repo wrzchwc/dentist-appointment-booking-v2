@@ -4,24 +4,33 @@ import { AppointmentBookingService } from './data/appointment-booking.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppointmentQuestionEntity } from './domain/appointment-question.entity';
 import { HealthFactEntity } from './domain/health-fact.entity';
-import { AppointmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { TreatmentsModule } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
-import { HealthReportsModule } from '@dentist-appointment-booking/dentist-appointment-booking-v2-server/health-reports';
 import { PeriodFactory } from './data/period-factory.service';
 import { AvailableDatesCalculator } from './data/available-dates-calculator.service';
+import { HealthReportEntity } from './domain/health-report.entity';
+import { HealthReportsRepository } from './data/health-reports.repository.service';
+import { AppointmentsRepository } from './data/appointments.repository.service';
+import { AppointmentEntity } from './domain/appointment.entity';
 
 @Module({
   controllers: [AppointmentBookingController],
-  providers: [AppointmentBookingService, PeriodFactory, AvailableDatesCalculator],
+  providers: [
+    AppointmentBookingService,
+    PeriodFactory,
+    AvailableDatesCalculator,
+    HealthReportsRepository,
+    AppointmentsRepository
+  ],
   imports: [
     TypeOrmModule.forFeature([
       AppointmentQuestionEntity,
-      HealthFactEntity
+      HealthFactEntity,
+      HealthReportEntity,
+      AppointmentEntity
     ]),
-    AppointmentsModule,
-    HealthReportsModule,
     TreatmentsModule
-  ]
+  ],
+  exports: [AppointmentsRepository]
 })
 export class AppointmentBookingModule {
 }

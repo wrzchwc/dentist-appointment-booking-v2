@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PeriodFactory } from './period-factory.service';
-import { Appointment } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/appointments';
 import { DateTime } from 'luxon';
 import { END_HOUR, INTERVAL_MINUTE, START_HOUR, START_MINUTE } from '../domain/time-units';
 import { Period } from '../domain/period';
+import { Appointment } from '../domain/appointment.model';
 
 @Injectable()
 export class AvailableDatesCalculator {
