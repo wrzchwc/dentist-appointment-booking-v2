@@ -5,9 +5,7 @@ import { DateTime } from 'luxon';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 import { AppointmentManagementApiService } from './appointment-management-api.service';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class AdminAppointmentManagementApiService extends AppointmentManagementApiService{
     private readonly baseUrl: string = '/api/appointment-management/admin';
 

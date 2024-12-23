@@ -7,6 +7,10 @@ import {
   AppointmentManagementApiService,
   ClientAppointmentManagementApiService
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-listing';
+import {
+  AppointmentManagementApiService as AppointmentService,
+  ClientAppointmentManagementApiService as ClientAppointmentService
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-information';
 
 export const CLIENT_ROUTES: Routes = [
   {
@@ -15,6 +19,12 @@ export const CLIENT_ROUTES: Routes = [
       {
         path: ':appointmentId',
         title: 'Podgląd wizyty',
+        providers: [
+          {
+            provide: AppointmentService,
+            useClass: ClientAppointmentService
+          }
+        ],
         component: ClientAppointmentComponent
       },
       {

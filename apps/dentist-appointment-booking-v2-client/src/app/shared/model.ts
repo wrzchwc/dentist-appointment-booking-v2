@@ -1,5 +1,3 @@
-import { User } from '../appointment-preview/model';
-
 export interface Service {
     readonly id: string;
     readonly name: string;
@@ -25,37 +23,4 @@ export interface PriceItem {
 
 export interface NamedPriceItem extends PriceItem {
     readonly name: string;
-}
-
-export interface Appointment1 {
-    readonly id: string;
-    readonly startsAt: Date;
-    readonly facts: Fact[];
-    readonly services: AssociatedService[];
-    readonly user: User;
-}
-
-interface Fact {
-    readonly id: string;
-    readonly value: string;
-    readonly healthSurvey: HealthSurvey;
-}
-
-interface HealthSurvey {
-    readonly additionalInfo: string | null;
-}
-
-export interface AppointmentPreview {
-    id: string;
-    startsAt: Date;
-    services: ServicePreview[];
-}
-
-interface ServicePreview {
-    id: string;
-    name: string;
-}
-
-export interface AdminAppointmentPreview extends AppointmentPreview {
-    user: User;
 }

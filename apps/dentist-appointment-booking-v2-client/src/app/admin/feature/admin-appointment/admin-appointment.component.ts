@@ -1,62 +1,60 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { AdminAppointmentService } from './admin-appointment.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { DatePipe, Location, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { EmailPipe } from './email.pipe';
 import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
-import { Appointment1, AppointmentComponent, CardComponent, NamedPriceItem, PricePipe } from '../../../shared';
+import { AppointmentComponent, CardComponent, NamedPriceItem, PricePipe } from '../../../shared';
 import { EndDatePipe } from '../../../appointment-preview/components/appointment-preview/end-date.pipe';
-import { DataService } from '../../../appointment-preview/components/appointment-preview/data.service';
+import {
+  AppointmentStore
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-information';
+import { Store } from '@ngrx/store';
+import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
+import {
+  cancelAppointment,
+  rescheduleAppointment
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 
 @Component({
-    selector: 'app-admin-appointment',
-    templateUrl: './admin-appointment.component.html',
-    styleUrls: [
-        './admin-appointment.component.scss',
-        '../../../shared/components/page/appointment/appointment.scss',
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-admin-appointment',
+  templateUrl: './admin-appointment.component.html',
+  styleUrls: [
+    './admin-appointment.component.scss',
+    '../../../shared/components/page/appointment/appointment.scss'
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AppointmentComponent,
-    NgIf,
     CardComponent,
     ServicesTableComponent,
     DatePipe,
-    NgOptimizedImage,
-    NgForOf,
     PricePipe,
     EmailPipe,
     EndDatePipe,
     ServicesTableComponent
   ],
-    standalone: true,
+  standalone: true,
+  providers: [AppointmentStore]
 })
-export class AdminAppointmentComponent implements OnDestroy {
-    readonly appointment: Appointment1 = this.activatedRoute.snapshot.data['appointment'];
-    readonly dataSource: NamedPriceItem[] = this.appointmentService.createDateSource(this.appointment.services);
-    readonly length: number = this.appointmentService.calculateLength(this.appointment.services);
+export class AdminAppointmentComponent {
+  private readonly appointmentStore = inject(AppointmentStore);
+  private readonly store = inject(Store);
 
-    private readonly destroy$: Subject<void> = new Subject();
+  readonly appointment: Signal<AppointmentDAO | undefined> = this.appointmentStore.appointment;
+  readonly dataSource: Signal<NamedPriceItem[]> = this.appointmentStore.dataSource;
+  readonly length: Signal<number> = this.appointmentStore.length;
+  readonly appointmentId = computed(() => this.appointment()?.id || '');
+  readonly startsAt = computed(() => this.appointment()?.startsAt || '');
 
-    constructor(
-        private readonly activatedRoute: ActivatedRoute,
-        private readonly appointmentService: DataService,
-        private readonly adminAppointmentService: AdminAppointmentService,
-        private readonly location: Location
-    ) {}
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
+  handleCancel() {
+    this.store.dispatch(cancelAppointment({ appointmentId: this.appointmentId() }));
+  }
 
-    handleCancel(): void {
-        this.adminAppointmentService
-            .cancelAppointment(this.appointment.id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-                this.location.back();
-            });
-    }
+  handleReschedule() {
+    this.store.dispatch(rescheduleAppointment({
+      id: this.appointmentId(),
+      length: this.length(),
+      startsAt: this.startsAt()
+    }));
+  }
 }

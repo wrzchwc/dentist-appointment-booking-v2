@@ -18,6 +18,9 @@
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking": [
         "libs/dentist-appointment-booking-v2-client/appointment-booking/src/index.ts"
       ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-information": [
+        "libs/dentist-appointment-booking-v2-client/appointment-information/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-listing": [
         "libs/dentist-appointment-booking-v2-client/appointment-listing/src/index.ts"
       ],

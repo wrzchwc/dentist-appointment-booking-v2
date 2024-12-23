@@ -3,18 +3,22 @@ import { DatePipe } from '@angular/common';
 import {
   AppointmentComponent,
   CardComponent,
-  PricePipe,
-  NamedPriceItem
+  PricePipe
 } from '../../../shared';
 import { EndDatePipe } from '../../../appointment-preview/components/appointment-preview/end-date.pipe';
-import { AppointmentStore } from './appointment.store';
 import { AppointmentDAO } from '@dentist-appointment-booking-v2/shared/appointment-management';
 import { Store } from '@ngrx/store';
 import {
   cancelAppointment,
   rescheduleAppointment
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
-import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
+import {
+  NamedPriceItem,
+  ServicesTableComponent
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
+import {
+  AppointmentStore
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-information';
 
 @Component({
   selector: 'app-client-appointment',
