@@ -1,1 +1,67 @@
-<p>sign-up-page works!</p>
+<section class="sign-up-page__main-container">
+  <mat-card class="content">
+    <mat-card-header class="header">
+      <h1 class="header-content">Rejestracja</h1>
+    </mat-card-header>
+    <mat-card-content class="content">
+      <form class="form" [formGroup]="signUpForm">
+        <mat-form-field class="form-field">
+          <mat-label>E-mail</mat-label>
+          <input matInput type="email" formControlName="email">
+        </mat-form-field>
+        @if (confirmationCodeSent()) {
+          <mat-form-field class="form-field">
+            <mat-label>Imię</mat-label>
+            <input matInput type="text" formControlName="firstName">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Nazwisko</mat-label>
+            <input matInput type="text" formControlName="lastName">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Kod potwierdzenia</mat-label>
+            <input matInput type="password" formControlName="confirmationCode">
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <mat-label>Link do zdjęcia</mat-label>
+            <input matInput type="text" formControlName="photoUrl">
+          </mat-form-field>
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="confirmSignUp()"
+            [disabled]="signUpForm.invalid"
+          >
+            Potwierdź rejestrację
+          </button>
+        } @else {
+          <mat-form-field class="form-field">
+            <mat-label>Hasło</mat-label>
+            <input matInput type="password" formControlName="password">
+          </mat-form-field>
+          <button
+            mat-flat-button
+            color="primary"
+            type="button"
+            (click)="signUp()"
+            [disabled]="disableSignUpButton"
+          >
+            Zarejestruj się
+          </button>
+        }
+      </form>
+    </mat-card-content>
+    <mat-card-footer class="footer">
+      @if(confirmationCodeSent()) {
+        <span>Kod powierdzenia wysłano na adres email</span>
+      }
+      <div class="call-to-action">
+        <span>Masz już konto?</span>
+        <button routerLink="/auth/sign-in" mat-button color="accent">
+          Zaloguj się
+        </button>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</section>

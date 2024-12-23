@@ -1,5 +1,10 @@
 import { createAction, props } from '@ngrx/store';
-import { UserProfile, SignInRequest, SignInResponse } from '@dentist-appointment-booking-v2/shared/auth';
+import {
+  UserProfile,
+  SignInRequest,
+  SignInResponse,
+  ConfirmSignUpRequest
+} from '@dentist-appointment-booking-v2/shared/auth';
 
 export const signIn = createAction(
   '[Auth] Sign In]', props<{ readonly request: SignInRequest }>()
@@ -22,4 +27,9 @@ export const fetchUserProfileSuccess = createAction(
 export const refreshTokens = createAction(
   '[Auth] Refresh Tokens',
   props<{ accessToken: string }>()
-)
+);
+
+export const confirmSignUp = createAction(
+  '[Auth] Confirm Sign Up]',
+  props<{ readonly request: ConfirmSignUpRequest }>()
+);

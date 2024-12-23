@@ -9,13 +9,13 @@ import { catchError, iif, Observable, switchMap, tap, throwError } from 'rxjs';
 import { computed, inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { accessToken, refreshToken } from './auth.selectors';
-import { AuthService } from './auth.service';
+import { AuthApiService } from './auth-api.service';
 import { refreshTokens } from './auth.actions';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   private readonly store = inject(Store);
-  private readonly authService = inject(AuthService);
+  private readonly authService = inject(AuthApiService);
 
   private readonly refreshTokenFromStore = this.store.selectSignal(refreshToken);
   private readonly accessToken = this.store.selectSignal(accessToken);

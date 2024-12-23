@@ -13,7 +13,13 @@
           <mat-label>Hasło</mat-label>
           <input matInput type="password" formControlName="password">
         </mat-form-field>
-        <button mat-flat-button color="primary" type="button" (click)="signIn()">
+        <button
+          mat-flat-button
+          color="primary"
+          type="button"
+          (click)="signIn()"
+          [disabled]="signInForm.invalid"
+        >
           Zaloguj się
         </button>
       </form>

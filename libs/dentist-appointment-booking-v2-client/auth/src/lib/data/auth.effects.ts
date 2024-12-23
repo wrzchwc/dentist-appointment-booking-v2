@@ -1,7 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AuthService } from './auth.service';
-import { fetchUserProfileSuccess, signIn, signInSuccess, signOut, signOutSuccess } from './auth.actions';
+import { AuthApiService } from './auth-api.service';
+import {
+  confirmSignUp,
+  fetchUserProfileSuccess,
+  signIn,
+  signInSuccess,
+  signOut,
+  signOutSuccess
+} from './auth.actions';
 import { filter, map, switchMap } from 'rxjs';
 import {
   navigateToPage,
@@ -12,12 +19,12 @@ import { isAdmin } from '@dentist-appointment-booking-v2/shared/auth';
 @Injectable()
 export class AuthEffects {
   private readonly actions$ = inject(Actions);
-  private readonly authService = inject(AuthService);
+  private readonly authApiService = inject(AuthApiService);
 
   readonly signIn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signIn),
-      switchMap(({ request }) => this.authService.signIn(request)),
+      switchMap(({ request }) => this.authApiService.signIn(request)),
       map((response) => signInSuccess({ tokens: response }))
     )
   );
@@ -25,7 +32,7 @@ export class AuthEffects {
   readonly signInSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signInSuccess),
-      switchMap(() => this.authService.getCurrentUserProfile()),
+      switchMap(() => this.authApiService.getCurrentUserProfile()),
       map((profile) => fetchUserProfileSuccess({ profile }))
     )
   );
@@ -42,7 +49,7 @@ export class AuthEffects {
   readonly signOut$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signOut),
-      switchMap(() => this.authService.signOut()),
+      switchMap(() => this.authApiService.signOut()),
       filter((response) => response === 'SUCCESS'),
       map(() => signOutSuccess())
     )
@@ -54,4 +61,12 @@ export class AuthEffects {
       map(() => navigateToPage({ route: Route.HOME }))
     )
   );
+
+  readonly confirmSignUp$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(confirmSignUp),
+      switchMap(({request}) => this.authApiService.confirmSignUp(request)),
+      map(() => navigateToPage({ route: Route.SIGN_IN }))
+    )
+  )
 }

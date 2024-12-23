@@ -4,14 +4,16 @@ import {
   UserProfile,
   SignInResponse,
   SignUpRequest,
-  RefreshTokenResponse
+  RefreshTokenResponse,
+  SignUpResponse,
+  ConfirmSignUpRequest
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthApiService {
   private readonly httpClient = inject(HttpClient);
 
   private readonly baseUrl = '/api/auth';
@@ -32,6 +34,14 @@ export class AuthService {
   }
 
   refreshTokens(refreshToken: string): Observable<RefreshTokenResponse> {
-    return this.httpClient.post<RefreshTokenResponse>(`${this.baseUrl}/refresh-tokens`, {refreshToken});
+    return this.httpClient.post<RefreshTokenResponse>(`${this.baseUrl}/refresh-tokens`, { refreshToken });
+  }
+
+  signUp(request: SignUpRequest): Observable<SignUpResponse> {
+    return this.httpClient.post<SignUpResponse>(`${this.baseUrl}/sign-up`, request);
+  }
+
+  confirmSignUp(request: ConfirmSignUpRequest): Observable<string> {
+    return this.httpClient.post(`${this.baseUrl}/confirm-sign-up`, request, { responseType: 'text' });
   }
 }
