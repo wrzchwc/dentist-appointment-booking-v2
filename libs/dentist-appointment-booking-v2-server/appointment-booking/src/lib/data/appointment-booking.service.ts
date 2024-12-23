@@ -5,14 +5,16 @@ import {
   AppointmentQuestion as AppointmentQuestionDAO,
   BookAppointmentRequest
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AppointmentQuestionEntity } from '../domain/appointment-question.entity';
 import { TreatmentsRepository } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/treatments';
 import { DateTime } from 'luxon';
 import { END_HOUR, END_MINUTE, START_HOUR, START_MINUTE } from '../domain/time-units';
 import { AvailableDatesCalculator } from './available-dates-calculator.service';
 import { HealthReportsRepository } from './health-reports.repository.service';
 import { AppointmentsRepository } from './appointments.repository.service';
+import { AuthenticatedRequest } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-server/auth';
+import { isAdmin, Role } from '@dentist-appointment-booking-v2/shared/auth';
+import { AppointmentQuestionEntity } from '../domain/appointment-question.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AppointmentBookingService {
@@ -22,7 +24,7 @@ export class AppointmentBookingService {
     private readonly appointmentsRepository: AppointmentsRepository,
     private readonly healthReportsRepository: HealthReportsRepository,
     private readonly treatmentsRepository: TreatmentsRepository,
-    private readonly availableDatesCalculator: AvailableDatesCalculator,
+    private readonly availableDatesCalculator: AvailableDatesCalculator
   ) {
   }
 
@@ -62,25 +64,24 @@ export class AppointmentBookingService {
     return this.availableDatesCalculator.calculateAvailableDates(appointmentsAtDate, fromISO, estimatedLength);
   }
 
-  async rescheduleAppointment(appointmentId: string, startsAt: string, userId: string): Promise<string> {
-    const appointment = await this.appointmentsRepository.findOneById(appointmentId);
-    if(!appointment) {
-      throw new NotFoundException('Appointment not found');
-    } else if(appointment.userId !== userId) {
-      throw new ForbiddenException('Unauthorised action');
-    }
+  async rescheduleAppointment(appointmentId: string, startsAt: string, request: AuthenticatedRequest): Promise<string> {
+    await this.findAppointmentAndCheckRoles(appointmentId, request.userId, request.roles);
     await this.appointmentsRepository.updateStartDate(appointmentId, startsAt);
     return 'SUCCESS';
   }
 
-  async cancelAppointment(appointmentId: string, userId: string): Promise<string> {
-    const appointment = await this.appointmentsRepository.findOneById(appointmentId);
-    if(!appointment) {
-      throw new NotFoundException('Appointment not found');
-    } else if(appointment.userId !== userId) {
-      throw new ForbiddenException('Unauthorised action');
-    }
+  async cancelAppointment(appointmentId: string, request: AuthenticatedRequest): Promise<string> {
+    await this.findAppointmentAndCheckRoles(appointmentId, request.userId, request.roles);
     await this.appointmentsRepository.deleteById(appointmentId);
     return 'SUCCESS';
+  }
+
+  private async findAppointmentAndCheckRoles(appointmentId: string, userId: string, roles: Role[]): Promise<void> {
+    const appointment = await this.appointmentsRepository.findOneById(appointmentId);
+    if (!appointment) {
+      throw new NotFoundException('Appointment not found');
+    } else if (appointment.userId !== userId && !isAdmin(roles)) {
+      throw new ForbiddenException('Unauthorised action');
+    }
   }
 }

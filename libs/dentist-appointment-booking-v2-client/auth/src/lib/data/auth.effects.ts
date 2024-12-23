@@ -7,7 +7,7 @@ import {
   navigateToPage,
   Route
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
-import { isAdmin } from '../domain/role-check';
+import { isAdmin } from '@dentist-appointment-booking-v2/shared/auth';
 
 @Injectable()
 export class AuthEffects {
@@ -33,7 +33,7 @@ export class AuthEffects {
   readonly fetchUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchUserProfileSuccess),
-      map(({profile}) => isAdmin(profile)),
+      map(({profile}) => isAdmin(profile.roles)),
       map((isAdmin) => isAdmin ? Route.ADMIN : Route.CLIENT),
       map((route) => navigateToPage({ route }))
     )

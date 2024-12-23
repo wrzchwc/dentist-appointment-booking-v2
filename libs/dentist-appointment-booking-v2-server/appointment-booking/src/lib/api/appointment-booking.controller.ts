@@ -46,7 +46,7 @@ export class AppointmentBookingController {
     return this.appointmentBookingService.rescheduleAppointment(
       appointmentId,
       body.startsAt,
-      request.userId
+      request
     );
   }
 
@@ -55,6 +55,6 @@ export class AppointmentBookingController {
     @Param('appointmentId') appointmentId: string,
     @Request() request: AuthenticatedRequest
   ): Promise<string> {
-    return this.appointmentBookingService.cancelAppointment(appointmentId,  request.userId);
+    return this.appointmentBookingService.cancelAppointment(appointmentId,  request);
   }
 }
