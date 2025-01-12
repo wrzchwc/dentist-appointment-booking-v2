@@ -1,5 +1,5 @@
 import { ApplicationConfig, isDevMode } from '@angular/core';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { APP_ROUTES } from './routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -18,6 +18,10 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   AppointmentBookingEffects
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
+import {
+  environment,
+  ENVIRONMENT
+} from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments';
 
 function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ keys: [AUTH_FEATURE_KEY], rehydrate: true, removeOnUndefined: true })(reducer);
@@ -35,6 +39,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ logOnly: !isDevMode(), maxAge: 25 }),
     provideEffects(AuthEffects, NavigationEffects, AppointmentBookingEffects),
     provideNativeDateAdapter(),
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: ENVIRONMENT, useValue: environment }
   ]
 };

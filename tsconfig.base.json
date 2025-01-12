@@ -30,6 +30,9 @@
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/date": [
         "libs/dentist-appointment-booking-v2-client/date/src/index.ts"
       ],
+      "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments": [
+        "libs/dentist-appointment-booking-v2-client/environments/src/index.ts"
+      ],
       "@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation": [
         "libs/dentist-appointment-booking-v2-client/navigation/src/index.ts"
       ],

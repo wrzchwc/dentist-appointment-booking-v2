@@ -1,14 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  UserProfile,
+  ConfirmSignUpRequest,
+  RefreshTokenResponse,
   SignInResponse,
   SignUpRequest,
-  RefreshTokenResponse,
   SignUpResponse,
-  ConfirmSignUpRequest
+  UserProfile
 } from '@dentist-appointment-booking-v2/shared/auth';
 import { HttpClient } from '@angular/common/http';
+import { ENVIRONMENT } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthApiService {
   private readonly httpClient = inject(HttpClient);
 
-  private readonly baseUrl = '/api/auth';
+  private readonly baseUrl = `${inject(ENVIRONMENT).apiUrl}/api/auth`;
 
   signIn(request: SignUpRequest): Observable<SignInResponse> {
     return this.httpClient.post<SignInResponse>(`${this.baseUrl}/sign-in`, request);
