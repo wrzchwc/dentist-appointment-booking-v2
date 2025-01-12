@@ -8,7 +8,7 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.enableCors({
-    origin: ['http://localhost:4200'],
+    origin: 'http://localhost:4200',
     methods: 'GET, POST, PATCH, DELETE',
     allowedHeaders: 'Content-Type, Authorization',
   });

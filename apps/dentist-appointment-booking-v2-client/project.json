@@ -100,6 +100,12 @@
         "buildTarget": "dentist-appointment-booking-v2-client:build",
         "spa": true
       }
+    },
+    "docker-build": {
+      "dependsOn": [
+        "build:production"
+      ],
+      "command": "docker build -f apps/dentist-appointment-booking-v2-client/Dockerfile . -t dentist-appointment-booking-v2-client"
     }
   }
 }
