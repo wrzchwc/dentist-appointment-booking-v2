@@ -7,6 +7,7 @@ import {
   HealthReportDTO,
   TreatmentDTO
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
+import { ENVIRONMENT } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import {
 export class AppointmentBookingService {
   private readonly httpClient = inject(HttpClient);
 
-  private readonly baseUrl = '/api/appointment-booking';
+  private readonly baseUrl = `${inject(ENVIRONMENT).apiUrl}/api/appointment-booking`;
 
   createAppointment(startsAt: string, treatments: TreatmentDTO[], healthReports: HealthReportDTO[]): Observable<string> {
     const body: BookAppointmentRequest = {

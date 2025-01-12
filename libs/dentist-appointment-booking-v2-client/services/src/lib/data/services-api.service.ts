@@ -2,12 +2,13 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServiceDAO, UpdateServiceRequest } from '@dentist-appointment-booking-v2/shared/services';
+import { ENVIRONMENT } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicesApiService {
-  private readonly baseUrl = '/api/services';
+  private readonly baseUrl = `${inject(ENVIRONMENT).apiUrl}/api/services`;
 
   private readonly httpClient = inject(HttpClient);
 

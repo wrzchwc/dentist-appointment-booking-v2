@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/environments';
+
 
 interface ApiUrl {
     readonly ADMIN: string;
