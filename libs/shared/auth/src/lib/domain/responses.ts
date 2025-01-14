@@ -12,7 +12,6 @@ export interface UserProfile {
   readonly firstName: string;
   readonly lastName: string;
   readonly email: string;
-  readonly photoUrl: string | null;
   readonly roles?: Role [];
 }
 

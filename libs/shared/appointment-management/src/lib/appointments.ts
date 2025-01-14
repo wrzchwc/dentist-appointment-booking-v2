@@ -10,7 +10,6 @@ export interface UserDAO {
   readonly name: string;
   readonly surname: string;
   readonly id?: string;
-  readonly photoUrl?: string | null;
   readonly email?: string;
 }
 

@@ -9,7 +9,6 @@ export interface ConfirmSignUpRequest {
   readonly userId: string;
   readonly firstName: string;
   readonly lastName: string;
-  readonly photoUrl?: string;
 }
 
 export interface SignInRequest {

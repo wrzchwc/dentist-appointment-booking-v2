@@ -19,10 +19,6 @@ export const UserEntity = new EntitySchema<User>({
     lastName: {
       type: String,
       nullable: false
-    },
-    photoUrl: {
-      type: String,
-      nullable: true
     }
   }
 })

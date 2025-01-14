@@ -52,8 +52,7 @@ export class AdminAppointmentTransformer {
       id: user.id,
       name: user.firstName,
       surname: user.lastName,
-      email: user.email,
-      photoUrl: user.photoUrl
+      email: user.email
     };
   }
 
