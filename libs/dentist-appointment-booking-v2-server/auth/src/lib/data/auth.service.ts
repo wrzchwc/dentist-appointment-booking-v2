@@ -53,8 +53,7 @@ export class AuthService {
       id: request.userId,
       email: request.email,
       firstName: request.firstName,
-      lastName: request.lastName,
-      photoUrl: request.photoUrl
+      lastName: request.lastName
     });
     return 'Success';
   }
@@ -72,7 +71,8 @@ export class AuthService {
     );
     return {
       refreshToken: AuthenticationResult?.RefreshToken || '',
-      accessToken: AuthenticationResult?.AccessToken || ''
+      accessToken: AuthenticationResult?.AccessToken || '',
+      identityToken: AuthenticationResult?.IdToken || '',
     };
   }
 

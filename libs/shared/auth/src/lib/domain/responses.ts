@@ -5,6 +5,7 @@ export interface SignUpResponse {
 export interface SignInResponse {
   readonly accessToken: string;
   readonly refreshToken: string;
+  readonly identityToken: string;
 }
 
 export interface UserProfile {
