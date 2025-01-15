@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ./.ecr.env
+URL="654362432770.dkr.ecr.us-east-1.amazonaws.com"
+NAMESPACE="dab-v2"
 REPO="server"
 
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "$URL"

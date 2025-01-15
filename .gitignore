@@ -42,6 +42,5 @@ Thumbs.db
 .nx/workspace-data
 
 apps/dentist-appointment-booking-v2-server/.env
-tools/.ecr.env
 
 .angular
