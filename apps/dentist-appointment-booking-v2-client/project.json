@@ -72,8 +72,7 @@
           "buildTarget": "dentist-appointment-booking-v2-client:build:production"
         },
         "development": {
-          "buildTarget": "dentist-appointment-booking-v2-client:build:development",
-          "proxyConfig": "apps/dentist-appointment-booking-v2-client/config/proxy.dev.conf.json"
+          "buildTarget": "dentist-appointment-booking-v2-client:build:development"
         }
       },
       "defaultConfiguration": "development"
