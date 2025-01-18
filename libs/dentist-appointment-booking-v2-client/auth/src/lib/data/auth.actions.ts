@@ -5,7 +5,6 @@ import {
   SignInResponse,
   ConfirmSignUpRequest
 } from '@dentist-appointment-booking-v2/shared/auth';
-import { createEffect } from '@ngrx/effects';
 
 export const signIn = createAction(
   '[Auth] Sign In]', props<{ readonly request: SignInRequest }>()
@@ -44,5 +43,13 @@ export const refreshTokens = createAction(
 
 export const confirmSignUp = createAction(
   '[Auth] Confirm Sign Up]',
-  props<{ readonly request: ConfirmSignUpRequest }>()
+  props<{ readonly request: ConfirmSignUpRequest, readonly photo: File | null | undefined; }>()
+);
+
+export const confirmSignUpSuccess = createAction(
+  '[Auth] Confirm Sign Up Success',
+  props<{
+    readonly photo: File | null | undefined,
+    readonly userId: string
+  }>()
 );

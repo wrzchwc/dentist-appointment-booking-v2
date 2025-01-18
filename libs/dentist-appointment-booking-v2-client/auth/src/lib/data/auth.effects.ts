@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthApiService } from './auth-api.service';
 import {
-  confirmSignUp, fetchUserPhotoFailure, fetchUserPhotoSuccess,
+  confirmSignUp, confirmSignUpSuccess, fetchUserPhotoFailure, fetchUserPhotoSuccess,
   fetchUserProfileSuccess,
   signIn,
   signInSuccess,
@@ -77,8 +77,29 @@ export class AuthEffects {
   readonly confirmSignUp$ = createEffect(() =>
     this.actions$.pipe(
       ofType(confirmSignUp),
-      switchMap(({ request }) => this.authApiService.confirmSignUp(request)),
+      switchMap(({ request, photo }) =>
+        this.authApiService.confirmSignUp(request).pipe(
+          map(() => confirmSignUpSuccess({ userId: request.userId, photo }))
+        )
+      )
+    )
+  );
+
+  readonly navigateToSignIn$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(confirmSignUpSuccess),
       map(() => navigateToPage({ route: Route.SIGN_IN }))
     )
+  );
+
+  readonly uploadPhoto$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(confirmSignUpSuccess),
+      filter(({ photo }) => !!photo),
+      filter(({ photo }) =>
+        (photo as File).type === 'image/jpg' || (photo as File).type === 'image/jpeg'
+      ),
+      switchMap(({ userId, photo }) => this.photosApiService.uploadPhoto(userId, photo as File))
+    ), { dispatch: false }
   );
 }

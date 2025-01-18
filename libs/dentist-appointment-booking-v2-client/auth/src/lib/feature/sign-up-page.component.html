@@ -23,8 +23,8 @@
             <input matInput type="password" formControlName="confirmationCode">
           </mat-form-field>
           <mat-form-field class="form-field">
-            <mat-label>Link do zdjęcia</mat-label>
-            <input matInput type="text" formControlName="photoUrl">
+            <mat-label>Zdjęcie profilowe</mat-label>
+            <input matInput type="file" accept="image/jpeg, image/jpg" (change)="handlePhotoChange($event)">
           </mat-form-field>
           <button
             mat-flat-button

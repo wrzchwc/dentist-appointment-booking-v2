@@ -33,6 +33,9 @@ export class SignUpPageComponent {
   private readonly userStore = inject(UserStore);
 
   private readonly userId: Signal<string | undefined> = this.userStore.userId;
+
+  private photo: File | null | undefined = undefined;
+
   readonly confirmationCodeSent = computed(() => !!this.userId());
   readonly disableEmail = effect(() => {
     if(this.confirmationCodeSent()) {
@@ -47,7 +50,6 @@ export class SignUpPageComponent {
     lastName: this.formBuilder.nonNullable.control('', [
       Validators.required
     ]),
-    photoUrl: this.formBuilder.nonNullable.control(''),
     confirmationCode: this.formBuilder.nonNullable.control('', [
       Validators.required, Validators.minLength(6)
     ]),
@@ -79,7 +81,12 @@ export class SignUpPageComponent {
         lastName: this.signUpForm.controls['lastName'].value,
         confirmationCode: this.signUpForm.controls['confirmationCode'].value,
         userId: this.userId() || ''
-      }
+      },
+      photo: this.photo
     }))
+  }
+
+  handlePhotoChange($event: Event) {
+    this.photo = ($event.target as HTMLInputElement).files?.item(0);
   }
 }
