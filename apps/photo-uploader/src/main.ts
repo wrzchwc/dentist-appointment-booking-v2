@@ -1,18 +1,9 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-
-interface Event {
-  readonly key: string;
-  readonly imageBase64: string;
-}
-
-interface Response {
-  readonly statusCode: number;
-  readonly body: object;
-}
+import { UploadPhotoRequest, UploadPhotoResponse } from '@dentist-appointment-booking-v2/shared/photos';
 
 const s3Client: S3Client = new S3Client({ region: process.env.REGION });
 
-export const handler = async (event: Event): Promise<Response> => {
+export const handler = async (event: UploadPhotoRequest): Promise<UploadPhotoResponse> => {
   try {
     const { key, imageBase64 } = event;
 
@@ -41,7 +32,7 @@ export const handler = async (event: Event): Promise<Response> => {
   }
 };
 
-const response = (statusCode: number, body: object): Response => ({
+const response = (statusCode: number, body: object): UploadPhotoResponse => ({
   statusCode,
   body
 })

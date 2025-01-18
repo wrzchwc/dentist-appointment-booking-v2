@@ -1,0 +1,19 @@
+{
+  "name": "shared-photos",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/photos/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/photos",
+        "main": "libs/shared/photos/src/index.ts",
+        "tsConfig": "libs/shared/photos/tsconfig.lib.json",
+        "assets": ["libs/shared/photos/*.md"]
+      }
+    }
+  }
+}

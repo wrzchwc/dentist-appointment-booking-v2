@@ -56,12 +56,18 @@
         "libs/dentist-appointment-booking-v2-server/health-reports/*",
         "libs/dentist-appointment-booking-v2-server/appointment-management/*",
         "libs/shared/appointment-management/*",
-        "libs/shared/services/*"
+        "libs/shared/services/*",
+        "libs/shared/shared/photos/*",
+        "libs/shared/photos/*"
       ]
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["libs/shared/services/*"],
+      "include": [
+        "libs/shared/services/*",
+        "libs/shared/shared/photos/*",
+        "libs/shared/photos/*"
+      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
