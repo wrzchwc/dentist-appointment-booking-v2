@@ -22,13 +22,13 @@
       </app-card>
     </div>
     <div class="content user-section">
-      <app-card title="Pacjent(ka)" icon="photo_camera">
-        <img
-          [src]="appointment()?.user?.photoUrl"
-          [alt]="appointment()?.user?.id"
-          class="avatar"
-        />
-      </app-card>
+<!--      <app-card title="Pacjent(ka)" icon="photo_camera">-->
+<!--        <img-->
+<!--          [src]="appointment()?.user?.photoUrl"-->
+<!--          [alt]="appointment()?.user?.id"-->
+<!--          class="avatar"-->
+<!--        />-->
+<!--      </app-card>-->
       <app-card title="Dane osobowe" icon="person" class="card">
         <h1 class="text">{{ appointment()?.user?.name }} {{ appointment()?.user?.surname }}</h1>
         <a [href]="appointment()?.user?.email || '' | email" class="email-wrapper">

@@ -77,7 +77,6 @@ export class SignUpPageComponent {
         email: this.signUpForm.controls['email'].value,
         firstName: this.signUpForm.controls['firstName'].value,
         lastName: this.signUpForm.controls['lastName'].value,
-        photoUrl: this.signUpForm.controls['photoUrl'].value,
         confirmationCode: this.signUpForm.controls['confirmationCode'].value,
         userId: this.userId() || ''
       }

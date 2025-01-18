@@ -13,6 +13,11 @@ export const accessToken = createSelector(
   (state) => state.accessToken
 );
 
+export const identityToken = createSelector(
+  selectFeature,
+  (state) => state.identityToken
+);
+
 export const refreshToken = createSelector(
   selectFeature,
   (state) => state.refreshToken

@@ -3,8 +3,14 @@ import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Role, UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
+import { Role } from '@dentist-appointment-booking-v2/shared/auth';
 import { Route } from '../domain/route';
+
+interface UserProfile {
+  readonly firstName: string;
+  readonly roles?: Role[];
+  readonly photoUrl?: string;
+}
 
 @Component({
   selector: 'lib-header',

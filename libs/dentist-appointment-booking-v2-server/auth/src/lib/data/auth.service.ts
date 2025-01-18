@@ -97,7 +97,8 @@ export class AuthService {
       throw new InternalServerErrorException({ message: 'Refresh failed' });
     }
     return {
-      accessToken: AuthenticationResult.AccessToken || ''
+      accessToken: AuthenticationResult.AccessToken || '',
+      identityToken: AuthenticationResult.IdToken || '',
     };
   }
 

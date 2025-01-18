@@ -71,6 +71,9 @@
       ],
       "@dentist-appointment-booking-v2/shared/services": [
         "libs/shared/services/src/index.ts"
+      ],
+      "@dentist-appointment-booking/dentist-appointment-booking-v2-client/photos": [
+        "libs/dentist-appointment-booking-v2-client/photos/src/index.ts"
       ]
     }
   },

@@ -8,12 +8,12 @@ import { AppointmentCartService } from '../appointment-cart.service';
 import { filter, map, Observable } from 'rxjs';
 import { AsyncPipe, DatePipe, NgIf } from '@angular/common';
 import { DateTime } from 'luxon';
-import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 import { calculateTotalAppointmentLength } from '@dentist-appointment-booking-v2/shared/appointment-booking';
 import {
   AppointmentDateService
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';
 import { ServicesTableComponent } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/services';
+import { UserProfile } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 
 @Component({
   selector: 'app-summary',

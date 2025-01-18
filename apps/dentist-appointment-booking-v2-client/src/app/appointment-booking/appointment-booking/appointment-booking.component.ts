@@ -24,7 +24,7 @@ import {
   AppointmentQuestion,
   calculateTotalAppointmentLength
 } from '@dentist-appointment-booking-v2/shared/appointment-booking';
-import { AuthFacade } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
+import { AuthFacade, UserProfile } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/auth';
 import { HealthStateStore } from '../health-state.store';
 import { HealthStateDescriptor, Info } from '../model';
 import { Store } from '@ngrx/store';
@@ -32,7 +32,6 @@ import {
   navigateToPage,
   Route
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/navigation';
-import { UserProfile } from '@dentist-appointment-booking-v2/shared/auth';
 import {
   AppointmentDateService, AvailableTimesStore
 } from '@dentist-appointment-booking-v2/dentist-appointment-booking-v2-client/appointment-booking';

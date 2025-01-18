@@ -22,4 +22,5 @@ export enum Role {
 
 export interface RefreshTokenResponse {
   readonly accessToken: string;
+  readonly identityToken: string;
 }
